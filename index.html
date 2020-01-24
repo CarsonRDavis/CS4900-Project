@@ -11,15 +11,13 @@
 		<script src="js/three.js"></script>
 		<script>
             
-            //scene and camera
+            //create scene and camera
             var scene = new THREE.Scene();
             var camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, .1, 10000);
             
-            //camera.position.z = 2;
             camera.position.set(0, 1, 2.5);
-            //camera.up = new THREE.Vector3(0,-20,1);
             camera.lookAt(new THREE.Vector3(0,-3,10));
-                                    
+            //add camera to scene          
             scene.add(camera);
             
             //renderer
@@ -33,18 +31,17 @@
 
             var gridHelper = new THREE.GridHelper(size, divisions, 0xff0000, 0xff0000);
             gridHelper.position.set(0, -1, 7);
+            //add grid to scene
             scene.add(gridHelper);
-            //gridHelper.position.x = 0;
-            
-            //camera.lookAt(gridHelper);
-            
+                        
             //render loop
             function render(){
                 //updateProjectionMatrix();
                 renderer.render(scene, camera);
                 requestAnimationFrame(render);
-            }
+            }//end render loop
             
+            //execute
             requestAnimationFrame(render);
 
 		</script>
