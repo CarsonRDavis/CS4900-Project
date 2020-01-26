@@ -4,23 +4,18 @@
     <meta charset="utf-8">
     <style>
         body { margin: 0; }
-        canvas { width: 90%; height: 90% }
+        canvas { width: 80%; height: 80% }
     </style>
 </head>
 <body>
-    <!-- //imports from https://bl.ocks.org/duhaime/8c2be958e71ea1814e8c11f95592a3a4 -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/88/three.js'></script>
-
-    <script src='https://threejs.org/examples/js/controls/TrackballControls.js'></script>
-<!--    <script src='three/examples/jsm/controls/OrbitControls.js'></script>-->
-
-    <script src='https://mamboleoo.be/learnThree/demos/OBJLoader.js'></script>
-<!--
     <script src="js/three.js"></script>
-    <script src="js/OBJLoader.js"></script>
--->
-    <script>        
-        
+    <script src = "js/TrackballControls.js"></script>
+    <script src = "js/OBJLoader.js"></script>
+    <script>   
+
+        //var keyboard = new THREE.KeyboardState();
+        var clock = THREE.Clock();
+                
         //accessor to create the scene
         function getScene(){
             var scene = new THREE.Scene();
@@ -28,30 +23,23 @@
             
             return scene;
         }
+        
         //accessor to create the camera
         function getCamera(){
             var aspectRatio = window.innerWidth / window.innerHeight;
             var camera = new THREE.PerspectiveCamera(50, aspectRatio, .1, 1000);
-            //var camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
-            
-            //////////////////////////
-            camera.position.set(0, 1, -4);
-            /////////////////////////
-            //camera.lookAt(new THREE.Vector3(0,-3,10));
 
-            //camera.position.set(0, 1, 2.5);
+            camera.position.set(0, 1, -4);
             
             return camera;
         }
-        
+
         //accessor to create the lighting        
         function getLighting(scene){
             var light = new THREE.PointLight(0xffffff, 1, 0);
             light.position.set(1, 1, 1);
             scene.add(light);
             return light;
-//            var ambientLight = new THREE.AmbientLight(0x111111);
-//            scene.add(ambientLight);
         }
         
         //accessor to create the renderer
@@ -63,6 +51,7 @@
             return renderer;
         }
         
+        //get the controls to scroll and change camera
         function getControls(camera, renderer) {
             var controls = new THREE.TrackballControls(camera, renderer.domElement);
             controls.zoomSpeed = 0.4;
@@ -78,8 +67,6 @@
             loader.load(
                 'Models/CatMac.obj', 
                 function(object){ 
-//                    object.rotation.z = Math.PI;
-//                    object.scale.set(0.5, 0.5, 0.5);
                     object.position.set(0.25, -1.25, 0);
                     object.name = "cat";
                     scene.add(object);
@@ -96,60 +83,52 @@
             gridHelper.position.set(0, -1, 2);
             scene.add(gridHelper);
         }
-
-
-        //https://bl.ocks.org/duhaime/8c2be958e71ea1814e8c11f95592a3a4
-        //threejs.org documentation and tutorials
-        //loading .obj model
         
         //render loop
-        function render(){
-            //updateProjectionMatrix();
-
-            requestAnimationFrame(render);
+        function animate(){
+            requestAnimationFrame(animate);
+            
+//            var cat = scene.getObjectByName("cat");
+            document.addEventListener("keydown", onDocumentKeyDown, false);
             renderer.render(scene, camera);
             controls.update();
         }
         
-        //https://subscription.packtpub.com/book/web_development/9781783981182/1/ch01lvl1sec22/adding-keyboard-controls
-        function configureKeyHandling() {
+        //https://stackoverflow.com/questions/42958252/how-do-i-move-a-three-js-cube-with-keyboard-input/42959008
+        function onDocumentKeyDown() {            
             var cat = scene.getObjectByName("cat");
-            document.onkeydown = function(e) {
-                switch (e.keyCode) {
-                    case 37:
-                        cat.position.x += 0.25;
-                        break;
-                    case 38:
-                        cat.rotation.z -= 0.1;
-                        break;
-                    case 39:
-                        cat.rotation.x -= 0.1;
-                        break;
-                    case 40:
-                        cat.rotation.z += 0.1;
-                        break;
-                }
-                render();
-            };
-
+        
+            var code = event.keyCode;
+            
+            if(code == 87){ //w is pressed
+                cat.position.z += 0.5;
+            } else if(code == 65){ //a is pressed
+                cat.position.x += 0.5;
+            }else if(code == 83){ //s is pressed
+                cat.position.z += -0.5;
+            }else if (code == 68){ //d is pressed
+                cat.position.x += -0.5;
+            }
+            
+            controls.update();
         }
         
+        //call accessors
         var scene = getScene();
         var camera = getCamera();
         var light = getLighting(scene);
         var renderer = getRenderer();
         var controls = getControls(camera, renderer);
+        //var keyboard = {};
         
-        window.addEventListener('keyDown', keyDown);
-        window.addEventListener('keyUp', keyUp);
+        //document.addEventListener("keyDown", onDocumentKeyDown);
+        //document.addEventListener('keyUp', keyUp, false);
 
-        
-        configureKeyHandling();
+        //load the model and create grid
         loadModel();
         createGrid();
-
-        //requestAnimationFrame(render);
-        render();
+        //call render loop
+        animate();
 
     </script>
 </body>
