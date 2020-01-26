@@ -1,49 +1,156 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<style>
-			body { margin: 0; }
-			canvas { width: 100%; height: 100% }
-		</style>
-	</head>
-	<body>
-		<script src="js/three.js"></script>
-		<script>
-            
-            //create scene and camera
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { margin: 0; }
+        canvas { width: 90%; height: 90% }
+    </style>
+</head>
+<body>
+    <!-- //imports from https://bl.ocks.org/duhaime/8c2be958e71ea1814e8c11f95592a3a4 -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/88/three.js'></script>
+
+    <script src='https://threejs.org/examples/js/controls/TrackballControls.js'></script>
+<!--    <script src='three/examples/jsm/controls/OrbitControls.js'></script>-->
+
+    <script src='https://mamboleoo.be/learnThree/demos/OBJLoader.js'></script>
+<!--
+    <script src="js/three.js"></script>
+    <script src="js/OBJLoader.js"></script>
+-->
+    <script>        
+        
+        //accessor to create the scene
+        function getScene(){
             var scene = new THREE.Scene();
-            var camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, .1, 10000);
+            scene.background = new THREE.Color(0xff0000);
             
-            camera.position.set(0, 1, 2.5);
-            camera.lookAt(new THREE.Vector3(0,-3,10));
-            //add camera to scene          
-            scene.add(camera);
+            return scene;
+        }
+        //accessor to create the camera
+        function getCamera(){
+            var aspectRatio = window.innerWidth / window.innerHeight;
+            var camera = new THREE.PerspectiveCamera(50, aspectRatio, .1, 1000);
+            //var camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
             
-            //renderer
+            //////////////////////////
+            camera.position.set(0, 1, -4);
+            /////////////////////////
+            //camera.lookAt(new THREE.Vector3(0,-3,10));
+
+            //camera.position.set(0, 1, 2.5);
+            
+            return camera;
+        }
+        
+        //accessor to create the lighting        
+        function getLighting(scene){
+            var light = new THREE.PointLight(0xffffff, 1, 0);
+            light.position.set(1, 1, 1);
+            scene.add(light);
+            return light;
+//            var ambientLight = new THREE.AmbientLight(0x111111);
+//            scene.add(ambientLight);
+        }
+        
+        //accessor to create the renderer
+        function getRenderer(){
             var renderer = new THREE.WebGLRenderer();
             renderer.setSize(window.innerWidth, window.innerHeight);
             document.body.appendChild(renderer.domElement);
             
+            return renderer;
+        }
+        
+        function getControls(camera, renderer) {
+            var controls = new THREE.TrackballControls(camera, renderer.domElement);
+            controls.zoomSpeed = 0.4;
+            controls.panSpeed = 0.4;
+            
+            return controls;
+        }
+
+        //function to load the model        
+        function loadModel(){
+            var loader = new THREE.OBJLoader();
+
+            loader.load(
+                'Models/CatMac.obj', 
+                function(object){ 
+//                    object.rotation.z = Math.PI;
+//                    object.scale.set(0.5, 0.5, 0.5);
+                    object.position.set(0.25, -1.25, 0);
+                    object.name = "cat";
+                    scene.add(object);
+                }
+            );
+        }
+        
+        function createGrid(){
             //create grid           
             var size = 5;
             var divisions = 10;
 
-            var gridHelper = new THREE.GridHelper(size, divisions, 0xff0000, 0xff0000);
-            gridHelper.position.set(0, -1, 7);
-            //add grid to scene
+            var gridHelper = new THREE.GridHelper(size, divisions, 0x111111, 0x111111);
+            gridHelper.position.set(0, -1, 2);
             scene.add(gridHelper);
-                        
-            //render loop
-            function render(){
-                //updateProjectionMatrix();
-                renderer.render(scene, camera);
-                requestAnimationFrame(render);
-            }//end render loop
-            
-            //execute
-            requestAnimationFrame(render);
+        }
 
-		</script>
-	</body>
+
+        //https://bl.ocks.org/duhaime/8c2be958e71ea1814e8c11f95592a3a4
+        //threejs.org documentation and tutorials
+        //loading .obj model
+        
+        //render loop
+        function render(){
+            //updateProjectionMatrix();
+
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+            controls.update();
+        }
+        
+        //https://subscription.packtpub.com/book/web_development/9781783981182/1/ch01lvl1sec22/adding-keyboard-controls
+        function configureKeyHandling() {
+            var cat = scene.getObjectByName("cat");
+            document.onkeydown = function(e) {
+                switch (e.keyCode) {
+                    case 37:
+                        cat.position.x += 0.25;
+                        break;
+                    case 38:
+                        cat.rotation.z -= 0.1;
+                        break;
+                    case 39:
+                        cat.rotation.x -= 0.1;
+                        break;
+                    case 40:
+                        cat.rotation.z += 0.1;
+                        break;
+                }
+                render();
+            };
+
+        }
+        
+        var scene = getScene();
+        var camera = getCamera();
+        var light = getLighting(scene);
+        var renderer = getRenderer();
+        var controls = getControls(camera, renderer);
+        
+        window.addEventListener('keyDown', keyDown);
+        window.addEventListener('keyUp', keyUp);
+
+        
+        configureKeyHandling();
+        loadModel();
+        createGrid();
+
+        //requestAnimationFrame(render);
+        render();
+
+    </script>
+</body>
 </html>
