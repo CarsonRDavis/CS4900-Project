@@ -24,23 +24,53 @@ class Actor{   //Base character object
 
     //Function for damaging another actor. For now, it simply checks weakness and resistance before dealing damage
     attack(actor){
-        attMod = 1;
-        if(this.attType != null && actor.resist != null){   //check to see if that values are assigned
-            if(this.arrCheck(this.attType, actor.resist)){  //if the arg actor is resistant, attack mod is halved
-                attMod /=2;                     
-            }
-            if(this.arrCheck(this.attType, actor.weakness)){//if the arg actor is WEAK, attack mod is doubled
-                attMod *=2;
+        var attMod = 1;                                       //attack modifier
+   
+        if(this.attType != null && actor.weakness != null){   
+            for(var i = 0; i < this.attType.length; i++){     
+                if(actor.weakness.includes(this.attType[i])){ //if the arg actor's weakness includes the type, attack mod is doubled
+                    attMod *=2;                     
+                }
             }
         }
-        actor.hitPts -= this.attPow * attMod;               //reduce the arg actor's HP 
-    }
-
-    //Function for checking an actor's attType against an array 
-    arrCheck(attType, arr){
-        found = false;
-        if(arr.contains(attType))
-            found = true;
-        return found;
+        if(actor.resist != null){
+            for(var i = 0; i < this.attType.length; i++){     //second verse, same as the first (but for resistance)
+                if(actor.resist.includes(this.attType[i])){   //if the arg actor is resitant, attack mod is halved
+                    attMod /= 2;
+                }    
+            }
+        }
+        actor.hitPts -= this.attPow * attMod;                  //reduce the arg actor's HP 
     }
 }
+
+//define a subclass for melee actors
+class Melee extends Actor{
+    constructor(name){
+        super(name);
+        this.weakness = ['Defender'];
+        this.attType = ['Melee'];
+    }
+}
+
+//define a subclass for defender actors
+class Defender extends Actor{
+    constructor(name){
+        super(name);
+        this.weakness = ['Ranged'];
+        this.attType = ['Defender'];
+    }
+}
+
+//define a subclass for ranged actors
+class Ranged extends Actor{
+    constructor(name){
+        super(name);
+        this.weakness = ['Melee'];
+        this.attType = ['Ranged'];
+    }
+}
+module.exports.Actor = Actor;
+module.exports.Melee = Melee; 
+module.exports.Defender = Defender;
+module.exports.Ranged = Ranged;
