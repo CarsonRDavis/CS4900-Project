@@ -16,6 +16,17 @@ var scene = new THREE.Scene;
 // Creates Camera Object
 var camera = new THREE.PerspectiveCamera(90, width / height, 0.1, 10000);
 
+// Creates an OrbitControls object to be able to rotate the camera around an object
+var controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+// Updates which keys are used to rotate the camera
+controls.keys = {
+    LEFT: 81,
+    RIGHT: 69
+};
+
+controls.update();
+
 // Creates temporary cube object, used for testing
 var cubeGeometry = new THREE.CubeGeometry(1, 1, 1);
 var cubeMaterial = new THREE.MeshBasicMaterial({
@@ -27,6 +38,7 @@ var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 // Sets positions for testing
 cube.position.set(0, 0.75, 0);
 camera.position.set(0, 7, 5);
+controls.update();
 
 // Creates 4 cubes for each corner of the floor to test swapping the camera focus
 var cube1 = new THREE.Mesh(cubeGeometry, cubeMaterial);
@@ -70,20 +82,7 @@ var selectedCube = cube;
 function animate() {
     requestAnimationFrame(animate);
 
-    var x = camera.position.x;
-    var z = camera.position.z;
-
-    // Rotates camera left around an object
-    if (keyboard[69]) {
-        camera.position.x = x * Math.cos(0.02) + z * Math.sin(0.02);
-        camera.position.z = z * Math.cos(0.02) - x * Math.sin(0.02);
-    }
-
-    // Rotates camera right around an object
-    if (keyboard[81]) {
-        camera.position.x = x * Math.cos(0.02) - z * Math.sin(0.02);
-        camera.position.z = z * Math.cos(0.02) + x * Math.sin(0.02);
-    }
+    controls.update();
 
     // Reorients camera to look at proper cube
     camera.lookAt(selectedCube.position);
@@ -92,29 +91,19 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-function cameraPosition() {
-    requestAnimationFrame(cameraPosition);
-
-    if (keyboard[90]) {
-        if (selectedCube = cube) {
-            selectedCube = cube1;
-        } else if (selectedCube = cube1) {
-            selectedCube = cube2;
-        } else if (selectedCube = cube2) {
-            selectedCube = cube3;
-        } else if (selectedCube = cube3) {
-            selectedCube = cube4;
-        } else {
-            selectedCube = cube;
-        }
+// Changes which cube the camera is currently looking at
+function changeSelectedCube() {
+    if (selectedCube == cube) {
+        selectedCube = cube1;
+    } else if (selectedCube == cube1) {
+        selectedCube = cube2;
+    } else if (selectedCube == cube2) {
+        selectedCube = cube3;
+    } else if (selectedCube == cube3) {
+        selectedCube = cube4;
+    } else {
+        selectedCube = cube;
     }
-
-    camera.position.x = selectedCube.position.x;
-    camera.position.z = selectedCube.position.z + 5;
-
-    camera.lookAt(selectedCube.position);
-
-    renderer.render(scene, camera);
 }
 
 // Event for when a key is pushed down
@@ -133,7 +122,6 @@ window.addEventListener('keyup', keyUp);
 
 // Triggers animation function
 animate();
-cameraPosition();
 
 // Renders scene
 renderer.render(scene, camera);
