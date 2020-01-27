@@ -92,17 +92,21 @@ function animate() {
 }
 
 // Changes which cube the camera is currently looking at
-function changeSelectedCube() {
-    if (selectedCube == cube) {
-        selectedCube = cube1;
-    } else if (selectedCube == cube1) {
-        selectedCube = cube2;
-    } else if (selectedCube == cube2) {
-        selectedCube = cube3;
-    } else if (selectedCube == cube3) {
-        selectedCube = cube4;
-    } else {
-        selectedCube = cube;
+function changeSelectedCube(event) {
+    if (event.key === 'z') {
+        if (selectedCube == cube) {
+            selectedCube = cube1;
+        } else if (selectedCube == cube1) {
+            selectedCube = cube2;
+        } else if (selectedCube == cube2) {
+            selectedCube = cube3;
+        } else if (selectedCube == cube3) {
+            selectedCube = cube4;
+        } else {
+            selectedCube = cube;
+        }
+
+        camera.position.set(selectedCube.position.x, 7, selectedCube.position.z + 5);
     }
 }
 
@@ -119,6 +123,7 @@ function keyUp(event) {
 // Creates event listeners
 window.addEventListener('keydown', keyDown);
 window.addEventListener('keyup', keyUp);
+window.addEventListener('keypress', changeSelectedCube);
 
 // Triggers animation function
 animate();
