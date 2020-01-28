@@ -25,13 +25,14 @@ controls.keys = {
     RIGHT: 69
 };
 
+// Updates controls to make sure they are working correctly
 controls.update();
 
 // Creates temporary cube object, used for testing
 var cubeGeometry = new THREE.CubeGeometry(1, 1, 1);
 var cubeMaterial = new THREE.MeshBasicMaterial({
     color: 0xff0000,
-    wireframe: true
+    wireframe: false
 });
 var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
@@ -52,10 +53,27 @@ cube2.position.set(-5, 0.75, 5);
 cube3.position.set(5, 0.75, -5);
 cube4.position.set(-5, 0.75, -5);
 
+// Creates Grid Overlay
+var size = 10;
+var divisions = 10;
+var gridHelper = new THREE.GridHelper(size, divisions, 0x111111, 0x111111);
+gridHelper.position.set(0, 1, 0);
+
 // Loads texture onto the plane geometry/floor
 var loader = new THREE.TextureLoader();
 var material = new THREE.MeshBasicMaterial();
 material.map = loader.load('./textures/grass.jpg');
+
+// Creates and loads cat object
+var objLoader = new THREE.OBJLoader();
+objLoader.load(
+    './Models/CatMac.obj',
+    function (object) {
+        object.position.set(0, 0.25, -3);
+        object.name = "cat";
+        scene.add(object);
+    }
+);
 
 // Creates Floor
 var floorMesh = new THREE.Mesh(
@@ -74,6 +92,7 @@ scene.add(cube1);
 scene.add(cube2);
 scene.add(cube3);
 scene.add(cube4);
+scene.add(gridHelper);
 
 // Keeps count of which cube the camera is focused on
 var selectedCube = cube;
@@ -81,6 +100,22 @@ var selectedCube = cube;
 // Performs basic animations
 function animate() {
     requestAnimationFrame(animate);
+
+    controls.update();
+
+    // Loads cat object
+    var cat = scene.getObjectByName("cat");
+
+    // Moves the cat object
+    if (keyboard[87]) { //w is pressed
+        cat.position.z += 0.5;
+    } else if (keyboard[65]) { //a is pressed
+        cat.position.x += 0.5;
+    } else if (keyboard[83]) { //s is pressed
+        cat.position.z += -0.5;
+    } else if (keyboard[68]) { //d is pressed
+        cat.position.x += -0.5;
+    }
 
     controls.update();
 
