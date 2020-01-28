@@ -1,9 +1,7 @@
-//var keyboard = new THREE.KeyboardState();
-
 //accessor to create the scene
 function getScene() {
     var scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xff0000);
+    scene.background = new THREE.Color("#C0C0C0");
 
     return scene;
 }
@@ -51,7 +49,7 @@ function loadModel() {
     loader.load(
         './Models/CatMac.obj', 
         function(object){ 
-            object.position.set(0.25, -1.25, 0);
+            object.position.set(0.25, -1, -0.25);
             object.name = "cat";
             scene.add(object);
         }
@@ -78,7 +76,8 @@ function animate() {
     controls.update();
 }
 
-//https://stackoverflow.com/questions/42958252/how-do-i-move-a-three-js-cube-with-keyboard-input/42959008
+//Reference: https://stackoverflow.com/questions/42958252/how-do-i-move-a-three-js-cube-with-keyboard-input/42959008
+//create event function that moves object
 function onDocumentKeyDown() {            
     var cat = scene.getObjectByName("cat");
 
@@ -103,7 +102,6 @@ var camera = getCamera();
 var light = getLighting(scene);
 var renderer = getRenderer();
 var controls = getControls(camera, renderer);
-//var keyboard = {};
 
 //document.addEventListener("keyDown", onDocumentKeyDown);
 //document.addEventListener('keyUp', keyUp, false);
