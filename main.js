@@ -33,6 +33,7 @@ function getRenderer() {
     return renderer;
 }
 
+//Reference: https://bl.ocks.org/duhaime/8c2be958e71ea1814e8c11f95592a3a4
 //get the controls to scroll and change camera
 function getControls(camera, renderer) {
     var controls = new THREE.TrackballControls(camera, renderer.domElement);
