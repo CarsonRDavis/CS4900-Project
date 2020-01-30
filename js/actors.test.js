@@ -1,7 +1,7 @@
 Actor = require('./actors.js').Actor;
 Melee = require('./actors.js').Melee;
 Defender = require('./actors.js').Defender;
-Ranged = require('./actors').Ranged;
+Ranged = require('./actors.js').Ranged;
 
 //Test whether the base attacxk formula works as expected
 test('Base actor attack test', () => {
