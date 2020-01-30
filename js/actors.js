@@ -1,5 +1,3 @@
-//1-22-20 - Starting simple in order to get a working prototype - Mat
-
 class Actor{   //Base character object
     constructor(name){
         this.name = name;
@@ -9,6 +7,7 @@ class Actor{   //Base character object
         this.yPos = 0;          //Y position
         this.exp = 0;           //Experience points
         this.movement = 5;      //How far a unit can move in one turn
+        this.range = 1;         //How far the unit can reach
 
         this.resist = null;     //Resistances, weakness and attack type are declared 
         this.weakness = null;   //-->as null here for the following basic functions 
@@ -17,7 +16,7 @@ class Actor{   //Base character object
     }
 
     //Function for changing the the position of an actor
-    move(x, y){
+    move(x, y){ 
         this.xPos = x;
         this.yPos = y;
     }
@@ -25,7 +24,10 @@ class Actor{   //Base character object
     //Function for damaging another actor. For now, it simply checks weakness and resistance before dealing damage
     attack(actor){
         var attMod = 1;                                       //attack modifier
-   
+        
+        if(!this.inRange(actor))
+            return;
+
         if(this.attType != null && actor.weakness != null){   
             for(var i = 0; i < this.attType.length; i++){     
                 if(actor.weakness.includes(this.attType[i])){ //if the arg actor's weakness includes the type, attack mod is doubled
@@ -41,6 +43,23 @@ class Actor{   //Base character object
             }
         }
         actor.hitPts -= this.attPow * attMod;                  //reduce the arg actor's HP 
+    }
+
+    inRange(actor){
+        var xDiff = this.getDiff(this.xPos, actor.xPos);
+        var yDiff = this.getDiff(this.yPos, actor.yPos);
+
+        if(xDiff + yDiff > this.range)
+            return false;
+        else    
+            return true;
+    }
+
+    getDiff(int1, int2){
+        if(int2 > int1)
+            return int2 - int1;
+        else    
+            return int1 - int2;
     }
 }
 
@@ -66,6 +85,7 @@ class Defender extends Actor{
 class Ranged extends Actor{
     constructor(name){
         super(name);
+        this.range = 5;
         this.weakness = ['Melee'];
         this.attType = ['Ranged'];
     }
