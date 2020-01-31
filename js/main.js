@@ -145,14 +145,28 @@ function inputKeyCommand(event) {
         camera.position.set(selectedCube.position.x, 7, selectedCube.position.z + 5);
     }
 
+    var positionVector = new THREE.Vector3();
+    
     if (event.key === 'w') { //w is pressed
-        banana.position.z += 1;
+        positionVector = banana.position;
+        console.log(positionVector);
+        if(!(positionVector.z > 3.5))
+            banana.position.z += 1;
     } else if (event.key === 'a') { //a is pressed
-        banana.position.x += 1;
+        positionVector = banana.position;
+        console.log(positionVector);
+        if(!(positionVector.x > 3.5))
+            banana.position.x += 1;
     } else if (event.key === 's') { //s is pressed
-        banana.position.z += -1;
+        positionVector = banana.position;
+        console.log(positionVector);
+        if(!(positionVector.z < -3.5))
+            banana.position.z += -1;
     } else if (event.key === 'd') { //d is pressed
-        banana.position.x += -1;
+        positionVector = banana.position;
+        console.log(positionVector);
+        if(!(positionVector.x < -3.5))    
+            banana.position.x += -1;
     }
 }
 
