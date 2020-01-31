@@ -11,8 +11,8 @@ renderer.setSize(width, height);
 document.body.appendChild(renderer.domElement);
 
 // Creates Scene Object
-var scene = new THREE.Scene;
-scene.background = new THREE.Color("#C0C0C0")
+var scene = new THREE.Scene();
+scene.background = new THREE.Color("#C0C0C0");
 
 //add lighting
 var light = new THREE.PointLight(0xffffff, 1, 0);
@@ -66,13 +66,28 @@ var loader = new THREE.TextureLoader();
 var material = new THREE.MeshBasicMaterial();
 material.map = loader.load('./textures/grass.jpg');
 
-// Creates and loads cat object
+//Reference: https://blender.stackexchange.com/questions/64932/using-three-js-how-to-add-texture-to-obj-object
+
+// Creates and loads banana object with texture
+var bananaTexture = new THREE.TextureLoader().load('./textures/Banana_D01.png');
+//map.toJSON();
+//var math = new THREE.MathUtils();
+//map.size = math.floorPowerOfTwo(map.size);
+var bananaMaterial = new THREE.MeshLambertMaterial({map: bananaTexture});
+
 var objLoader = new THREE.OBJLoader();
 objLoader.load(
-    './models/CatMac.obj',
+    './models/BananaLow_OBJ.obj',
     function (object) {
+        object.traverse(function(node){
+            if(node.isMesh){
+                node.material = bananaMaterial;
+                node.scale.set(.25, .25, .25);
+            }
+        });
         object.position.set(0.5, 0.25, -3.5);
-        object.name = "cat";
+        object.name = "banana";
+        
         scene.add(object);
     }
 );
@@ -112,7 +127,7 @@ function animate() {
 
 // Changes which cube the camera is currently looking at
 function inputKeyCommand(event) {
-    var cat = scene.getObjectByName("cat");
+    var banana = scene.getObjectByName("banana");
 
     if (event.key === 'z') {
         if (selectedCube == cube) {
@@ -131,13 +146,13 @@ function inputKeyCommand(event) {
     }
 
     if (event.key === 'w') { //w is pressed
-        cat.position.z += 1;
+        banana.position.z += 1;
     } else if (event.key === 'a') { //a is pressed
-        cat.position.x += 1;
+        banana.position.x += 1;
     } else if (event.key === 's') { //s is pressed
-        cat.position.z += -1;
+        banana.position.z += -1;
     } else if (event.key === 'd') { //d is pressed
-        cat.position.x += -1;
+        banana.position.x += -1;
     }
 }
 
@@ -148,4 +163,4 @@ window.addEventListener('keypress', inputKeyCommand);
 animate();
 
 // Renders scene
-renderer.render(scene, camera);
+//renderer.render(scene, camera);
