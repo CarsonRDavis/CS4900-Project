@@ -1,7 +1,7 @@
 Actor = require('./actors.js').Actor;
 Melee = require('./actors.js').Melee;
 Defender = require('./actors.js').Defender;
-Ranged = require('./actors').Ranged;
+Ranged = require('./actors.js').Ranged;
 
 //Test whether the base attacxk formula works as expected
 test('Base actor attack test', () => {
@@ -38,7 +38,7 @@ test('Ranged values check', () => {
 })
 
 //Test to determine if the attack formula works when the arg actor is weak to this actor
-test('Modified attacked test', () => {
+test('Modified attack test', () => {
     let ran = new Ranged('Rick');
     let def = new Defender('Dan');
 
@@ -54,4 +54,27 @@ test('Modified resistance test', () => {
     def.resist = ['Melee'];
     mel.attack(def);
     expect(def.hitPts).toBe(9);
+})
+
+test('Simple range test (in range)', () => {
+    let def = new Defender('Dan');
+    let ran = new Ranged('Rick');
+
+    ran.move(3,0);
+
+    ran.attack(def);
+    def.attack(ran);
+    expect(def.hitPts).toBe(6);
+    expect(ran.hitPts).toBe(10);
+})
+
+test('Simple range test (out of range)', () => {
+    let def = new Defender('Dan');
+    let ran = new Ranged('Rick');
+
+    ran.move(6,0);
+
+    ran.attack(def);
+    def.attack(ran);
+    expect(def.hitPts).toBe(10);
 })
