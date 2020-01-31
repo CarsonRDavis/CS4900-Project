@@ -14,13 +14,6 @@ document.body.appendChild(renderer.domElement);
 var scene = new THREE.Scene;
 scene.background = new THREE.Color("#C0C0C0")
 
-var scene = new THREE.Scene();
-scene.background = new THREE.Color("#C0C0C0");
-
-
-// Creates Camera Object
-var camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
-
 //add lighting
 var light = new THREE.PointLight(0xffffff, 1, 0);
 light.position.set(1, 1, 1);
@@ -37,10 +30,6 @@ controls.keys = {
     LEFT: 81,
     RIGHT: 69
 };
-
-
-// Updates controls to make sure they are working correctly
-//controls.update();
 
 // Creates temporary cube object, used for testing
 var cubeGeometry = new THREE.CubeGeometry(1, 1, 1);
@@ -92,8 +81,6 @@ objLoader.load(
 var floorMesh = new THREE.Mesh(
     new THREE.PlaneGeometry(10, 10, 10, 10),
     material
-    new THREE.PlaneGeometry(10, 10, 10, 10), material
-    new THREE.PlaneGeometry(10, 10, 10, 10), material
 );
 
 // Rotates floor to face the right direction
@@ -116,22 +103,6 @@ var selectedCube = cube;
 function animate() {
     requestAnimationFrame(animate);
 
-//    // Loads cat object
-//    var cat = scene.getObjectByName("cat");
-//
-//    // Moves the cat object
-//    if (keyboard[87]) { //w is pressed
-//        cat.position.z += 0.5;
-//    } else if (keyboard[65]) { //a is pressed
-//        cat.position.x += 0.5;
-//    } else if (keyboard[83]) { //s is pressed
-//        cat.position.z += -0.5;
-//    } else if (keyboard[68]) { //d is pressed
-//        cat.position.x += -0.5;
-//    }
-
-    controls.update();
-
     // Reorients camera to look at proper cube
     camera.lookAt(selectedCube.position);
 
@@ -143,62 +114,6 @@ function animate() {
 function inputKeyCommand(event) {
     var cat = scene.getObjectByName("cat");
 
-//function to load the model        
-function loadModel() {
-    var loader = new THREE.OBJLoader();
-
-    loader.load(
-        './models/CatMac.obj', 
-        function(object){ 
-            object.position.set(0.25, -1, -0.25);
-            object.name = "cat";
-            scene.add(object);
-        }
-    );
-}
-
-function createGrid() {
-    //create grid           
-    var size = 5;
-    var divisions = 10;
-
-    var gridHelper = new THREE.GridHelper(size, divisions, 0x111111, 0x111111);
-    gridHelper.position.set(0, 5, 5);
-    scene.add(gridHelper);
-}
-
-//render loop
-function animate() {
-    requestAnimationFrame(animate);
-
-//            var cat = scene.getObjectByName("cat");
-    document.addEventListener("keydown", onDocumentKeyDown, false);
-    renderer.render(scene, camera);
-    controls.update();
-}
-
-//Reference: https://stackoverflow.com/questions/42958252/how-do-i-move-a-three-js-cube-with-keyboard-input/42959008
-//create event function that moves object
-function onDocumentKeyDown() {            
-    var cat = scene.getObjectByName("cat");
-
-    var code = event.keyCode;
-
-    if(code == 87){ //w is pressed
-        cat.position.z += 1;
-    } else if(code == 65){ //a is pressed
-        cat.position.x += 1;
-    }else if(code == 83){ //s is pressed
-        cat.position.z += -1;
-    }else if (code == 68){ //d is pressed
-        cat.position.x += -1;
-    }
-
-    controls.update();
-}
-
-// Changes which cube the camera is currently looking at
-function changeSelectedCube(event) {
     if (event.key === 'z') {
         if (selectedCube == cube) {
             selectedCube = cube1;
@@ -228,22 +143,6 @@ function changeSelectedCube(event) {
 
 // Creates event listeners
 window.addEventListener('keypress', inputKeyCommand);
-}
-
-// Event for when a key is pushed down
-function keyDown(event) {
-    keyboard[event.keyCode] = true;
-}
-
-// Event for when a key is released
-function keyUp(event) {
-    keyboard[event.keyCode] = false;
-}
-
-// Creates event listeners
-window.addEventListener('keydown', keyDown);
-window.addEventListener('keyup', keyUp);
-window.addEventListener('keypress', changeSelectedCube);
 
 // Triggers animation function
 animate();
