@@ -43,7 +43,7 @@ test('Modified attack test', () => {
     let def = new Defender('Dan');
 
     ran.attack(def);
-    expect(def.hitPts).toBe(6);  
+    expect(def.hitPts).toBe(6);
 })
 
 //Test to determine if the attack formula works when the arg actor is resistant to this actor
