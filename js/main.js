@@ -98,8 +98,30 @@ var floorMesh = new THREE.Mesh(
     material
 );
 
+//adding plane geometry to act as highlighted coordinates
+var highlightPlane = new THREE.PlaneGeometry(.9, .9);
+var highlightMaterial = new THREE.MeshBasicMaterial({
+    color: "#FFD700",
+    transparent: true,
+    opacity: 0.5
+});
+//highlightMaterial.map = loader.load('./textures/highlight.png');
+
+// Creating highlight
+var highLightMesh = new THREE.Mesh(highlightPlane,
+    highlightMaterial
+);
+
 // Rotates floor to face the right direction
 floorMesh.rotation.x -= Math.PI / 2;
+highLightMesh.rotation.x -= Math.PI / 2;
+
+//raise the highlight block and make transparent
+highLightMesh.position.set(0.5, 0.25, -2.5);
+//highLightMesh.position.z += -4;
+highLightMesh.transparent = true;
+
+highLightMesh.opacity = 0;
 
 // Adds objects to the scene
 scene.add(camera);
@@ -110,6 +132,7 @@ scene.add(cube2);
 scene.add(cube3);
 scene.add(cube4);
 scene.add(gridHelper);
+scene.add(highLightMesh);
 
 // Keeps count of which cube the camera is focused on
 var selectedCube = cube;
@@ -145,10 +168,12 @@ function inputKeyCommand(event) {
         camera.position.set(selectedCube.position.x, 7, selectedCube.position.z + 5);
     }
 
+    //create vector to hold object's location
     var positionVector = new THREE.Vector3();
     
     if (event.key === 'w') { //w is pressed
         positionVector = banana.position;
+        //limit movement if out of bounds
         console.log(positionVector);
         if(!(positionVector.z > 3.5))
             banana.position.z += 1;
