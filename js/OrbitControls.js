@@ -15,6 +15,7 @@
 //    Pan - right mouse, or left mouse + ctrl/meta/shiftKey, or arrow keys / touch: two-finger move
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 THREE.OrbitControls = function (object, domElement) {
 
     if (domElement === undefined) console.warn('THREE.OrbitControls: The second parameter "domElement" is now mandatory.');
@@ -1173,6 +1174,8 @@ THREE.OrbitControls = function (object, domElement) {
 
 THREE.OrbitControls.prototype = Object.create(THREE.EventDispatcher.prototype);
 =======
+=======
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
 THREE.OrbitControls = function ( object, domElement ) {
 
 	if ( domElement === undefined ) console.warn( 'THREE.OrbitControls: The second parameter "domElement" is now mandatory.' );
@@ -2282,7 +2285,10 @@ THREE.OrbitControls = function ( object, domElement ) {
 };
 
 THREE.OrbitControls.prototype = Object.create( THREE.EventDispatcher.prototype );
+<<<<<<< HEAD
 >>>>>>> fixes to prepare for merge
+=======
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
 THREE.OrbitControls.prototype.constructor = THREE.OrbitControls;
 
 
@@ -2294,6 +2300,7 @@ THREE.OrbitControls.prototype.constructor = THREE.OrbitControls;
 //    Zoom - middle mouse, or mousewheel / touch: two-finger spread or squish
 //    Pan - left mouse, or arrow keys / touch: one-finger move
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 THREE.MapControls = function (object, domElement) {
 
@@ -2310,6 +2317,8 @@ THREE.MapControls = function (object, domElement) {
 THREE.MapControls.prototype = Object.create(THREE.EventDispatcher.prototype);
 THREE.MapControls.prototype.constructor = THREE.MapControls;
 =======
+=======
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
 THREE.MapControls = function ( object, domElement ) {
 
 	THREE.OrbitControls.call( this, object, domElement );
@@ -2324,4 +2333,7 @@ THREE.MapControls = function ( object, domElement ) {
 
 THREE.MapControls.prototype = Object.create( THREE.EventDispatcher.prototype );
 THREE.MapControls.prototype.constructor = THREE.MapControls;
+<<<<<<< HEAD
 >>>>>>> fixes to prepare for merge
+=======
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3

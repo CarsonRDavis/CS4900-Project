@@ -12,28 +12,37 @@ document.body.appendChild(renderer.domElement);
 
 // Creates Scene Object
 <<<<<<< HEAD
+<<<<<<< HEAD
 var scene = new THREE.Scene;
 scene.background = new THREE.Color("#C0C0C0")
 
 =======
+=======
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
 var scene = new THREE.Scene();
 scene.background = new THREE.Color("#C0C0C0");
 
 
 // Creates Camera Object
 var camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+<<<<<<< HEAD
 >>>>>>> fixes to prepare for merge
+=======
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
 //add lighting
 var light = new THREE.PointLight(0xffffff, 1, 0);
 light.position.set(1, 1, 1);
 scene.add(light);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Creates Camera Object
 var camera = new THREE.PerspectiveCamera(90, width / height, 0.1, 10000);
 
 =======
 >>>>>>> fixes to prepare for merge
+=======
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
 // Creates an OrbitControls object to be able to rotate the camera around an object
 var controls = new THREE.OrbitControls(camera, renderer.domElement);
 
@@ -44,11 +53,17 @@ controls.keys = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 // Updates controls to make sure they are working correctly
 //controls.update();
 
 >>>>>>> fixes to prepare for merge
+=======
+// Updates controls to make sure they are working correctly
+//controls.update();
+
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
 // Creates temporary cube object, used for testing
 var cubeGeometry = new THREE.CubeGeometry(1, 1, 1);
 var cubeMaterial = new THREE.MeshBasicMaterial({
@@ -61,9 +76,13 @@ var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 cube.position.set(0, 0.75, 0);
 camera.position.set(0, 7, 5);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 controls.update();
 >>>>>>> fixes to prepare for merge
+=======
+controls.update();
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
 
 // Creates 4 cubes for each corner of the floor to test swapping the camera focus
 var cube1 = new THREE.Mesh(cubeGeometry, cubeMaterial);
@@ -102,11 +121,15 @@ objLoader.load(
 // Creates Floor
 var floorMesh = new THREE.Mesh(
 <<<<<<< HEAD
+<<<<<<< HEAD
     new THREE.PlaneGeometry(10, 10, 10, 10),
     material
 =======
     new THREE.PlaneGeometry(10, 10, 10, 10), material
 >>>>>>> fixes to prepare for merge
+=======
+    new THREE.PlaneGeometry(10, 10, 10, 10), material
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
 );
 
 // Rotates floor to face the right direction
@@ -130,7 +153,10 @@ function animate() {
     requestAnimationFrame(animate);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
     //controls.update();
 
 //    // Loads cat object
@@ -149,7 +175,10 @@ function animate() {
 
     controls.update();
 
+<<<<<<< HEAD
 >>>>>>> fixes to prepare for merge
+=======
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
     // Reorients camera to look at proper cube
     camera.lookAt(selectedCube.position);
 
@@ -158,11 +187,14 @@ function animate() {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Changes which cube the camera is currently looking at
 function inputKeyCommand(event) {
     var cat = scene.getObjectByName("cat");
 
 =======
+=======
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
 //function to load the model        
 function loadModel() {
     var loader = new THREE.OBJLoader();
@@ -219,7 +251,10 @@ function onDocumentKeyDown() {
 
 // Changes which cube the camera is currently looking at
 function changeSelectedCube(event) {
+<<<<<<< HEAD
 >>>>>>> fixes to prepare for merge
+=======
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
     if (event.key === 'z') {
         if (selectedCube == cube) {
             selectedCube = cube1;
@@ -236,6 +271,7 @@ function changeSelectedCube(event) {
         camera.position.set(selectedCube.position.x, 7, selectedCube.position.z + 5);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     if (event.key === 'w') { //w is pressed
         cat.position.z += 1;
@@ -251,6 +287,8 @@ function changeSelectedCube(event) {
 // Creates event listeners
 window.addEventListener('keypress', inputKeyCommand);
 =======
+=======
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
 }
 
 // Event for when a key is pushed down
@@ -267,14 +305,21 @@ function keyUp(event) {
 window.addEventListener('keydown', keyDown);
 window.addEventListener('keyup', keyUp);
 window.addEventListener('keypress', changeSelectedCube);
+<<<<<<< HEAD
 >>>>>>> fixes to prepare for merge
+=======
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
 
 // Triggers animation function
 animate();
 
 // Renders scene
 <<<<<<< HEAD
+<<<<<<< HEAD
 renderer.render(scene, camera);
 =======
 renderer.render(scene, camera); 
 >>>>>>> fixes to prepare for merge
+=======
+renderer.render(scene, camera); 
+>>>>>>> 2aed51885664da390f423b4d8cc4abe57cbcaed3
