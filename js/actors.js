@@ -45,6 +45,7 @@ class Actor{   //Base character object
         actor.hitPts -= this.attPow * attMod;                  //reduce the arg actor's HP 
     }
 
+    //Check to see if an actor is in attack range
     inRange(actor){
         var xDiff = this.getDiff(this.xPos, actor.xPos);
         var yDiff = this.getDiff(this.yPos, actor.yPos);
@@ -55,11 +56,42 @@ class Actor{   //Base character object
             return true;
     }
 
+    //Get the difference between two ints
     getDiff(int1, int2){
         if(int2 > int1)
             return int2 - int1;
         else    
             return int1 - int2;
+    }
+
+    //Algorithm for scanning the range of an actor. For now, it marks the range of an actor on a 2d array
+    rangeScan(){
+        var arr = ([[0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0]]);
+        this.move(5,5);                 //position the actor in the center of the new array
+        var x = this.xPos;
+        var y = this.yPos;
+        var lessRange = 0;              //setup variables to hold the actors position and the 'i' variable 
+
+        for(var r = this.range; r > 0; r--){
+            for(var i = 0; i <= lessRange; i++){    //Starting at each point, 'draw' a diamond shape around the actor 
+                arr[x-i][y+r] = 1;                  // by visiting i cells in the clockwise direction, r cells away from the actor
+                arr[x+i][y-r] = 1;
+                arr[x+r][y+i] = 1;
+                arr[x-r][y-i] = 1;
+            }
+            lessRange++;
+        }
+        return arr;
     }
 }
 
