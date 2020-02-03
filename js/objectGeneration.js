@@ -69,7 +69,10 @@ function createBanana(){
 function moveBanana(event){
     //used to reference the created objects
     var banana = scene.getObjectByName("banana");
-    var highlight = scene.getObjectByName("highlight");
+    var highlight1 = scene.getObjectByName("highlight1");
+    var highlight2 = scene.getObjectByName("highlight2");
+    var highlight3 = scene.getObjectByName("highlight3");
+    var highlight4 = scene.getObjectByName("highlight4");
     //var highlightMaterial = scene.getObjectByName("highlightMaterial");
     //var highlightMaterial = new THREE.MeshBasicMaterial();
     //highlightMaterial = scene.getObjectByName("highlightMaterial");
@@ -85,7 +88,10 @@ function moveBanana(event){
             banana.position.z += 1;
             //change location of highlight square
             if(!(positionVector.z > 4.5)){
-                highlight.position.z += 1;
+                highlight1.position.z += 1;
+                highlight2.position.z += 1;
+                highlight3.position.z += 1;
+                highlight4.position.z += 1;
 //                if(positionVector.z === 4.5)
 //                    highlightMaterial.opacity = 0;  
 //                else
@@ -100,21 +106,30 @@ function moveBanana(event){
         console.log(positionVector);
         if(!(positionVector.x > 3.5)){
             banana.position.x += 1;
-            highlight.position.x += 1;
+            highlight1.position.x += 1;
+            highlight2.position.x += 1;
+            highlight3.position.x += 1;
+            highlight4.position.x += 1;
         }
     } else if (event.key === 's') { //s is pressed
         positionVector = banana.position;
         console.log(positionVector);
         if(!(positionVector.z < -3.5)){
             banana.position.z += -1;
-            highlight.position.z += -1;
+            highlight1.position.z += -1;
+            highlight2.position.z += -1;
+            highlight3.position.z += -1;
+            highlight4.position.z += -1;        
         }
     } else if (event.key === 'd') { //d is pressed
         positionVector = banana.position;
         console.log(positionVector);
         if(!(positionVector.x < -3.5)){
             banana.position.x += -1;
-            highlight.position.x += -1;
+            highlight1.position.x += -1;
+            highlight2.position.x += -1;
+            highlight3.position.x += -1;
+            highlight4.position.x += -1;         
         }
     }
 }
