@@ -21,7 +21,9 @@ function worldCreation (scene) {
         transparent: true,
         opacity: 0.5
     });
-
+    highlightMaterial.name = "highlightMaterial";
+    //highlightMaterial.opacity = 1;
+    
     // Creating highlight
     var highLightMesh = new THREE.Mesh(highlightPlane,
         highlightMaterial
@@ -31,9 +33,9 @@ function worldCreation (scene) {
 
     //raise the highlight block and set transparent value
     highLightMesh.position.set(0.5, 0.25, -2.5);
-    highLightMesh.transparent = true;
+    //highLightMesh.transparent = true;
     //change opacity
-    highLightMesh.opacity = 0;
+    //highLightMesh.opacity = 0;
     //add elements
     scene.add(light);
     scene.add(floorMesh);

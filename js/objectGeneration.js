@@ -20,7 +20,7 @@ function addCubes(){
     cube2.position.set(5, 0.25, -5);
     cube3.position.set(-5, 0.25, 5);
     cube4.position.set(-5, 0.25, -5);
-    //add to scene
+    //add cubes to scene
     scene.add(cube);
     scene.add(cube1);
     scene.add(cube2);
@@ -70,6 +70,10 @@ function moveBanana(event){
     //used to reference the created objects
     var banana = scene.getObjectByName("banana");
     var highlight = scene.getObjectByName("highlight");
+    //var highlightMaterial = scene.getObjectByName("highlightMaterial");
+    //var highlightMaterial = new THREE.MeshBasicMaterial();
+    //highlightMaterial = scene.getObjectByName("highlightMaterial");
+    
     //create vector to hold object's location
     var positionVector = new THREE.Vector3();
     
@@ -80,8 +84,16 @@ function moveBanana(event){
         if(!(positionVector.z > 3.5)){
             banana.position.z += 1;
             //change location of highlight square
-            if(!(positionVector.z > 3.5))
+            if(!(positionVector.z > 4.5)){
                 highlight.position.z += 1;
+//                if(positionVector.z === 4.5)
+//                    highlightMaterial.opacity = 0;  
+//                else
+//                    highlightMaterial.opacity = 1;  
+            }
+
+//                    highlight.opacity = 0;
+//                highlight.position.z += 1;
         }
     } else if (event.key === 'a') { //a is pressed
         positionVector = banana.position;
