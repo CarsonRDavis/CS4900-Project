@@ -61,7 +61,7 @@ function createBanana() {
             object.name = "banana";
             //add obj to scene
             scene.add(object);
-            setCameraPosition();
+            onModelLoad();
         }
     );
 }
@@ -105,4 +105,7 @@ function moveBanana(event) {
             camera.position.x += -1;
         }
     }
+
+    controls.target.copy(banana.position);
+    controls.update();
 }
