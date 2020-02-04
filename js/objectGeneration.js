@@ -25,8 +25,6 @@ function addCubes() {
     scene.add(cube2);
     scene.add(cube3);
     scene.add(cube4);
-    //return for use in main.js
-    return cube;
 }
 //method to create the cubes and returns to addCubes()
 function createCubes() {

@@ -39,6 +39,8 @@ function worldCreation(scene) {
     scene.add(floorMesh);
     scene.add(gridHelper);
     scene.add(highLightMesh);
+
+    addCubes();
 }
 //animation loop
 function animate() {
@@ -46,6 +48,4 @@ function animate() {
 
     // Rerenders the scene
     renderer.render(scene, camera);
-    //update the controls
-    controls.update();
 }

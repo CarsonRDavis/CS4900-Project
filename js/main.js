@@ -13,11 +13,8 @@ scene.background = new THREE.Color("#C0C0C0");
 //call method from worldGeneration.js
 worldCreation(scene);
 //create camera and camera controls
-var camera = createCamera(width, height, renderer, scene);
-var controls = addCameraControls();
+var camera = createCamera(width, height);
 
-//add objects and set selectedCube
-addCubes();
 createBanana();
 //add event listeners
 window.addEventListener('keypress', moveBanana, false);
