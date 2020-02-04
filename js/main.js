@@ -17,11 +17,9 @@ var camera = createCamera(width, height, renderer, scene);
 var controls = addCameraControls();
 
 //add objects and set selectedCube
-var selectedCube = addCubes();
+addCubes();
 createBanana();
 //add event listeners
-window.addEventListener('keypress', cameraRotation, false);
 window.addEventListener('keypress', moveBanana, false);
 //call animate function
 animate();
-

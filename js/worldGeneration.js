@@ -1,5 +1,5 @@
 //This file creates the layout of the scene
-function worldCreation (scene) {
+function worldCreation(scene) {
     //add lighting
     var light = new THREE.PointLight(0xffffff, 1, 0);
     light.position.set(1, 1, 1);
@@ -13,7 +13,7 @@ function worldCreation (scene) {
     //add grid
     var gridHelper = new THREE.GridHelper(10, 10, 0x111111, 0x111111);
     gridHelper.position.set(0, 0.25, 0);
-    
+
     //adding plane geometry to act as highlighted coordinates
     var highlightPlane = new THREE.PlaneGeometry(.9, .9);
     var highlightMaterial = new THREE.MeshBasicMaterial({
