@@ -28,9 +28,13 @@ function worldCreation (scene) {
     highLightMesh2.position.set(-0.5, 0.25, -3.5);
     highLightMesh3.position.set(0.5, 0.25, -4.5);
     highLightMesh4.position.set(1.5, 0.25, -3.5);
-    //highLightMesh.transparent = true;
-    //change opacity
-    //highLightMesh.opacity = 0;
+    //create highlight array for easy storage
+    var highlights = [];
+    //push highlights to array
+    highlights.push(highLightMesh1);
+    highlights.push(highLightMesh2);
+    highlights.push(highLightMesh3);
+    highlights.push(highLightMesh4);
     //add elements
     scene.add(light);
     scene.add(floorMesh);
@@ -39,6 +43,8 @@ function worldCreation (scene) {
     scene.add(highLightMesh2);
     scene.add(highLightMesh3);
     scene.add(highLightMesh4);
+    
+    return highlights; //array is used in objectGeneration.js
 }
 
 function createHighlight(){
@@ -49,8 +55,6 @@ function createHighlight(){
         transparent: true,
         opacity: 0.5
     });
-    //highlightMaterial.name = "highlightMaterial";
-    //highlightMaterial.opacity = 1;
     
     // Creating highlight
     var highLightMesh = new THREE.Mesh(highlightPlane,

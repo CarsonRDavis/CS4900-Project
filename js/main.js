@@ -11,10 +11,15 @@ document.body.append(renderer.domElement);
 var scene = new THREE.Scene;
 scene.background = new THREE.Color("#C0C0C0");
 //call method from worldGeneration.js
-worldCreation(scene);
+var highlights = worldCreation(scene);
 //create camera and camera controls
 var camera = createCamera(width, height, renderer, scene);
 var controls = addCameraControls();
+
+const mapTopZ = 4.5;
+const mapRightX = -4.5;
+const mapBottomZ = -4.5;
+const mapLeftX = 4.5;
 
 //add objects and set selectedCube
 var selectedCube = addCubes();
