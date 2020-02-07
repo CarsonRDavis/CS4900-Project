@@ -67,6 +67,9 @@ function createBanana(){
 }
 //create event handler to move the banana along with a highlight square
 function moveBanana(event){
+    if(down)
+        return;
+    down = true;
     //used to reference the created object
     var banana = scene.getObjectByName("banana");
     
@@ -129,6 +132,12 @@ function moveBanana(event){
         highlights[1].visible = false;
     }else
         highlights[1].visible = true;   
+}
+//https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
+function bananaUp(){
+    down = false;
+    
+    return down;
 }
 //function that looks at and cycles through each cube with z
 function cameraRotation(event) {   

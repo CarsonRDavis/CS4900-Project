@@ -73,5 +73,5 @@ function animate() {
     // Rerenders the scene
     renderer.render(scene, camera);
     //update the controls
-    controls.update();
+    //controls.update();
 }

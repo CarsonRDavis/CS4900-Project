@@ -26,7 +26,9 @@ var selectedCube = addCubes();
 createBanana();
 //add event listeners
 window.addEventListener('keypress', cameraRotation, false);
-window.addEventListener('keypress', moveBanana, false);
+var down = true;
+window.addEventListener('keydown', moveBanana, false);
+window.addEventListener('keyup', bananaUp, false);
 //call animate function
 animate();
 
