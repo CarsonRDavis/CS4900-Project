@@ -3,7 +3,7 @@ function createCamera (width, height, renderer, scene) {
     //create camera
     var camera = new THREE.PerspectiveCamera(90, width / height, 0.1, 10000);
     //set position
-    camera.position.set(0, 7, -5);
+    camera.position.set(0, 5, -5);
     
     //render
     renderer.render(scene, camera);
