@@ -1,7 +1,7 @@
 //This file creates the layout of the scene
 function boardGen (scene) {
     //add lighting
-    var light = new THREE.PointLight(0xffffff, 1, 0);
+    var light = new THREE.AmbientLight( 0x404040, 15.0 );
     light.position.set(1, 1, 1);
     //add map texture
     var loader = new THREE.TextureLoader();
