@@ -63,19 +63,6 @@ function createHighlight() {
     //highLightMesh.name = "highlight";
     highLightMesh.rotation.x -= Math.PI / 2;
 
-    //raise the highlight block and set transparent value
-    highLightMesh.position.set(0.5, 0.25, -2.5);
-    highLightMesh.transparent = true;
-    //change opacity
-    highLightMesh.opacity = 0;
-    //add elements
-    scene.add(light);
-    scene.add(floorMesh);
-    scene.add(gridHelper);
-    scene.add(highLightMesh);
-
-    addCubes();
-
     return highLightMesh;
 }
 
