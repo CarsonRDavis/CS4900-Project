@@ -1,6 +1,6 @@
 import { scene, selectedCharacter, charactersArray, mapTopZ, mapRightX, mapBottomZ, mapLeftX, highlights } from '/main.js';
 
-var down = true;
+var down = false;
 // function setPositions(charactersArray){
                     
 
@@ -28,6 +28,7 @@ function createModel1(){
         });
             charactersArray.push(object);
             object.name = "banana1";
+            object.turns = 5;
             scene.add(object);
             console.log(charactersArray);   
             object.position.set(1.5, 0.25, -3.5);
@@ -52,6 +53,7 @@ function createModel2(charactersArray, scene){
     
             charactersArray.push(object);
             object.name = "banana2";
+            object.turns = 5;
             scene.add(object);
             console.log(charactersArray);   
             object.position.set(0.5, 0.25, -2.5);
@@ -76,6 +78,7 @@ function createModel3(charactersArray, scene){
     
             charactersArray.push(object);
             object.name = "banana3";
+            object.turns = 5;
             scene.add(object);
             console.log(charactersArray);   
             object.position.set(-0.5, 0.25, -3.5);
@@ -86,73 +89,80 @@ function createModel3(charactersArray, scene){
 }
 
 //create event handler to move the banana along with a highlight square
-function movePlayer(event){
-   if(down)    //prevents obj from moving multiple spaces when key is held down
-       return;
-   down = true;
-   //used to reference the created object
-  // var character = window[selectedObj.name]; //needs to be changed to current obj
+function movePlayer(event){   
+
+        //used to reference the created object
+        // var character = window[selectedObj.name]; //needs to be changed to current obj
    
-   //create vector to hold object's location
-   var positionVector = new THREE.Vector3();
-    var player = scene.getObjectByName("banana2");
-   
-   if (event.key === 'w') { //w is pressed
-        positionVector = player.position;
-       //limit movement if out of bounds
-       console.log(positionVector);
-       if(!(positionVector.z >= mapTopZ)){
-            player.position.z += 1;
-           //change location of highlight squares
-           highlights.forEach(function(highlight){
-               highlight.position.z += 1;
-           });
-       }
-   } else if (event.key === 'a') { //a is pressed
-       positionVector = player.position;
-       console.log(positionVector);
-       if(!(positionVector.x >= mapLeftX)){
-            player.position.x += 1;
-            highlights.forEach(function(highlight){
-               highlight.position.x += 1;
-           });
-       }
-   } else if (event.key === 's') { //s is pressed
-       positionVector = player.position;
-       console.log(positionVector);
-       if(!(positionVector.z <= mapBottomZ)){
-            player.position.z += -1;
-            highlights.forEach(function(highlight){
-               highlight.position.z += -1;
-           });      
-       }
-   } else if (event.key === 'd') { //d is pressed
-       positionVector = player.position;
-       console.log(positionVector);
-       if(!(positionVector.x <= mapRightX)){
-            player.position.x += -1;
-            highlights.forEach(function(highlight){
-               highlight.position.x += -1;
-           });        
-       }
-   }
-   //set highlight visibility
-   if(player.position.z === (mapTopZ)){
-       highlights[0].visible = false;
-   }else
-       highlights[0].visible = true;
-   if(player.position.x === (mapLeftX)){
-       highlights[3].visible = false;
-   }else
-       highlights[3].visible = true;
-   if(player.position.z === (mapBottomZ)){
-       highlights[2].visible = false;
-   }else
-       highlights[2].visible = true;    
-   if(player.position.x === (mapRightX)){
-       highlights[1].visible = false;
-   }else
-       highlights[1].visible = true;   
+        //create vector to hold object's location
+        var positionVector = new THREE.Vector3();
+        var player = scene.getObjectByName("banana2");
+        console.log(player.turns);
+
+    while(player.turns > 0){
+        if(down)    //prevents obj from moving multiple spaces when key is held down
+            return;
+        down = true;
+
+        if (event.key === 'w') { //w is pressed
+            positionVector = player.position;
+            //limit movement if out of bounds
+            console.log(positionVector);
+            if(!(positionVector.z >= mapTopZ)){
+                player.position.z += 1;
+                //change location of highlight squares
+                highlights.forEach(function(highlight){
+                    highlight.position.z += 1;
+                });
+            }
+        } else if (event.key === 'a') { //a is pressed
+            positionVector = player.position;
+            console.log(positionVector);
+            if(!(positionVector.x >= mapLeftX)){
+                player.position.x += 1;
+                highlights.forEach(function(highlight){
+                    highlight.position.x += 1;
+                });
+            }
+        } else if (event.key === 's') { //s is pressed
+            positionVector = player.position;
+            console.log(positionVector);
+            if(!(positionVector.z <= mapBottomZ)){
+                player.position.z += -1;
+                highlights.forEach(function(highlight){
+                    highlight.position.z += -1;
+                });      
+            }
+        } else if (event.key === 'd') { //d is pressed
+            positionVector = player.position;
+            console.log(positionVector);
+            if(!(positionVector.x <= mapRightX)){
+                player.position.x += -1;
+                highlights.forEach(function(highlight){
+                    highlight.position.x += -1;
+                });        
+            }
+        }
+        //set highlight visibility
+        if(player.position.z === (mapTopZ)){
+            highlights[0].visible = false;
+        }else
+            highlights[0].visible = true;
+        if(player.position.x === (mapLeftX)){
+            highlights[3].visible = false;
+        }else
+            highlights[3].visible = true;
+        if(player.position.z === (mapBottomZ)){
+            highlights[2].visible = false;
+        }else
+            highlights[2].visible = true;    
+        if(player.position.x === (mapRightX)){
+            highlights[1].visible = false;
+        }else
+            highlights[1].visible = true;
+
+        --player.turns;
+    }
 }
 //Reference: https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
 //prevents obj from moving multiple spaces when key is held down
