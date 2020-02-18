@@ -68,4 +68,4 @@ function highlightGeneration (scene){     //returns void
     return highlights;
 }
 
-export { worldCreation, highlightGeneration };
+export { worldCreation, highlightGeneration, createHighlight };

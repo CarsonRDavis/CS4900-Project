@@ -1,4 +1,5 @@
 import { scene, charactersArray, mapTopZ, mapRightX, mapBottomZ, mapLeftX, highlights, player } from '/main.js';
+import { createHighlight } from './worldGeneration.js';
 
 var down = false;
 var characterCount = 1;
@@ -36,7 +37,7 @@ function createModel1(){
             object.position.set(1.5, 0.25, -3.5);
             //created = true;  
             return object;
-    });         
+    });        
     return obj;
 }
 
@@ -173,6 +174,8 @@ function movePlayer(event){
     }//end while
     //isDefault = false;
     characterCount++;
+    resetHighlights(player.name);
+
     //console.log(player.name);
     //var player = changeCharacter(player);
     //console.log(player.name);
@@ -184,6 +187,20 @@ function keyLifted(){
    down = false;
    
    return down;
+}
+
+function resetHighlights(playerName){
+    if(playerName === "banana2"){
+        highlights[0].position.set(1.5, 0.25, -2.5);
+        highlights[1].position.set(0.5, 0.25, -3.5);
+        highlights[2].position.set(1.5, 0.25, -4.5);
+        highlights[3].position.set(2.5, 0.25, -3.5);
+    }else if(playerName === "banana1"){
+        highlights[0].position.set(-0.5, 0.25, -2.5);
+        highlights[1].position.set(-1.5, 0.25, -3.5);
+        highlights[2].position.set(-0.5, 0.25, -4.5);
+        highlights[3].position.set(0.5, 0.25, -3.5);
+    }
 }
 
 // function changeCharacter(player){
