@@ -283,16 +283,31 @@ function keyLifted() {
 
 function resetHighlights(playerName) {
     if (playerName === "melee") {
+        for (var i = 0; i < 4; i++) {
+            highlights[i].visible = true;
+        }
         highlights[0].position.set(1.5, 0.02, -2.5);
         highlights[1].position.set(0.5, 0.02, -3.5);
         highlights[2].position.set(1.5, 0.02, -4.5);
         highlights[3].position.set(2.5, 0.02, -3.5);
     } else if (playerName === "ranged") {
+        for (var i = 0; i < 4; i++) {
+            highlights[i].visible = true;
+        }
+        highlights[0].position.set(-0.5, 0.02, -2.5);
+        highlights[1].position.set(-1.5, 0.02, -3.5);
+        highlights[2].position.set(-0.5, 0.02, -4.5);
+        highlights[3].position.set(0.5, 0.02, -3.5);
+    } else if (playerName === "defender") {
+        for (var i = 0; i < 4; i++) {
+            highlights[i].visible = true;
+        }
         highlights[0].position.set(-0.5, 0.02, -2.5);
         highlights[1].position.set(-1.5, 0.02, -3.5);
         highlights[2].position.set(-0.5, 0.02, -4.5);
         highlights[3].position.set(0.5, 0.02, -3.5);
     }
+
 }
 
 // function changeCharacter(player){

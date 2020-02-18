@@ -24,6 +24,7 @@ function addCameraControls(camera, renderer) {
     controls.update();
 
     controls.maxPolarAngle = Math.PI / 2.5;
+    controls.minPolarAngle = Math.PI / 5;
 
     controls.minDistance = 3;
     controls.maxDistance = 10;
