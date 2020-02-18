@@ -29,6 +29,7 @@ function addCubes() {
     //return for use in main.js
     return cube;
 }
+
 //method to create the cubes and returns to addCubes()
 function createCubes() {
     var cubeGeometry = new THREE.CubeGeometry(1, 1, 1);
@@ -67,6 +68,7 @@ function createBanana() {
         }
     );
 }
+
 //create event handler to move the banana along with a highlight square
 function moveBanana(event) {
     if (down)
@@ -135,12 +137,14 @@ function moveBanana(event) {
     } else
         highlights[1].visible = true;
 }
+
 //https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
 function bananaUp() {
     down = false;
 
     return down;
 }
+
 //function that looks at and cycles through each cube with z
 function cameraRotation(event) {
     //used to reference the created cubes

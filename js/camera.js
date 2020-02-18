@@ -23,5 +23,7 @@ function addCameraControls() {
 
     controls.update();
 
+    controls.maxPolarAngle = Math.PI / 2;
+
     return controls;
 }

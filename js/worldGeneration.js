@@ -76,3 +76,9 @@ function animate() {
     //update the controls
     //controls.update();
 }
+
+function createHole() {
+    var temp = new THREE.CubeGeometry(1, 1, 1);
+
+
+}
