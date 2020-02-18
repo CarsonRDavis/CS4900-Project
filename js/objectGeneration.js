@@ -1,6 +1,8 @@
-import { scene, selectedCharacter, charactersArray, mapTopZ, mapRightX, mapBottomZ, mapLeftX, highlights } from '/main.js';
+import { scene, charactersArray, mapTopZ, mapRightX, mapBottomZ, mapLeftX, highlights } from '/main.js';
 
 var down = false;
+var isDefault = true;
+
 // function setPositions(charactersArray){
                     
 
@@ -90,14 +92,18 @@ function createModel3(charactersArray, scene){
 
 //create event handler to move the banana along with a highlight square
 function movePlayer(event){   
-
-        //used to reference the created object
-        // var character = window[selectedObj.name]; //needs to be changed to current obj
-   
-        //create vector to hold object's location
-        var positionVector = new THREE.Vector3();
+    
+    if(isDefault){
         var player = scene.getObjectByName("banana2");
-        console.log(player.turns);
+    }
+
+    //used to reference the created object
+    // var character = window[selectedObj.name]; //needs to be changed to current obj
+   
+    //create vector to hold object's location
+    var positionVector = new THREE.Vector3();
+    console.log(player.turns);
+    console.log(isDefault);
 
     while(player.turns > 0){
         if(down)    //prevents obj from moving multiple spaces when key is held down
@@ -162,7 +168,11 @@ function movePlayer(event){
             highlights[1].visible = true;
 
         --player.turns;
-    }
+    }//end while
+    isDefault = false;
+
+    console.log(player);
+    player = changeCharacter(player);
 }
 //Reference: https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
 //prevents obj from moving multiple spaces when key is held down
@@ -172,9 +182,16 @@ function keyLifted(){
    return down;
 }
 
-function changeCharacter(){
+function changeCharacter(player){
     //call this if moves have run out
-    //change model to obj with attributes?
+    console.log("changing");
+    if(player.name === "banana1"){
+        var newCharacter = scene.getObjectByName("banana3");
+    }else if(player.name === "banana2"){
+        var newCharacter = scene.getObjectByName("banana1");
+    }
+
+    return newCharacter;
 }
 
 //add test cubes and set their obj names

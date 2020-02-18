@@ -23,7 +23,7 @@ highlights = highlightGeneration(scene);
 
 var charactersArray = [];
 
-var selectedCharacter = createModel1(charactersArray);
+createModel1(charactersArray);
 createModel2(charactersArray, scene);
 createModel3(charactersArray, scene);
 
@@ -43,6 +43,6 @@ window.addEventListener('keyup', keyLifted, false);
 
 animate();
 
-export { scene, selectedCharacter, charactersArray,
+export { scene, charactersArray,
         mapTopZ, mapRightX, mapBottomZ, mapLeftX,
         highlights };
