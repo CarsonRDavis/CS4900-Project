@@ -1,4 +1,5 @@
-import { scene, charactersArray, mapTopZ, mapRightX, mapBottomZ, mapLeftX, highlights, player } from '/main.js';
+import { scene, //charactersArray, 
+    mapTopZ, mapRightX, mapBottomZ, mapLeftX, highlights, player } from '/main.js';
 import { createHighlight } from './worldGeneration.js';
 
 var down = false;
@@ -91,14 +92,43 @@ function createModel3(charactersArray, scene){
     return obj;
 }
 
+//implementing Mat's function that loads the models
+function createModels(){
+    var manager = new THREE.LoadingManager();
+    var redMat = new THREE.MeshLambertMaterial({color:0xF7573E});
+    var blueMat = new THREE.MeshLambertMaterial({color:0x2194ce});
+    var greenMat = new THREE.MeshLambertMaterial({color:0x11E020});
+
+    const models = {
+        melee:    { url: './models/Pirate_Male.glb', name: 'melee', pos: 0.5 },
+        ranged:   { url: './models/Ninja_Male.glb', name: 'ranged', pos: 1.5 },
+        defender: { url: './models/BlueSoldier_Female.glb', name: 'defender', pos: -0.5 },
+    };
+
+    const gltfLoader = new THREE.GLTFLoader(manager);
+    for (const model of Object.values(models)){
+      gltfLoader.load(model.url, (gltf) => {
+        const root = gltf.scene;
+        root.name = model.name;
+        root.turns = 5; //determines the number of moves; will need to relocate
+        root.position.set(model.pos, 0.01, -3.5);             
+        //root.rotation.y += Math.PI;
+        root.scale.set(.34,.34,.34)
+        //root.visible = false;
+        scene.add(root);
+        
+      });
+    }    
+}
+
 //create event handler to move the banana along with a highlight square
 function movePlayer(event){    
     if(characterCount == 1){
-        var player = scene.getObjectByName("banana2");
+        var player = scene.getObjectByName("melee");
     }else if(characterCount == 2){
-        var player = scene.getObjectByName("banana1");
+        var player = scene.getObjectByName("ranged");
     }else
-        var player = scene.getObjectByName("banana3");
+        var player = scene.getObjectByName("defender");
     
     //used to reference the created object
     // var character = window[selectedObj.name]; //needs to be changed to current obj
@@ -190,16 +220,16 @@ function keyLifted(){
 }
 
 function resetHighlights(playerName){
-    if(playerName === "banana2"){
-        highlights[0].position.set(1.5, 0.25, -2.5);
-        highlights[1].position.set(0.5, 0.25, -3.5);
-        highlights[2].position.set(1.5, 0.25, -4.5);
-        highlights[3].position.set(2.5, 0.25, -3.5);
-    }else if(playerName === "banana1"){
-        highlights[0].position.set(-0.5, 0.25, -2.5);
-        highlights[1].position.set(-1.5, 0.25, -3.5);
-        highlights[2].position.set(-0.5, 0.25, -4.5);
-        highlights[3].position.set(0.5, 0.25, -3.5);
+    if(playerName === "melee"){
+        highlights[0].position.set(1.5, 0.02, -2.5);
+        highlights[1].position.set(0.5, 0.02, -3.5);
+        highlights[2].position.set(1.5, 0.02, -4.5);
+        highlights[3].position.set(2.5, 0.02, -3.5);
+    }else if(playerName === "ranged"){
+        highlights[0].position.set(-0.5, 0.02, -2.5);
+        highlights[1].position.set(-1.5, 0.02, -3.5);
+        highlights[2].position.set(-0.5, 0.02, -4.5);
+        highlights[3].position.set(0.5, 0.02, -3.5);
     }
 }
 
@@ -255,4 +285,4 @@ function createCubes() {
     return temp;
 }
 
-export { createModel1, createModel2, createModel3, keyLifted, movePlayer };
+export { createModel1, createModel2, createModel3, keyLifted, movePlayer, createModels };
