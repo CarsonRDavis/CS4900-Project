@@ -17,80 +17,79 @@ var characterCount = 1;
 // }
 
 ////////////////// These will be replaced with Mat's model code. They are just for testing ///////////////////////////
-function createModel1(){
+// function createModel1(){
     
-    var objLoader = new THREE.OBJLoader();
-    var bananaTexture = new THREE.TextureLoader().load('./textures/Banana_D01.png');
-    var bananaMaterial = new THREE.MeshLambertMaterial({map: bananaTexture});
+//     var objLoader = new THREE.OBJLoader();
+//     var bananaTexture = new THREE.TextureLoader().load('./textures/Banana_D01.png');
+//     var bananaMaterial = new THREE.MeshLambertMaterial({map: bananaTexture});
 
-    var obj = objLoader.load('./models/BananaLow_OBJ.obj', function(object){
-        object.traverse(function(node){
-            if(node.isMesh){
-                node.material = bananaMaterial;
-                node.scale.set(0.25, 0.25, 0.25);
-            }
-        });
-            charactersArray.push(object);
-            object.name = "banana1";
-            object.turns = 5;
-            scene.add(object);
-            console.log(charactersArray);   
-            object.position.set(1.5, 0.25, -3.5);
-            //created = true;  
-            return object;
-    });        
-    return obj;
-}
+//     var obj = objLoader.load('./models/BananaLow_OBJ.obj', function(object){
+//         object.traverse(function(node){
+//             if(node.isMesh){
+//                 node.material = bananaMaterial;
+//                 node.scale.set(0.25, 0.25, 0.25);
+//             }
+//         });
+//             charactersArray.push(object);
+//             object.name = "banana1";
+//             object.turns = 5;
+//             scene.add(object);
+//             console.log(charactersArray);   
+//             object.position.set(1.5, 0.25, -3.5);
+//             //created = true;  
+//             return object;
+//     });        
+//     return obj;
+// }
 
-function createModel2(charactersArray, scene){
-    var objLoader = new THREE.OBJLoader();
-    var bananaTexture = new THREE.TextureLoader().load('./textures/Banana_D01.png');
-    var bananaMaterial = new THREE.MeshLambertMaterial({map: bananaTexture});
+// function createModel2(charactersArray, scene){
+//     var objLoader = new THREE.OBJLoader();
+//     var bananaTexture = new THREE.TextureLoader().load('./textures/Banana_D01.png');
+//     var bananaMaterial = new THREE.MeshLambertMaterial({map: bananaTexture});
 
-    var obj = objLoader.load('./models/BananaLow_OBJ.obj', function(object){
-        object.traverse(function(node){
-            if(node.isMesh){
-                node.material = bananaMaterial;
-                node.scale.set(0.25, 0.25, 0.25);
-            }
-        });
+//     var obj = objLoader.load('./models/BananaLow_OBJ.obj', function(object){
+//         object.traverse(function(node){
+//             if(node.isMesh){
+//                 node.material = bananaMaterial;
+//                 node.scale.set(0.25, 0.25, 0.25);
+//             }
+//         });
     
-            charactersArray.push(object);
-            object.name = "banana2";
-            object.turns = 5;
-            scene.add(object);
-            console.log(charactersArray);   
-            object.position.set(0.5, 0.25, -2.5);
-            //created = true;
-            return object;
-    });        
-    return obj;    
-}
+//             charactersArray.push(object);
+//             object.name = "banana2";
+//             object.turns = 5;
+//             scene.add(object);
+//             console.log(charactersArray);   
+//             object.position.set(0.5, 0.25, -2.5);
+//             //created = true;
+//             return object;
+//     });        
+//     return obj;    
+// }
 
-function createModel3(charactersArray, scene){
-    var objLoader = new THREE.OBJLoader();
-    var bananaTexture = new THREE.TextureLoader().load('./textures/Banana_D01.png');
-    var bananaMaterial = new THREE.MeshLambertMaterial({map: bananaTexture});
+// function createModel3(charactersArray, scene){
+//     var objLoader = new THREE.OBJLoader();
+//     var bananaTexture = new THREE.TextureLoader().load('./textures/Banana_D01.png');
+//     var bananaMaterial = new THREE.MeshLambertMaterial({map: bananaTexture});
 
-    var obj = objLoader.load('./models/BananaLow_OBJ.obj', function(object){
-        object.traverse(function(node){
-            if(node.isMesh){
-                node.material = bananaMaterial;
-                node.scale.set(0.25, 0.25, 0.25);
-            }
-        });
-    
-            charactersArray.push(object);
-            object.name = "banana3";
-            object.turns = 5;
-            scene.add(object);
-            console.log(charactersArray);   
-            object.position.set(-0.5, 0.25, -3.5);
-            //created = true;
-            return object;
-    });            
-    return obj;
-}
+//     var obj = objLoader.load('./models/BananaLow_OBJ.obj', function(object){
+//         object.traverse(function(node){
+//             if(node.isMesh){
+//                 node.material = bananaMaterial;
+//                 node.scale.set(0.25, 0.25, 0.25);
+//             }
+//         });    
+//             charactersArray.push(object);
+//             object.name = "banana3";
+//             object.turns = 5;
+//             scene.add(object);
+//             console.log(charactersArray);   
+//             object.position.set(-0.5, 0.25, -3.5);
+//             //created = true;
+//             return object;
+//     });            
+//     return obj;
+// }
 
 //implementing Mat's function that loads the models
 function createModels(){
@@ -121,6 +120,35 @@ function createModels(){
     }    
 }
 
+function loadCat(){
+    var objLoader = new THREE.OBJLoader();
+    var catTexture = new THREE.TextureLoader().load('./textures/CatMac_C.png');
+    var catMaterial = new THREE.MeshLambertMaterial({
+            map: catTexture,
+            transparent: true,
+            opacity: 1
+            //visible: false
+        });
+
+    objLoader.load('./models/CatMac.obj', function(object){
+        object.traverse(function(node){
+            if(node.isMesh){
+                node.material = catMaterial;
+                node.scale.set(1, 1, 1);
+            }
+        });    
+            //charactersArray.push(object);
+            object.name = "cat";
+            //object.turns = 5;
+            scene.add(object);
+            //console.log(charactersArray);   
+            object.position.set(0.5, 0.02, -2.5);
+            //created = true;
+            return object;
+    });        
+    //return obj;    
+}
+
 //create event handler to move the banana along with a highlight square
 function movePlayer(event){    
     if(characterCount == 1){
@@ -129,6 +157,8 @@ function movePlayer(event){
         var player = scene.getObjectByName("ranged");
     }else
         var player = scene.getObjectByName("defender");
+    
+    var cat = scene.getObjectByName("cat");
     
     //used to reference the created object
     // var character = window[selectedObj.name]; //needs to be changed to current obj
@@ -181,7 +211,12 @@ function movePlayer(event){
                     highlight.position.x += -1;
                 });        
             }
-        }
+            //The following can be used to manually swap characters, skipping moves
+        }//else if (event.key == 'c'){//cat easter egg
+            //loadCat();
+            //cat.visible = true;
+            //break;
+        //}
         //set highlight visibility
         if(player.position.z === (mapTopZ)){
             highlights[0].visible = false;
@@ -285,4 +320,5 @@ function createCubes() {
     return temp;
 }
 
-export { createModel1, createModel2, createModel3, keyLifted, movePlayer, createModels };
+export { //createModel1, createModel2, createModel3, 
+    keyLifted, movePlayer, createModels, loadCat };
