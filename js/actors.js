@@ -13,7 +13,6 @@ class Actor{   //Base character object
         this.resist = null;     //Resistances, weakness and attack type are declared 
         this.weakness = null;   //-->as null here for the following basic functions 
         this.attType = null;    //-->that all ACTOR subclasses will have 
-    
     }
 
     //Function for changing the the position of an actor
@@ -70,7 +69,7 @@ class Ranged extends Actor{
         this.attType = ['Ranged'];
     }
 }
-module.exports.Actor = Actor;
-module.exports.Melee = Melee; 
-module.exports.Defender = Defender;
-module.exports.Ranged = Ranged;
+//module.exports.Actor = Actor;
+//module.exports.Melee = Melee; 
+//module.exports.Defender = Defender;
+//module.exports.Ranged = Ranged;

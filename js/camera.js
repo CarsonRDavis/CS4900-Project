@@ -11,7 +11,7 @@ function createCamera (width, height, renderer, scene) {
     return camera;
 }
 
-function addCameraControls(){
+function addCameraControls(camera, renderer){
     // Creates an OrbitControls object to be able to rotate the camera around an object
     var controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.name = "controls";
@@ -25,3 +25,5 @@ function addCameraControls(){
     
     return controls;
 }
+
+export { createCamera, addCameraControls };
