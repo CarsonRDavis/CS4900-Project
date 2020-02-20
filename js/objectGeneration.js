@@ -2,6 +2,7 @@ import { scene, //charactersArray,
     mapTopZ, mapRightX, mapBottomZ, mapLeftX, highlights } from '/main.js';
     //player 
 import { createHighlight } from './worldGeneration.js';
+import { Node, LinkedList } from './LinkedList.js';
 
 var down = false;
 var characterCount = 1;
