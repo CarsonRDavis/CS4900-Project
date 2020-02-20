@@ -5,6 +5,9 @@ import { createHighlight } from './worldGeneration.js';
 
 var down = false;
 var characterCount = 1;
+var manager = new THREE.LoadingManager();
+const gltfLoader = new THREE.GLTFLoader(manager);
+
 //var isDefault = true;
 // function setPositions(charactersArray){
                     
@@ -94,7 +97,6 @@ var characterCount = 1;
 
 //implementing Mat's function that loads the models
 function createModels(){
-    var manager = new THREE.LoadingManager();
     var redMat = new THREE.MeshLambertMaterial({color:0xF7573E});
     var blueMat = new THREE.MeshLambertMaterial({color:0x2194ce});
     var greenMat = new THREE.MeshLambertMaterial({color:0x11E020});
@@ -105,7 +107,6 @@ function createModels(){
         defender: { url: './models/BlueSoldier_Female.glb', name: 'defender', pos: -0.5 },
     };
 
-    const gltfLoader = new THREE.GLTFLoader(manager);
     for (const model of Object.values(models)){
       gltfLoader.load(model.url, (gltf) => {
         const root = gltf.scene;
@@ -122,32 +123,17 @@ function createModels(){
 }
 
 function loadCat(){
-    var objLoader = new THREE.OBJLoader();
-    var catTexture = new THREE.TextureLoader().load('./textures/CatMac_C.png');
-    var catMaterial = new THREE.MeshLambertMaterial({
-            map: catTexture,
-            transparent: true,
-            opacity: 1
-            //visible: false
-        });
-
-    objLoader.load('./models/CatMac.obj', function(object){
-        object.traverse(function(node){
-            if(node.isMesh){
-                node.material = catMaterial;
-                node.scale.set(1, 1, 1);
-            }
-        });    
-            //charactersArray.push(object);
-            object.name = "cat";
-            //object.turns = 5;
-            scene.add(object);
-            //console.log(charactersArray);
-            object.position.set(0.5, 0.02, -2.5);
-            //created = true;
-            return object;
-    });        
-    //return obj;    
+      gltfLoader.load('./models/Felixx.glb', function(gltf) {
+        const root = gltf.scene;
+        root.name = "cat";
+        root.visible = false;
+        //root.turns = 5; //determines the number of moves; will need to relocate
+        root.position.set(-0.25, 0.01, 2);
+        root.rotation.y += Math.PI;
+        root.scale.set(10, 10, 10)
+        scene.add(root);
+        
+      });
 }
 
 //create event handler to move the banana along with a highlight square
@@ -227,13 +213,13 @@ function movePlayer(event){
                     highlight.position.x += -1;
                 });        
             }
-        }
-            //The following can be used to manually swap characters, skipping moves
-        // }else if (event.key == 'c'){//cat easter egg
-        //     loadCat();
-        //     cat.visible = true;
-        //     break;
-        // }
+                    //The following can be used to manually swap characters, skipping moves
+        }else if (event.key == 'c'){//cat easter egg
+            //loadCat();
+            cat.visible = true;
+        break;
+    }
+
         //set highlight visibility
         if(player.position.z === (mapTopZ)){
             highlights[0].visible = false;

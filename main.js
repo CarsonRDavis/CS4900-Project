@@ -29,7 +29,7 @@ highlights = highlightGeneration(scene);
 // createModel3(charactersArray, scene);
 
 createModels();
-//loadCat();
+loadCat();
 
 const mapTopZ = 4.5;
 const mapRightX = -4.5;
