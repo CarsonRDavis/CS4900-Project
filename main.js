@@ -1,7 +1,8 @@
 import { worldCreation, highlightGeneration } from './js/worldGeneration.js';
 import { createCamera, addCameraControls } from './js/camera.js';
 import { //createModel1, createModel2, createModel3, 
-    keyLifted, movePlayer, createModels, loadCat } from './js/objectGeneration.js';
+    keyLifted, movePlayer, createModels, loadCat, checkKey, initializeFirstCharacter
+} from './js/objectGeneration.js';
 
 //set window size
 var height = window.innerHeight;
@@ -28,7 +29,8 @@ highlights = highlightGeneration(scene);
 // createModel2(charactersArray, scene);
 // createModel3(charactersArray, scene);
 
-createModels();
+
+var list = createModels();
 loadCat();
 
 const mapTopZ = 4.5;
@@ -36,18 +38,33 @@ const mapRightX = -4.5;
 const mapBottomZ = -4.5;
 const mapLeftX = 4.5;
 
-function animate(){     //returns void
+function animate() {     //returns void
     requestAnimationFrame(animate);
     // Rerenders the scene
     renderer.render(scene, camera);
+    //console.log(camera.position);
 }
+//Reference: https://stackoverflow.com/questions/8941183/pass-multiple-arguments-along-with-an-event-object-to-an-event-handler
+var character = list.head;
+//initializeFirstCharacter(list);
+console.log(character);
+var handler = function (character) {
+    return function (event) {
+        if (event.key === 'w' || event.key === 'a' || event.key === 's' || event.key === 'd')
+            movePlayer(character, event.key);
+        else if (event.key === 'q')
+            changeCharacter();
+    };
+};
 
-var player = window.addEventListener('keydown', movePlayer, false);
+window.addEventListener('keydown', handler(character), false);
 window.addEventListener('keyup', keyLifted, false);
 
 animate();
 
-export { scene, //charactersArray,
-        mapTopZ, mapRightX, mapBottomZ, mapLeftX, 
-        highlights };
+export {
+    scene, //charactersArray,
+    mapTopZ, mapRightX, mapBottomZ, mapLeftX,
+    highlights
+};
 	//player };
