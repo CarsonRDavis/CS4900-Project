@@ -4,11 +4,12 @@ import {
     mapRightX,
     mapBottomZ,
     mapLeftX,
-    highlights,
     player
 } from '/main.js';
 import {
-    createHighlight
+    createHighlight,
+    floodFill,
+    clearHighLights
 } from './worldGeneration.js';
 
 var down = false;
@@ -195,6 +196,10 @@ function movePlayer(event) {
     console.log(player.turns);
     //console.log(isDefault);
 
+    var radius = 4;
+
+    floodFill(scene, player.position.x, player.position.z, radius);
+
     while (player.turns > 0) {
         if (down) //prevents obj from moving multiple spaces when key is held down
             return;
@@ -203,70 +208,32 @@ function movePlayer(event) {
         if (event.key === 'w') { //w is pressed
             positionVector = player.position;
             //limit movement if out of bounds
-            console.log(positionVector);
             if (!(positionVector.z >= mapTopZ)) {
                 player.position.z += 1;
-                //change location of highlight squares
-                highlights.forEach(function (highlight) {
-                    highlight.position.z += 1;
-                });
             }
         } else if (event.key === 'a') { //a is pressed
             positionVector = player.position;
-            console.log(positionVector);
             if (!(positionVector.x >= mapLeftX)) {
                 player.position.x += 1;
-                highlights.forEach(function (highlight) {
-                    highlight.position.x += 1;
-                });
             }
         } else if (event.key === 's') { //s is pressed
             positionVector = player.position;
-            console.log(positionVector);
             if (!(positionVector.z <= mapBottomZ)) {
                 player.position.z += -1;
-                highlights.forEach(function (highlight) {
-                    highlight.position.z += -1;
-                });
             }
         } else if (event.key === 'd') { //d is pressed
             positionVector = player.position;
-            console.log(positionVector);
+            0
             if (!(positionVector.x <= mapRightX)) {
                 player.position.x += -1;
-                highlights.forEach(function (highlight) {
-                    highlight.position.x += -1;
-                });
             }
             //The following can be used to manually swap characters, skipping moves
-        } //else if (event.key == 'c'){//cat easter egg
-        //loadCat();
-        //cat.visible = true;
-        //break;
-        //}
-        //set highlight visibility
-        if (player.position.z === (mapTopZ)) {
-            highlights[0].visible = false;
-        } else
-            highlights[0].visible = true;
-        if (player.position.x === (mapLeftX)) {
-            highlights[3].visible = false;
-        } else
-            highlights[3].visible = true;
-        if (player.position.z === (mapBottomZ)) {
-            highlights[2].visible = false;
-        } else
-            highlights[2].visible = true;
-        if (player.position.x === (mapRightX)) {
-            highlights[1].visible = false;
-        } else
-            highlights[1].visible = true;
-
+        }
         --player.turns;
-    } //end while
-    //isDefault = false;
+        // clearHighLights(scene);
+        floodFill(scene, player.position.x, player.position.z, radius -= 1);
+    }
     characterCount++;
-    resetHighlights(player.name);
 
     //console.log(player.name);
     //var player = changeCharacter(player);

@@ -1,7 +1,17 @@
-import { worldCreation, highlightGeneration } from './js/worldGeneration.js';
-import { createCamera, addCameraControls } from './js/camera.js';
+import {
+    worldCreation,
+    floodFill
+} from './js/worldGeneration.js';
+import {
+    createCamera,
+    addCameraControls
+} from './js/camera.js';
 import { //createModel1, createModel2, createModel3, 
-    keyLifted, movePlayer, createModels, loadCat } from './js/objectGeneration.js';
+    keyLifted,
+    movePlayer,
+    createModels,
+    loadCat
+} from './js/objectGeneration.js';
 
 //set window size
 var height = window.innerHeight;
@@ -19,8 +29,6 @@ scene.add(camera);
 addCameraControls(camera, renderer);
 
 worldCreation(scene);
-var highlights = [];
-highlights = highlightGeneration(scene);
 
 // var charactersArray = [];
 
@@ -36,7 +44,7 @@ const mapRightX = -4.5;
 const mapBottomZ = -4.5;
 const mapLeftX = 4.5;
 
-function animate(){     //returns void
+function animate() { //returns void
     requestAnimationFrame(animate);
     // Rerenders the scene
     renderer.render(scene, camera);
@@ -47,6 +55,11 @@ window.addEventListener('keyup', keyLifted, false);
 
 animate();
 
-export { scene, //charactersArray,
-        mapTopZ, mapRightX, mapBottomZ, mapLeftX, 
-        highlights, player };
+export {
+    scene, //charactersArray,
+    mapTopZ,
+    mapRightX,
+    mapBottomZ,
+    mapLeftX,
+    player
+};

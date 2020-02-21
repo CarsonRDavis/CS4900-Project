@@ -43,7 +43,7 @@ function createHighlight() { //returns highlight mesh
     return highLightMesh;
 }
 
-function highlightGeneration(scene) { //returns void
+/*function highlightGeneration(scene) { //returns void
     var highLightMesh1 = createHighlight();
     highLightMesh1.name = "highlight1";
     var highLightMesh2 = createHighlight();
@@ -72,10 +72,35 @@ function highlightGeneration(scene) { //returns void
     scene.add(highLightMesh4);
 
     return highlights;
+}*/
+
+function floodFill(scene, x, y, radius) {
+
+    if (radius == 0) {
+        return;
+    }
+
+    floodFill(scene, x + 1, y, radius - 1);
+    floodFill(scene, x, y + 1, radius - 1);
+    floodFill(scene, x - 1, y, radius - 1);
+    floodFill(scene, x, y - 1, radius - 1);
+
+    var temp = createHighlight();
+    temp.position.set(x, 0.25, y);
+    temp.name = "highlight";
+    scene.add(temp);
+
+}
+
+function clearHighLights(scene) {
+    while (scene.getObjectByName("highlight")) {
+        scene.remove("highlight");
+    }
 }
 
 export {
     worldCreation,
-    highlightGeneration,
-    createHighlight
+    createHighlight,
+    floodFill,
+    clearHighLights
 };
