@@ -122,7 +122,7 @@ class Ranged extends Actor{
         this.attType = ['Ranged'];
     }
 }
-//module.exports.Actor = Actor;
-//module.exports.Melee = Melee; 
-//module.exports.Defender = Defender;
-//module.exports.Ranged = Ranged;
+// module.exports.Actor = Actor;
+// module.exports.Melee = Melee; 
+// module.exports.Defender = Defender;
+// module.exports.Ranged = Ranged;

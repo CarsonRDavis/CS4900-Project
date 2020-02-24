@@ -56,3 +56,4 @@ function animate() {
     //update the controls
     controls.update();
 }
+

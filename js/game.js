@@ -1,3 +1,5 @@
+//import { HeightMap } from "./heightMap";
+
 var height = window.innerHeight;
 var width = window.innerWidth;
 //create renderer
@@ -29,7 +31,8 @@ function init(){
     var ran = new Range('Rick');
     ran.model = scene.getObjectByName('ranged');
 
-    
+    console.log("Creating height map");
+    heightMap = new HeightMap(2,1,2,3,4);
 }
 
 //add event listeners
