@@ -7,7 +7,8 @@ import {
     player
 } from '/main.js';
 import {
-    characterRadius
+    characterRadius,
+    clearBoard
 } from './worldGeneration.js';
 
 var down = false;
@@ -108,9 +109,7 @@ function movePlayer(event) {
     console.log(player.turns);
     //console.log(isDefault);
 
-    var radius = 4;
-
-    characterRadius(scene, player.position.x, player.position.z, radius);
+    var radius = 6;
 
     while (player.turns > 0) {
         if (down) //prevents obj from moving multiple spaces when key is held down
@@ -142,6 +141,9 @@ function movePlayer(event) {
             //The following can be used to manually swap characters, skipping moves
         }
         --player.turns;
+        clearBoard(scene);
+        characterRadius(scene, player.position.x, player.position.z, radius);
+
     }
     characterCount++;
 

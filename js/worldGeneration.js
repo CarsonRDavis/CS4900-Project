@@ -16,7 +16,7 @@ function worldCreation(scene) { //returns void
     floorMesh.rotation.x -= Math.PI / 2;
     //add grid
     var gridHelper = new THREE.GridHelper(17, 17, 0x111111, 0x111111);
-    gridHelper.position.set(0, 0.01, 0);
+    gridHelper.position.set(0, 0.20, 0);
 
     //add elements
     scene.add(light);
@@ -61,8 +61,13 @@ function characterRadius(scene, x, y, radius) {
 
 }
 
-function fillBoard() {
-
+function clearBoard(scene) {
+    for (var i = scene.children.length - 1; i >= 0; i--) {
+        if (scene.children[i].name == "highlight") {
+            var temp = scene.children[i];
+            scene.remove(temp);
+        }
+    }
 }
 
 function generateSkybox(scene) {
@@ -105,5 +110,6 @@ export {
     worldCreation,
     createHighlight,
     generateSkybox,
-    characterRadius
+    characterRadius,
+    clearBoard
 };
