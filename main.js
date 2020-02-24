@@ -1,6 +1,6 @@
 import {
     worldCreation,
-    floodFill
+    generateSkybox
 } from './js/worldGeneration.js';
 import {
     createCamera,
@@ -29,6 +29,7 @@ scene.add(camera);
 addCameraControls(camera, renderer);
 
 worldCreation(scene);
+generateSkybox(scene);
 
 // var charactersArray = [];
 

@@ -12,10 +12,10 @@ function worldCreation(scene) { //returns void
     var material = new THREE.MeshBasicMaterial();
     material.map = grassTexture;
     //add floor
-    var floorMesh = new THREE.Mesh(new THREE.PlaneGeometry(10, 10, 10, 10), material);
+    var floorMesh = new THREE.Mesh(new THREE.PlaneGeometry(17, 17, 17, 17), material);
     floorMesh.rotation.x -= Math.PI / 2;
     //add grid
-    var gridHelper = new THREE.GridHelper(10, 10, 0x111111, 0x111111);
+    var gridHelper = new THREE.GridHelper(17, 17, 0x111111, 0x111111);
     gridHelper.position.set(0, 0.01, 0);
 
     //add elements
@@ -37,70 +37,73 @@ function createHighlight() { //returns highlight mesh
     var highLightMesh = new THREE.Mesh(highlightPlane,
         highlightMaterial
     );
-    //highLightMesh.name = "highlight";
+
+    highLightMesh.name = "highlight";
     highLightMesh.rotation.x -= Math.PI / 2;
 
     return highLightMesh;
 }
 
-/*function highlightGeneration(scene) { //returns void
-    var highLightMesh1 = createHighlight();
-    highLightMesh1.name = "highlight1";
-    var highLightMesh2 = createHighlight();
-    highLightMesh2.name = "highlight2";
-    var highLightMesh3 = createHighlight();
-    highLightMesh3.name = "highlight3";
-    var highLightMesh4 = createHighlight();
-    highLightMesh4.name = "highlight4";
-
-    //raise the highlight block and set transparent value
-    highLightMesh1.position.set(0.5, 0.02, -2.5);
-    highLightMesh2.position.set(-0.5, 0.02, -3.5);
-    highLightMesh3.position.set(0.5, 0.02, -4.5);
-    highLightMesh4.position.set(1.5, 0.02, -3.5);
-    //create highlight array for easy storage
-    var highlights = [];
-    //push highlights to array
-    highlights.push(highLightMesh1);
-    highlights.push(highLightMesh2);
-    highlights.push(highLightMesh3);
-    highlights.push(highLightMesh4);
-
-    scene.add(highLightMesh1);
-    scene.add(highLightMesh2);
-    scene.add(highLightMesh3);
-    scene.add(highLightMesh4);
-
-    return highlights;
-}*/
-
-function floodFill(scene, x, y, radius) {
+function characterRadius(scene, x, y, radius) {
 
     if (radius == 0) {
         return;
     }
 
-    floodFill(scene, x + 1, y, radius - 1);
-    floodFill(scene, x, y + 1, radius - 1);
-    floodFill(scene, x - 1, y, radius - 1);
-    floodFill(scene, x, y - 1, radius - 1);
+    characterRadius(scene, x + 1, y, radius - 1);
+    characterRadius(scene, x, y + 1, radius - 1);
+    characterRadius(scene, x - 1, y, radius - 1);
+    characterRadius(scene, x, y - 1, radius - 1);
 
     var temp = createHighlight();
     temp.position.set(x, 0.25, y);
-    temp.name = "highlight";
     scene.add(temp);
 
 }
 
-function clearHighLights(scene) {
-    while (scene.getObjectByName("highlight")) {
-        scene.remove("highlight");
-    }
+function fillBoard() {
+
+}
+
+function generateSkybox(scene) {
+    var materialArray = [];
+    var texture_ft = new THREE.TextureLoader().load('../textures/front.png');
+    var texture_bk = new THREE.TextureLoader().load('../textures/back.png');
+    var texture_up = new THREE.TextureLoader().load('../textures/top.png');
+    var texture_dn = new THREE.TextureLoader().load('../textures/bottom.png');
+    var texture_rt = new THREE.TextureLoader().load('../textures/right.png');
+    var texture_lf = new THREE.TextureLoader().load('../textures/left.png');
+
+    materialArray.push(new THREE.MeshBasicMaterial({
+        map: texture_ft
+    }));
+    materialArray.push(new THREE.MeshBasicMaterial({
+        map: texture_bk
+    }));
+    materialArray.push(new THREE.MeshBasicMaterial({
+        map: texture_up
+    }));
+    materialArray.push(new THREE.MeshBasicMaterial({
+        map: texture_dn
+    }));
+    materialArray.push(new THREE.MeshBasicMaterial({
+        map: texture_rt
+    }));
+    materialArray.push(new THREE.MeshBasicMaterial({
+        map: texture_lf
+    }));
+
+    for (var i = 0; i < 6; i++)
+        materialArray[i].side = THREE.BackSide;
+
+    var skyboxGeo = new THREE.BoxGeometry(10000, 10000, 10000);
+    var skybox = new THREE.Mesh(skyboxGeo, materialArray);
+    scene.add(skybox);
 }
 
 export {
     worldCreation,
     createHighlight,
-    floodFill,
-    clearHighLights
+    generateSkybox,
+    characterRadius
 };
