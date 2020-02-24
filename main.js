@@ -1,8 +1,13 @@
 import { worldCreation, highlightGeneration } from './js/worldGeneration.js';
 import { createCamera, addCameraControls } from './js/camera.js';
 import { //createModel1, createModel2, createModel3, 
-    keyLifted, movePlayer, createModels, loadCat, checkKey, initializeFirstCharacter
+    keyLifted, movePlayer, 
+    createModels, 
+    loadCat, 
+    //checkKey, 
+    initializeFirstCharacter
 } from './js/objectGeneration.js';
+import { Node, LinkedList } from './js/LinkedList.js';
 
 //set window size
 var height = window.innerHeight;
@@ -29,8 +34,13 @@ highlights = highlightGeneration(scene);
 // createModel2(charactersArray, scene);
 // createModel3(charactersArray, scene);
 
+var linked = new LinkedList();
+linked = createModels(linked);
 
-var list = createModels();
+console.log(linked.isEmpty());
+console.log(linked.printList());
+console.log(linked.next);
+console.log(linked.indexOf(1));
 loadCat();
 
 const mapTopZ = 4.5;
@@ -45,7 +55,7 @@ function animate() {     //returns void
     //console.log(camera.position);
 }
 //Reference: https://stackoverflow.com/questions/8941183/pass-multiple-arguments-along-with-an-event-object-to-an-event-handler
-var character = list.head;
+var character = linked.next;
 //initializeFirstCharacter(list);
 console.log(character);
 var handler = function (character) {

@@ -4,7 +4,7 @@ import {
 } from '/main.js';
 //player 
 import { createHighlight } from './worldGeneration.js';
-import { Node, LinkedList } from './LinkedList.js';
+//import { Node, LinkedList } from './LinkedList.js';
 
 var down = false;
 var characterCount = 1;
@@ -12,7 +12,8 @@ var manager = new THREE.LoadingManager();
 const gltfLoader = new THREE.GLTFLoader(manager);
 //var current = list.head;
 //implementing Mat's function that loads the models
-function createModels() {
+
+function createModels(linked) {
     // var redMat = new THREE.MeshLambertMaterial({color:0xF7573E});
     // var blueMat = new THREE.MeshLambertMaterial({color:0x2194ce});
     // var greenMat = new THREE.MeshLambertMaterial({color:0x11E020});
@@ -22,7 +23,6 @@ function createModels() {
         ranged: { url: './models/Ninja_Male.glb', name: 'ranged', pos: 1.5 },
         defender: { url: './models/BlueSoldier_Female.glb', name: 'defender', pos: -0.5 },
     };
-    var list = new LinkedList();
     for (const model of Object.values(models)) {
         gltfLoader.load(model.url, (gltf) => {
             const root = gltf.scene;
@@ -31,13 +31,14 @@ function createModels() {
             root.position.set(model.pos, 0.01, -3.5);
             root.scale.set(.34, .34, .34)
             //root.visible = false;
-            list.add(root); //add the models to the LinkedList
-            //console.log(list.head.element.name);
+            linked.add(root); //add the models to the LinkedList
+            console.log(linked.size_of_list())
+            console.log(linked.head.element.name);
             scene.add(root);
         });
     }
-
-    return list;
+    console.log(linked);
+    return linked;
 }
 
 function loadCat() {     //cat doesn't get added to the LinkedList
@@ -60,14 +61,15 @@ function initializeFirstCharacter(list){
     return character;
 }
 
-function checkKey(event, character){
-    if(event.key === 'w' || event.key === 'a' || event.key === 's' || event.key === 'd'){
-        movePlayer(character, key);
-        console.log(character)
-    }
-    else if(event.key === 'q')
-        changeCharacter();
-}
+// function checkKey(event, character){
+//     if(event.key === 'w' || event.key === 'a' || event.key === 's' || event.key === 'd'){
+//         console.log(character);
+//         movePlayer(character, key);
+//         console.log(character)
+//     }
+//     else if(event.key === 'q')
+//         changeCharacter();
+// }
 
 //create event handler to move the banana along with a highlight square
 function movePlayer(currentCharacter, key) {
@@ -90,8 +92,9 @@ function movePlayer(currentCharacter, key) {
 
         //create vector to hold object's location
         var positionVector = new THREE.Vector3();
+        currentCharacter = scene.currentCharacter.name;
 
-        while (player.turns > 0) {
+        while (currentCharacter.turns > 0) {
             if (down)    //prevents obj from moving multiple spaces when key is held down
                 return;
             down = true;
@@ -281,5 +284,8 @@ function createCubes() {
 }
 
 export { //createModel1, createModel2, createModel3, 
-    keyLifted, movePlayer, createModels, loadCat, checkKey, initializeFirstCharacter
+    keyLifted, movePlayer, createModels, 
+    loadCat, 
+    //checkKey, 
+    initializeFirstCharacter
 };
