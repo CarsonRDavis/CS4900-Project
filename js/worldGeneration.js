@@ -43,7 +43,7 @@ function createHighlight() { //returns highlight mesh
     return highLightMesh;
 }
 
-function characterRadius(scene, x, y, radius, highlights) {
+function characterRadius(scene, x, y, radius) {
 
     if (radius == -1) {
         return;
@@ -54,18 +54,36 @@ function characterRadius(scene, x, y, radius, highlights) {
     characterRadius(scene, x - 1, y, radius - 1);
     characterRadius(scene, x, y - 1, radius - 1);
 
-    for (var highlight in highlights) {
-        console.log(highlight.name);
-        if (highlight.includes(x) && highlight.includes(y)) {
-            highlight.visible = true;
-        }
+    var temp = "highlight - " + x + " - " + y;
+    var highlight = scene.getObjectByName(temp);
+    if (highlight == undefined) {
+        return;
     }
+    highlight.visible = true;
+
+}
+
+function clearRadius(scene, x, y, radius, group) {
+
+    if (radius == -1) {
+        return;
+    }
+
+    clearRadius(scene, x + 1, y, radius - 1);
+    clearRadius(scene, x, y + 1, radius - 1);
+    clearRadius(scene, x - 1, y, radius - 1);
+    clearRadius(scene, x, y - 1, radius - 1);
+
+    var temp = "highlight - " + x + " - " + y;
+    var highlight = scene.getObjectByName(temp);
+    if (highlight == undefined) {
+        return;
+    }
+    highlight.visible = false;
 
 }
 
 function fillBoard(scene) {
-
-    var highlights = [];
 
     for (var i = 8; i > -9; i--) {
         for (var j = -8; j < 9; j++) {
@@ -73,12 +91,9 @@ function fillBoard(scene) {
             temp.position.set(i, 0.2, j);
             temp.name = "highlight - " + i + " - " + j;
             temp.visible = false;
-            highlights.push(temp);
             scene.add(temp);
         }
     }
-
-    return highlights
 
 }
 
@@ -123,5 +138,6 @@ export {
     createHighlight,
     generateSkybox,
     characterRadius,
-    fillBoard
+    fillBoard,
+    clearRadius
 };

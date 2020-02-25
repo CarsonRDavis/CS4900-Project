@@ -4,11 +4,10 @@ import {
     mapRightX,
     mapBottomZ,
     mapLeftX,
-    player,
-    highlights
 } from '/main.js';
 import {
-    characterRadius
+    characterRadius,
+    clearRadius
 } from './worldGeneration.js';
 
 var down = false;
@@ -113,9 +112,8 @@ function movePlayer(event) {
 
     var radius = 5;
 
-    characterRadius(scene, player.position.x, player.position.z, radius, highlights)
-
     while (player.turns > 0) {
+
         if (down) //prevents obj from moving multiple spaces when key is held down
             return;
         down = true;
@@ -138,15 +136,12 @@ function movePlayer(event) {
             }
         } else if (event.key === 'd') { //d is pressed
             positionVector = player.position;
-            0
             if (!(positionVector.x <= mapRightX)) {
                 player.position.x += -1;
             }
             //The following can be used to manually swap characters, skipping moves
         }
         --player.turns;
-        console.log(player.position);
-
     }
     characterCount++;
 
@@ -155,6 +150,7 @@ function movePlayer(event) {
     //console.log(player.name);
     //return player;
 }
+
 //Reference: https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
 //prevents obj from moving multiple spaces when key is held down
 function keyLifted() {

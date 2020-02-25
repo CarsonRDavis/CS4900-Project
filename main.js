@@ -26,20 +26,19 @@ var scene = new THREE.Scene();
 scene.background = new THREE.Color("#C0C0C0");
 
 var camera = createCamera(width, height, renderer, scene);
-camera.name = "camera";
 scene.add(camera);
 var controls = addCameraControls(camera, renderer);
 
 worldCreation(scene);
 generateSkybox(scene);
-var highlights = fillBoard(scene);
+fillBoard(scene);
 
 createModels();
 
-const mapTopZ = 4.5;
-const mapRightX = -4.5;
-const mapBottomZ = -4.5;
-const mapLeftX = 4.5;
+const mapTopZ = 7.5;
+const mapRightX = -7.5;
+const mapBottomZ = -7.5;
+const mapLeftX = 7.5;
 
 function animate() { //returns void
     requestAnimationFrame(animate);
@@ -58,7 +57,5 @@ export {
     mapRightX,
     mapBottomZ,
     mapLeftX,
-    player,
-    controls,
-    highlights
+    controls
 };
