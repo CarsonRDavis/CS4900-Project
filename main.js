@@ -1,6 +1,7 @@
 import {
     worldCreation,
-    generateSkybox
+    generateSkybox,
+    fillBoard
 } from './js/worldGeneration.js';
 import {
     createCamera,
@@ -25,20 +26,15 @@ var scene = new THREE.Scene();
 scene.background = new THREE.Color("#C0C0C0");
 
 var camera = createCamera(width, height, renderer, scene);
+camera.name = "camera";
 scene.add(camera);
-addCameraControls(camera, renderer);
+var controls = addCameraControls(camera, renderer);
 
 worldCreation(scene);
 generateSkybox(scene);
-
-// var charactersArray = [];
-
-// createModel1(charactersArray);
-// createModel2(charactersArray, scene);
-// createModel3(charactersArray, scene);
+var highlights = fillBoard(scene);
 
 createModels();
-//loadCat();
 
 const mapTopZ = 4.5;
 const mapRightX = -4.5;
@@ -62,5 +58,7 @@ export {
     mapRightX,
     mapBottomZ,
     mapLeftX,
-    player
+    player,
+    controls,
+    highlights
 };

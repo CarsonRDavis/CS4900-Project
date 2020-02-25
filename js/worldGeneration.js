@@ -38,15 +38,14 @@ function createHighlight() { //returns highlight mesh
         highlightMaterial
     );
 
-    highLightMesh.name = "highlight";
     highLightMesh.rotation.x -= Math.PI / 2;
 
     return highLightMesh;
 }
 
-function characterRadius(scene, x, y, radius) {
+function characterRadius(scene, x, y, radius, highlights) {
 
-    if (radius == 0) {
+    if (radius == -1) {
         return;
     }
 
@@ -55,19 +54,32 @@ function characterRadius(scene, x, y, radius) {
     characterRadius(scene, x - 1, y, radius - 1);
     characterRadius(scene, x, y - 1, radius - 1);
 
-    var temp = createHighlight();
-    temp.position.set(x, 0.25, y);
-    scene.add(temp);
+    for (var highlight in highlights) {
+        console.log(highlight.name);
+        if (highlight.includes(x) && highlight.includes(y)) {
+            highlight.visible = true;
+        }
+    }
 
 }
 
-function clearBoard(scene) {
-    for (var i = scene.children.length - 1; i >= 0; i--) {
-        if (scene.children[i].name == "highlight") {
-            var temp = scene.children[i];
-            scene.remove(temp);
+function fillBoard(scene) {
+
+    var highlights = [];
+
+    for (var i = 8; i > -9; i--) {
+        for (var j = -8; j < 9; j++) {
+            var temp = createHighlight();
+            temp.position.set(i, 0.2, j);
+            temp.name = "highlight - " + i + " - " + j;
+            temp.visible = false;
+            highlights.push(temp);
+            scene.add(temp);
         }
     }
+
+    return highlights
+
 }
 
 function generateSkybox(scene) {
@@ -111,5 +123,5 @@ export {
     createHighlight,
     generateSkybox,
     characterRadius,
-    clearBoard
+    fillBoard
 };
