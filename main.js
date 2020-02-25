@@ -34,9 +34,7 @@ highlights = highlightGeneration(scene);
 // createModel2(charactersArray, scene);
 // createModel3(charactersArray, scene);
 
-//var linked = new LinkedList();
-var linkedlist = new LinkedList();
-linkedlist = createModels(linkedlist);
+
 
 // console.log(linkedlist.isEmpty());
 // console.log(linkedlist.printList());
@@ -55,23 +53,28 @@ function animate() {     //returns void
     renderer.render(scene, camera);
     //console.log(camera.position);
 }
-//Reference: https://stackoverflow.com/questions/8941183/pass-multiple-arguments-along-with-an-event-object-to-an-event-handler
-var character = linkedlist.head.element.name;   //maybe I need to return each instance and 'braid' it into the ll
-//initializeFirstCharacter(list);
-console.log(character);
-var handler = function (character) {
-    return function (event) {
-        if (event.key === 'w' || event.key === 'a' || event.key === 's' || event.key === 'd')
-            movePlayer(character, event.key);
-        else if (event.key === 'q')
-            changeCharacter();
+
+var manager = new THREE.LoadingManager();
+let linked = new LinkedList();
+createModels(linked, manager);
+
+manager.onLoad = function(){
+    var character = linked.head.element;
+    //Reference: https://stackoverflow.com/questions/8941183/pass-multiple-arguments-along-with-an-event-object-to-an-event-handler
+    var handler = function (character, linked) {
+        return function (event) {
+            if (event.key === 'w' || event.key === 'a' || event.key === 's' || event.key === 'd' || event.key === 'c')
+                movePlayer(character, event.key, linked);
+            else if (event.key === 'q')
+                changeCharacter();
+        };
     };
-};
 
-window.addEventListener('keydown', handler(character), false);
-window.addEventListener('keyup', keyLifted, false);
+    window.addEventListener('keydown', handler(character, linked), false);
+    window.addEventListener('keyup', keyLifted, false);
 
-animate();
+    animate();
+}
 
 export {
     scene, //charactersArray,
