@@ -34,13 +34,14 @@ highlights = highlightGeneration(scene);
 // createModel2(charactersArray, scene);
 // createModel3(charactersArray, scene);
 
-var linked = new LinkedList();
-linked = createModels(linked);
+//var linked = new LinkedList();
+var linkedlist = new LinkedList();
+linkedlist = createModels(linkedlist);
 
-console.log(linked.isEmpty());
-console.log(linked.printList());
-console.log(linked.next);
-console.log(linked.indexOf(1));
+// console.log(linkedlist.isEmpty());
+// console.log(linkedlist.printList());
+// console.log(linkedlist.head.next);
+// console.log(linkedlist.indexOf(1));
 loadCat();
 
 const mapTopZ = 4.5;
@@ -55,7 +56,7 @@ function animate() {     //returns void
     //console.log(camera.position);
 }
 //Reference: https://stackoverflow.com/questions/8941183/pass-multiple-arguments-along-with-an-event-object-to-an-event-handler
-var character = linked.next;
+var character = linkedlist.head.element.name;   //maybe I need to return each instance and 'braid' it into the ll
 //initializeFirstCharacter(list);
 console.log(character);
 var handler = function (character) {

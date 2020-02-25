@@ -4,16 +4,19 @@ import {
 } from '/main.js';
 //player 
 import { createHighlight } from './worldGeneration.js';
+import { LinkedList } from './LinkedList.js';
 //import { Node, LinkedList } from './LinkedList.js';
 
 var down = false;
 var characterCount = 1;
-var manager = new THREE.LoadingManager();
-const gltfLoader = new THREE.GLTFLoader(manager);
+
 //var current = list.head;
 //implementing Mat's function that loads the models
 
-function createModels(linked) {
+function createModels() {
+    var manager = new THREE.LoadingManager();
+    const gltfLoader = new THREE.GLTFLoader(manager);
+    var linkedList = new LinkedList();
     // var redMat = new THREE.MeshLambertMaterial({color:0xF7573E});
     // var blueMat = new THREE.MeshLambertMaterial({color:0x2194ce});
     // var greenMat = new THREE.MeshLambertMaterial({color:0x11E020});
@@ -29,33 +32,39 @@ function createModels(linked) {
             root.name = model.name;
             root.turns = 5; //determines the number of moves; will need to relocate
             root.position.set(model.pos, 0.01, -3.5);
-            root.scale.set(.34, .34, .34)
+            root.scale.set(.34, .34, .34);
             //root.visible = false;
-            linked.add(root); //add the models to the LinkedList
-            console.log(linked.size_of_list())
-            console.log(linked.head.element.name);
+            linkedList.add(root); //add the models to the LinkedList
+            console.log(linkedList.size_of_list());
+            console.log(linkedList.head.element.name);
+            console.log(linkedList.head.next.element.name);
+            console.log(linkedList.head.next.next.element.name);
+            console.log(linkedList);
             scene.add(root);
         });
     }
-    console.log(linked);
-    return linked;
+
+    return linkedList;
+    //console.log(linked);
 }
 
 function loadCat() {     //cat doesn't get added to the LinkedList
+    const gltfLoader = new THREE.GLTFLoader();
     gltfLoader.load('./models/Felixx.glb', function (gltf) {
+
         const root = gltf.scene;
         root.name = "cat";
         root.visible = false;
         //root.turns = 5; //determines the number of moves; will need to relocate
         root.position.set(-0.25, 0.01, 2);
         root.rotation.y += Math.PI;
-        root.scale.set(10, 10, 10)
+        root.scale.set(10, 10, 10);
         scene.add(root);
 
     });
 }
 
-function initializeFirstCharacter(list){
+function initializeFirstCharacter(list) {
     var character = list.head.element.name;
 
     return character;
@@ -83,101 +92,102 @@ function movePlayer(currentCharacter, key) {
     //LinkedList Implementation
     //while (current != null) { //while the list is not null (no chars left) --- can edit this to continue
 
-        console.log(currentCharacter);
-        console.log(key);
+    console.log(currentCharacter);
+
+    console.log(key);
 
 
-        //console.log(player.name);
+    //console.log(player.name);
 
 
-        //create vector to hold object's location
-        var positionVector = new THREE.Vector3();
-        currentCharacter = scene.currentCharacter.name;
+    //create vector to hold object's location
+    var positionVector = new THREE.Vector3();
+    currentCharacter = scene.getObjectByName(currentCharacter.name);
 
-        while (currentCharacter.turns > 0) {
-            if (down)    //prevents obj from moving multiple spaces when key is held down
-                return;
-            down = true;
+    while (currentCharacter.turns > 0) {
+        if (down)    //prevents obj from moving multiple spaces when key is held down
+            return;
+        down = true;
 
-            if (event.key === 'w') { //w is pressed
-                positionVector = player.position;
-                //limit movement if out of bounds
-                console.log(positionVector);
-                if (!(positionVector.z >= mapTopZ)) {
-                    player.position.z += 1;
-                    //change location of highlight squares
-                    highlights.forEach(function (highlight) {
-                        highlight.position.z += 1;
-                    });
-                }
-            } else if (event.key === 'a') { //a is pressed
-                positionVector = player.position;
-                console.log(positionVector);
-                if (!(positionVector.x >= mapLeftX)) {
-                    player.position.x += 1;
-                    highlights.forEach(function (highlight) {
-                        highlight.position.x += 1;
-                    });
-                }
-            } else if (event.key === 's') { //s is pressed
-                positionVector = player.position;
-                console.log(positionVector);
-                if (!(positionVector.z <= mapBottomZ)) {
-                    player.position.z += -1;
-                    highlights.forEach(function (highlight) {
-                        highlight.position.z += -1;
-                    });
-                }
-            } else if (event.key === 'd') { //d is pressed
-                positionVector = player.position;
-                console.log(positionVector);
-                if (!(positionVector.x <= mapRightX)) {
-                    player.position.x += -1;
-                    highlights.forEach(function (highlight) {
-                        highlight.position.x += -1;
-                    });
-                }
-                //The following can be used to manually swap characters, skipping moves
-            } else if (event.key == 'c') {//cat easter egg
-                 //loadCat();
-                 cat.visible = true;
-                 return;
+        if (event.key === 'w') { //w is pressed
+            positionVector = player.position;
+            //limit movement if out of bounds
+            console.log(positionVector);
+            if (!(positionVector.z >= mapTopZ)) {
+                player.position.z += 1;
+                //change location of highlight squares
+                highlights.forEach(function (highlight) {
+                    highlight.position.z += 1;
+                });
             }
-
-            //set highlight visibility
-            if (player.position.z === (mapTopZ)) {
-                highlights[0].visible = false;
-            } else
-                highlights[0].visible = true;
-            if (player.position.x === (mapLeftX)) {
-                highlights[3].visible = false;
-            } else
-                highlights[3].visible = true;
-            if (player.position.z === (mapBottomZ)) {
-                highlights[2].visible = false;
-            } else
-                highlights[2].visible = true;
-            if (player.position.x === (mapRightX)) {
-                highlights[1].visible = false;
-            } else
-                highlights[1].visible = true;
-
-            --player.turns;
-
-            //console.log(player);
-            //console.log(player.turns);
-            //console.log(player);
-
-        }//end while(player turns > 0)
-        if (down)
+        } else if (event.key === 'a') { //a is pressed
+            positionVector = player.position;
+            console.log(positionVector);
+            if (!(positionVector.x >= mapLeftX)) {
+                player.position.x += 1;
+                highlights.forEach(function (highlight) {
+                    highlight.position.x += 1;
+                });
+            }
+        } else if (event.key === 's') { //s is pressed
+            positionVector = player.position;
+            console.log(positionVector);
+            if (!(positionVector.z <= mapBottomZ)) {
+                player.position.z += -1;
+                highlights.forEach(function (highlight) {
+                    highlight.position.z += -1;
+                });
+            }
+        } else if (event.key === 'd') { //d is pressed
+            positionVector = player.position;
+            console.log(positionVector);
+            if (!(positionVector.x <= mapRightX)) {
+                player.position.x += -1;
+                highlights.forEach(function (highlight) {
+                    highlight.position.x += -1;
+                });
+            }
+            //The following can be used to manually swap characters, skipping moves
+        } else if (event.key == 'c') {//cat easter egg
+            //loadCat();
+            cat.visible = true;
             return;
+        }
 
-        if (current.next === null)   //continue after exhausting the list; need to check if all members or all enemies are defeated
-            return;
-        else
-            current = current.next;
-        //current = current.head;
-        //resetHighlights(player.name);
+        //set highlight visibility
+        if (player.position.z === (mapTopZ)) {
+            highlights[0].visible = false;
+        } else
+            highlights[0].visible = true;
+        if (player.position.x === (mapLeftX)) {
+            highlights[3].visible = false;
+        } else
+            highlights[3].visible = true;
+        if (player.position.z === (mapBottomZ)) {
+            highlights[2].visible = false;
+        } else
+            highlights[2].visible = true;
+        if (player.position.x === (mapRightX)) {
+            highlights[1].visible = false;
+        } else
+            highlights[1].visible = true;
+
+        --player.turns;
+
+        //console.log(player);
+        //console.log(player.turns);
+        //console.log(player);
+
+    }//end while(player turns > 0)
+    if (down)
+        return;
+
+    if (current.next === null)   //continue after exhausting the list; need to check if all members or all enemies are defeated
+        return;
+    else
+        current = current.next;
+    //current = current.head;
+    //resetHighlights(player.name);
 
     //}//end while(current)
     // console.log(characterCount);
@@ -284,8 +294,8 @@ function createCubes() {
 }
 
 export { //createModel1, createModel2, createModel3, 
-    keyLifted, movePlayer, createModels, 
-    loadCat, 
+    keyLifted, movePlayer, createModels,
+    loadCat,
     //checkKey, 
     initializeFirstCharacter
 };

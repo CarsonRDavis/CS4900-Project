@@ -126,7 +126,7 @@ class LinkedList {
 
     // gives the size of the list 
     size_of_list() {
-        console.log(this.size);
+        return this.size;
     }
 
     // prints the list items 
@@ -137,7 +137,7 @@ class LinkedList {
             str += curr.element + " ";
             curr = curr.next;
         }
-        console.log(str);
+        return str;
     }
 
 
