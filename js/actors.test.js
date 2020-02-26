@@ -3,6 +3,7 @@ Melee = require('./actors.js').Melee;
 Defender = require('./actors.js').Defender;
 Ranged = require('./actors.js').Ranged;
 
+
 //Test whether the base attacxk formula works as expected
 test('Base actor attack test', () => {
     let actor1 = new Actor('Bill');
@@ -56,6 +57,7 @@ test('Modified resistance test', () => {
     expect(def.hitPts).toBe(9);
 })
 
+//Test to see if an actor is in range
 test('Simple range test (in range)', () => {
     let def = new Defender('Dan');
     let ran = new Ranged('Rick');
@@ -68,6 +70,7 @@ test('Simple range test (in range)', () => {
     expect(ran.hitPts).toBe(10);
 })
 
+//Test to see if an actor is out of range
 test('Simple range test (out of range)', () => {
     let def = new Defender('Dan');
     let ran = new Ranged('Rick');
@@ -77,4 +80,22 @@ test('Simple range test (out of range)', () => {
     ran.attack(def);
     def.attack(ran);
     expect(def.hitPts).toBe(10);
+})
+
+//Test to see if range scan marks the proper locations
+test('Range scan test', () => {
+    let ran = new Ranged('Rick');
+    let arr = ran.rangeScan();
+    
+    expect(arr).toStrictEqual([[0,0,0,0,0,1,0,0,0,0,0],
+                      [0,0,0,0,1,1,1,0,0,0,0],
+                      [0,0,0,1,1,1,1,1,0,0,0],
+                      [0,0,1,1,1,1,1,1,1,0,0],
+                      [0,1,1,1,1,1,1,1,1,1,0],
+                      [1,1,1,1,1,0,1,1,1,1,1],
+                      [0,1,1,1,1,1,1,1,1,1,0],
+                      [0,0,1,1,1,1,1,1,1,0,0],
+                      [0,0,0,1,1,1,1,1,0,0,0],
+                      [0,0,0,0,1,1,1,0,0,0,0],
+                      [0,0,0,0,0,1,0,0,0,0,0]]);
 })

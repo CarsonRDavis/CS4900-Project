@@ -91,24 +91,27 @@ function loadCat() {
 
 //create event handler to move the banana along with a highlight square
 function movePlayer(event) {
+    var player;
     if (characterCount == 1) {
-        var player = scene.getObjectByName("melee");
+        player = scene.getObjectByName("melee");
     } else if (characterCount == 2) {
-        var player = scene.getObjectByName("ranged");
-    } else
-        var player = scene.getObjectByName("defender");
+        player = scene.getObjectByName("ranged");
+    } else if (characterCount == 3) {
+        player = scene.getObjectByName("defender");
+        console.log(player.turns);
+        if (player.turns == 0) {
+            player = null;
+            characterCount = 1;
+            player = scene.getObjectByName("melee");
+        }
+    }
 
     var cat = scene.getObjectByName("cat");
 
     var camera = scene.getObjectByName("camera");
 
-    //used to reference the created object
-    // var character = window[selectedObj.name]; //needs to be changed to current obj
-
     //create vector to hold object's location
     var positionVector = new THREE.Vector3();
-    console.log(player.turns);
-    //console.log(isDefault);
 
     var radius = 5;
 
@@ -139,17 +142,12 @@ function movePlayer(event) {
             if (!(positionVector.x <= mapRightX)) {
                 player.position.x += -1;
             }
-            //The following can be used to manually swap characters, skipping moves
         }
-        --player.turns;
+        //The following can be used to manually swap characters, skipping moves
     }
-    characterCount++;
-
-    //console.log(player.name);
-    //var player = changeCharacter(player);
-    //console.log(player.name);
-    //return player;
+    --player.turns;
 }
+
 
 //Reference: https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
 //prevents obj from moving multiple spaces when key is held down
