@@ -43,17 +43,22 @@ function createHighlight() { //returns highlight mesh
     return highLightMesh;
 }
 
+// Uses the Flood Fill algorithm to make all the highlights in the range visible
 function characterRadius(scene, x, y, radius) {
 
+    // Stops the recursive statement
     if (radius == -1) {
         return;
     }
 
+    // This is the implementation of flood fill
     characterRadius(scene, x + 1, y, radius - 1);
     characterRadius(scene, x, y + 1, radius - 1);
     characterRadius(scene, x - 1, y, radius - 1);
     characterRadius(scene, x, y - 1, radius - 1);
 
+    // Finds the highlight in the scene if it exists and 
+    // sets its visibility to true
     var temp = "highlight - " + x + " - " + y;
     var highlight = scene.getObjectByName(temp);
     if (highlight == undefined) {
@@ -63,7 +68,9 @@ function characterRadius(scene, x, y, radius) {
 
 }
 
-function clearRadius(scene, x, y, radius, group) {
+// Works the same as characterRadius, but sets
+// highlight visibility to false
+function clearRadius(scene, x, y, radius) {
 
     if (radius == -1) {
         return;
@@ -83,6 +90,8 @@ function clearRadius(scene, x, y, radius, group) {
 
 }
 
+// Fills the board with multiple, invisible highlights
+// Creates the name of the highlight using it's x and z position
 function fillBoard(scene) {
 
     for (var i = 8; i > -9; i--) {

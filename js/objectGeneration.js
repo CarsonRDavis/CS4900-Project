@@ -159,10 +159,6 @@ function keyLifted() {
     return down;
 }
 
-function resetHighlights() {
-
-}
-
 export { //createModel1, createModel2, createModel3, 
     keyLifted,
     movePlayer,
