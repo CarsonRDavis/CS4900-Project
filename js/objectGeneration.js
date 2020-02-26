@@ -108,8 +108,6 @@ function movePlayer(event) {
 
     var cat = scene.getObjectByName("cat");
 
-    var camera = scene.getObjectByName("camera");
-
     //create vector to hold object's location
     var positionVector = new THREE.Vector3();
 
@@ -120,7 +118,6 @@ function movePlayer(event) {
         if (down) //prevents obj from moving multiple spaces when key is held down
             return;
         down = true;
-        console.log(player.name);
         if (event.key === 'w') { //w is pressed
             positionVector = player.position;
             //limit movement if out of bounds

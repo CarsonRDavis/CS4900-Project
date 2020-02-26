@@ -7,7 +7,7 @@ import {
     createCamera,
     addCameraControls
 } from './js/camera.js';
-import { //createModel1, createModel2, createModel3, 
+import {
     keyLifted,
     movePlayer,
     createModels,
@@ -17,10 +17,12 @@ import { //createModel1, createModel2, createModel3,
 //set window size
 var height = window.innerHeight;
 var width = window.innerWidth;
+
 //create renderer
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(width, height);
 document.body.append(renderer.domElement);
+
 //create scene
 var scene = new THREE.Scene();
 scene.background = new THREE.Color("#C0C0C0");
