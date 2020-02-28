@@ -13,7 +13,9 @@ var characterCount = 1;
 //var current = list.head;
 //implementing Mat's function that loads the models
 
-function createModels(linkedList, manager) {
+//function createModels(linkedList, manager) {
+function createModels(charactersArray, enemiesArray, manager) {
+
     const gltfLoader = new THREE.GLTFLoader(manager);
 
     //var linkedList = new LinkedList();
@@ -35,12 +37,8 @@ function createModels(linkedList, manager) {
             root.position.set(model.pos, 0.01, -3.5);
             root.scale.set(.34, .34, .34);
             //root.visible = false;
-            linkedList.add(root); //add the models to the LinkedList
-            // console.log(linkedList.size_of_list());
-            // console.log(linkedList.head.element.name);
-            // console.log(linkedList.head.next.element.name);
-            // console.log(linkedList.head.next.next.element.name);
-            // console.log(linkedList);
+            ///////////linkedList.add(root); //add the models to the LinkedList
+            charactersArray.push(root);
             scene.add(root);
         });
     }
@@ -81,21 +79,16 @@ function initializeFirstCharacter(list) {
 // }
 
 //create event handler to move the banana along with a highlight square
-function movePlayer(currentCharacter, key, linked) {
-
+function movePlayer(key, charactersArray, characterCount) {
     //var player = scene.getObjectByName(list.head.element.name);
-
-
-
     var cat = scene.getObjectByName("cat");
 
     //LinkedList Implementation
     //while (current != null) { //while the list is not null (no chars left) --- can edit this to continue
-
+    let currentCharacter = charactersArray[characterCount];
     console.log(currentCharacter);
 
     console.log(key);
-    console.log(linked);
 
 
     //console.log(player.name);
@@ -180,13 +173,14 @@ function movePlayer(currentCharacter, key, linked) {
         //console.log(player);
 
     }//end while(player turns > 0)
+
     if (down)
         return;
 
-    if (linked.next === null)   //continue after exhausting the list; need to check if all members or all enemies are defeated
-        return;
-    else
-        currentCharacter = linked.next;   //currentCharacter is referring to the name
+
+
+    console.log(characterCount);
+
     //current = current.head;
     //resetHighlights(player.name);
 

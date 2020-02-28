@@ -55,22 +55,38 @@ function animate() {     //returns void
 }
 
 var manager = new THREE.LoadingManager();
-let linked = new LinkedList();
-createModels(linked, manager);
+var charactersArray = [];
+var characterCount = 0;
+var enemiesArray = [];
+//let linked = new LinkedList();
+//createModels(linked, manager);
+createModels(charactersArray, enemiesArray, manager);
 
 manager.onLoad = function(){
-    var character = linked.head.element;
+    //var character = linked.head.element;
+    var character = charactersArray[characterCount];
+
+    if (charactersArray.indexOf(character) === (charactersArray.length - 1)){
+        characterCount = 0;
+        character = charactersArray[characterCount];
+    }
+    else{
+        characterCount++;
+        character = charactersArray[characterCount];
+    }
+
     //Reference: https://stackoverflow.com/questions/8941183/pass-multiple-arguments-along-with-an-event-object-to-an-event-handler
-    var handler = function (character, linked) {
+    //var handler = function (character, linked) {
+    var handler = function (charactersArray, characterCount) {
         return function (event) {
             if (event.key === 'w' || event.key === 'a' || event.key === 's' || event.key === 'd' || event.key === 'c')
-                movePlayer(character, event.key, linked);
+                movePlayer(event.key, charactersArray, characterCount);
             else if (event.key === 'q')
                 changeCharacter();
         };
     };
 
-    window.addEventListener('keydown', handler(character, linked), false);
+    window.addEventListener('keydown', handler(charactersArray, characterCount), false);
     window.addEventListener('keyup', keyLifted, false);
 
     animate();
