@@ -4,7 +4,7 @@ import { //createModel1, createModel2, createModel3,
     keyLifted, movePlayer, 
     createModels, 
     loadCat, 
-    //checkKey, 
+    changeCharacter, 
     initializeFirstCharacter
 } from './js/objectGeneration.js';
 import { Node, LinkedList } from './js/LinkedList.js';
@@ -64,36 +64,28 @@ createModels(charactersArray, enemiesArray, manager);
 
 manager.onLoad = function(){
     //var character = linked.head.element;
-    var character = charactersArray[characterCount];
-
-    if (charactersArray.indexOf(character) === (charactersArray.length - 1)){
-        characterCount = 0;
-        character = charactersArray[characterCount];
-    }
-    else{
-        characterCount++;
-        character = charactersArray[characterCount];
-    }
+    //var character = charactersArray[characterCount];
+    console.log(characterCount);
 
     //Reference: https://stackoverflow.com/questions/8941183/pass-multiple-arguments-along-with-an-event-object-to-an-event-handler
     //var handler = function (character, linked) {
-    var handler = function (charactersArray, characterCount) {
+    var handler = function (charactersArray) {
         return function (event) {
             if (event.key === 'w' || event.key === 'a' || event.key === 's' || event.key === 'd' || event.key === 'c')
-                movePlayer(event.key, charactersArray, characterCount);
-            else if (event.key === 'q')
+                movePlayer(event.key, charactersArray);
+            else if (event.key === 'r')
                 changeCharacter();
         };
     };
 
-    window.addEventListener('keydown', handler(charactersArray, characterCount), false);
+    window.addEventListener('keydown', handler(charactersArray), false);
     window.addEventListener('keyup', keyLifted, false);
-
+    console.log(characterCount);
     animate();
 }
 
 export {
-    scene, //charactersArray,
+    scene,charactersArray,
     mapTopZ, mapRightX, mapBottomZ, mapLeftX,
     highlights
 };

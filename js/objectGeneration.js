@@ -1,5 +1,5 @@
 import {
-    scene, //charactersArray, 
+    scene, charactersArray,
     mapTopZ, mapRightX, mapBottomZ, mapLeftX, highlights
 } from '/main.js';
 //player 
@@ -8,7 +8,7 @@ import { LinkedList } from './LinkedList.js';
 //import { Node, LinkedList } from './LinkedList.js';
 
 var down = false;
-var characterCount = 1;
+var characterCount = 0;
 
 //var current = list.head;
 //implementing Mat's function that loads the models
@@ -68,31 +68,24 @@ function initializeFirstCharacter(list) {
     return character;
 }
 
-// function checkKey(event, character){
-//     if(event.key === 'w' || event.key === 'a' || event.key === 's' || event.key === 'd'){
-//         console.log(character);
-//         movePlayer(character, key);
-//         console.log(character)
-//     }
-//     else if(event.key === 'q')
-//         changeCharacter();
-// }
+function changeCharacter() {
+    console.log(characterCount);
+    if (characterCount < 2)
+        characterCount++;
+    else
+        characterCount = 0;
+    return;
+}
 
 //create event handler to move the banana along with a highlight square
-function movePlayer(key, charactersArray, characterCount) {
-    //var player = scene.getObjectByName(list.head.element.name);
+function movePlayer(key, charactersArray) {
+
+    let currentCharacter = scene.getObjectByName(charactersArray[characterCount].name);
     var cat = scene.getObjectByName("cat");
 
     //LinkedList Implementation
     //while (current != null) { //while the list is not null (no chars left) --- can edit this to continue
-    let currentCharacter = charactersArray[characterCount];
-    console.log(currentCharacter);
-
-    console.log(key);
-
-
-    //console.log(player.name);
-
+    //var currentCharacter = charactersArray[characterCount];
 
     //create vector to hold object's location
     var positionVector = new THREE.Vector3();
@@ -174,31 +167,15 @@ function movePlayer(key, charactersArray, characterCount) {
 
     }//end while(player turns > 0)
 
+    if (characterCount < 2)
+        characterCount++;
+    else
+        characterCount = 0;
+
+    resetHighlights(currentCharacter.name);
+    
     if (down)
         return;
-
-
-
-    console.log(characterCount);
-
-    //current = current.head;
-    //resetHighlights(player.name);
-
-    //}//end while(current)
-    // console.log(characterCount);
-    // //isDefault = false;
-    // if (characterCount <= 3) {
-    //     characterCount++;
-    // } else
-    //     characterCount = 1;
-
-
-    //player.turns = 5;
-
-    //console.log(player.name);
-    //var player = changeCharacter(player);
-    //console.log(player.name);
-    //return player;
 }
 //Reference: https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
 //prevents obj from moving multiple spaces when key is held down
@@ -235,16 +212,6 @@ function resetHighlights(playerName) {
         highlights[3].position.set(0.5, 0.02, -3.5);
     }
 }
-
-// function changeCharacter(player){
-//     //call this if moves have run out
-//     console.log("changing");
-//     if(player.name === "banana1"){
-//         return scene.getObjectByName("banana3");
-//     }else if(player.name === "banana2"){
-//         return scene.getObjectByName("banana1");
-//     }
-// }
 
 //add test cubes and set their obj names
 function addCubes() {
@@ -291,6 +258,6 @@ function createCubes() {
 export { //createModel1, createModel2, createModel3, 
     keyLifted, movePlayer, createModels,
     loadCat,
-    //checkKey, 
+    changeCharacter,
     initializeFirstCharacter
 };
