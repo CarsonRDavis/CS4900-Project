@@ -24,17 +24,17 @@ function createModels(linkedList, manager) {
         melee: {
             url: './models/Pirate_Male.glb',
             name: 'melee',
-            pos: 0.5
+            pos: 0
         },
         ranged: {
             url: './models/Ninja_Male.glb',
             name: 'ranged',
-            pos: 1.5
+            pos: 1
         },
         defender: {
             url: './models/BlueSoldier_Female.glb',
             name: 'defender',
-            pos: -0.5
+            pos: -1
         },
     };
 
@@ -43,7 +43,7 @@ function createModels(linkedList, manager) {
             const root = gltf.scene;
             root.name = model.name;
             root.turns = 5; //determines the number of moves; will need to relocate
-            root.position.set(model.pos, 0.01, -3.5);
+            root.position.set(model.pos, 0.01, -3);
             root.scale.set(.34, .34, .34);
             //root.visible = false;
             linkedList.add(root); //add the models to the LinkedList
@@ -64,6 +64,14 @@ function loadCat() { //cat doesn't get added to the LinkedList
         root.scale.set(10, 10, 10);
         scene.add(root);
     });
+}
+
+function decrementTurns(character) {
+    character.turns -= 1;
+}
+
+function resetTurns(character) {
+    character.turns = 5;
 }
 
 function initializeFirstCharacter(list) {
@@ -90,7 +98,10 @@ function movePlayer(currentCharacter, key, linked) {
             positionVector = currentCharacterObj.position;
             //limit movement if out of bounds
             if (!(positionVector.z >= mapTopZ)) {
+                clearRadius(scene, currentCharacterObj.position.x, currentCharacterObj.position.z, currentCharacterObj.turns);
+                decrementTurns(currentCharacterObj);
                 currentCharacterObj.position.z += 1;
+                characterRadius(scene, currentCharacterObj.position.x, currentCharacterObj.position.z, currentCharacterObj.turns);
             }
         } else if (event.key === 'a') { //a is pressed
             positionVector = currentCharacterObj.position;
@@ -142,6 +153,5 @@ export { //createModel1, createModel2, createModel3,
     movePlayer,
     createModels,
     loadCat,
-    //checkKey, 
     initializeFirstCharacter
 };

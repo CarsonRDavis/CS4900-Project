@@ -9,6 +9,8 @@ class Actor { //Base character object
         this.movement = 5; //How far a unit can move in one turn
         this.range = 1; //How far the unit can reach
 
+        this.radius = 3;
+
         this.resist = null; //Resistances, weakness and attack type are declared 
         this.weakness = null; //-->as null here for the following basic functions 
         this.attType = null; //-->that all ACTOR subclasses will have 
@@ -94,6 +96,10 @@ class Actor { //Base character object
             lessRange++;
         }
         return arr;
+    }
+
+    decrementRadius() {
+        this.radius -= 1;
     }
 }
 

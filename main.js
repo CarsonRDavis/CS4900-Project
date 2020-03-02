@@ -1,7 +1,8 @@
 import {
     worldCreation,
     generateSkybox,
-    fillBoard
+    fillBoard,
+    characterRadius
 } from './js/worldGeneration.js';
 import {
     createCamera,
@@ -18,6 +19,7 @@ import {
     Node,
     LinkedList
 } from './js/LinkedList.js';
+
 
 //set window size
 var height = window.innerHeight;
@@ -40,7 +42,6 @@ worldCreation(scene);
 generateSkybox(scene);
 fillBoard(scene);
 
-createModels();
 loadCat();
 
 const mapTopZ = 7.5;
@@ -60,7 +61,10 @@ let linked = new LinkedList();
 createModels(linked, manager);
 
 manager.onLoad = function () {
-    //var character = linked.head.element;
+    var character = linked.head.element;
+
+    characterRadius(scene, character.position.x, character.position.z, character.turns);
+
     //Reference: https://stackoverflow.com/questions/8941183/pass-multiple-arguments-along-with-an-event-object-to-an-event-handler
     var handler = function (character, linked) {
         return function (event) {
@@ -76,6 +80,7 @@ manager.onLoad = function () {
 
     animate();
 }
+
 
 export {
     scene, //charactersArray,
