@@ -13,13 +13,16 @@ import {
     movePlayer,
     createModels,
     loadCat,
-    initializeFirstCharacter
+    changeCharacter
 } from './js/objectGeneration.js';
 import {
     Node,
     LinkedList
 } from './js/LinkedList.js';
-
+import {
+    addButton,
+    onEndTurnClick
+} from './js/HUD.js';
 
 //set window size
 var height = window.innerHeight;
@@ -43,6 +46,7 @@ generateSkybox(scene);
 fillBoard(scene);
 
 loadCat();
+addButton();
 
 const mapTopZ = 7.5;
 const mapRightX = -7.5;
@@ -57,33 +61,49 @@ function animate() { //returns void
 }
 
 var manager = new THREE.LoadingManager();
-let linked = new LinkedList();
-createModels(linked, manager);
+var charactersArray = [];
+var characterCount = 0;
 
+var managerEnemies = new THREE.LoadingManager();
+var enemiesArray = [];
+var enemyCount = 0;
+
+//let linked = new LinkedList();
+//createModels(linked, manager);
+createModels(charactersArray, enemiesArray, manager, managerEnemies);
+
+managerEnemies.onLoad = function () {
+    console.log("enemies loaded");
+}
+
+//add end turn button
 manager.onLoad = function () {
-    var character = linked.head.element;
+
+    console.log(characterCount);
 
     characterRadius(scene, character.position.x, character.position.z, character.turns);
 
     //Reference: https://stackoverflow.com/questions/8941183/pass-multiple-arguments-along-with-an-event-object-to-an-event-handler
-    var handler = function (character, linked) {
+    //var handler = function (character, linked) {
+    var handler = function (charactersArray) {
         return function (event) {
             if (event.key === 'w' || event.key === 'a' || event.key === 's' || event.key === 'd' || event.key === 'c')
-                movePlayer(character, event.key, linked);
-            else if (event.key === 'q')
+                movePlayer(event.key, charactersArray);
+            else if (event.key === 'r')
                 changeCharacter();
         };
     };
 
-    window.addEventListener('keydown', handler(character, linked), false);
+    window.addEventListener('keydown', handler(charactersArray), false);
     window.addEventListener('keyup', keyLifted, false);
-
+    console.log(characterCount);
     animate();
 }
 
-
 export {
-    scene, //charactersArray,
+    scene,
+    charactersArray,
+    enemiesArray,
     mapTopZ,
     mapRightX,
     mapBottomZ,

@@ -1,9 +1,9 @@
 import {
-    scene, //charactersArray, 
+    scene,
     mapTopZ,
     mapRightX,
     mapBottomZ,
-    mapLeftX,
+    mapLeftX
 } from '/main.js';
 import {
     characterRadius,
@@ -12,17 +12,29 @@ import {
 import {
     LinkedList
 } from './LinkedList.js';
+//import { Node, LinkedList } from './LinkedList.js';
+import {
+    Actor,
+    Defender,
+    Melee,
+    Ranged
+} from './actors.js';
 
 var down = false;
 var characterCount = 1;
+var enemyCount = 0;
 
 //implementing Mat's function that loads the models
-function createModels(linkedList, manager) {
-    const gltfLoader = new THREE.GLTFLoader(manager);
 
-    const models = {
+//function createModels(linkedList, manager) {
+function createModels(charactersArray, enemiesArray, manager, managerEnemies) {
+
+    const gltfLoader = new THREE.GLTFLoader(manager);
+    const gltfLoaderEnemies = new THREE.GLTFLoader(managerEnemies);
+
+    const characters = {
         melee: {
-            url: './models/Pirate_Male.glb',
+            url: './models/PirateTest.glb',
             name: 'melee',
             pos: 0
         },
@@ -35,10 +47,36 @@ function createModels(linkedList, manager) {
             url: './models/BlueSoldier_Female.glb',
             name: 'defender',
             pos: -1
+        }
+    };
+
+    const enemies = {
+        meleeEnemy: {
+            url: './models/Goblin_Male_Red.glb',
+            name: 'meleeEnemy',
+            pos: 0
+        },
+        rangedEnemy: {
+            url: './models/Cowgirl.glb',
+            name: 'rangedEnemy',
+            pos: 1
+        },
+        defenderEnemy: {
+            url: './models/Viking.glb',
+            name: 'defenderEnemy',
+            pos: -1
         },
     };
 
-    for (const model of Object.values(models)) {
+    //count number of characters on the level
+    // var numCharacters = 0;
+    // for (const model of Object.values(characters)) {
+    //     numCharacters++;
+    // }
+
+
+    //load characters and populate characters array
+    for (const model of Object.values(characters)) {
         gltfLoader.load(model.url, (gltf) => {
             const root = gltf.scene;
             root.name = model.name;
@@ -46,10 +84,40 @@ function createModels(linkedList, manager) {
             root.position.set(model.pos, 0.01, -3);
             root.scale.set(.34, .34, .34);
             //root.visible = false;
-            linkedList.add(root); //add the models to the LinkedList
+            ///////////linkedList.add(root); //add the models to the LinkedList
+            if (root.name === "melee") {
+                console.log("melee");
+                let mike = new Melee("Mike");
+                root.actor = mike;
+            } else if (root.name === "ranged") {
+                console.log("ranged");
+                let rachel = new Ranged("Rachel");
+                root.actor = rachel;
+            } else if (root.name === "defender") {
+                console.log("defender");
+                let donovan = new Defender("Donovan");
+                root.actor = donovan;
+            }
+            charactersArray.push(root);
             scene.add(root);
         });
-    }
+    } //end for
+
+    //load enemies and populate enemies array
+    for (const model of Object.values(enemies)) {
+        gltfLoaderEnemies.load(model.url, (gltf) => {
+            const root = gltf.scene;
+            root.name = model.name;
+            root.turns = 5; //determines the number of moves; will need to relocate
+            root.position.set(model.pos, 0.01, 3.5);
+            root.rotation.y += Math.PI;
+            root.scale.set(.34, .34, .34);
+            //root.visible = false;
+            ///////////linkedList.add(root); //add the models to the LinkedList
+            enemiesArray.push(root);
+            scene.add(root);
+        });
+    } //end for
 }
 
 function loadCat() { //cat doesn't get added to the LinkedList
@@ -74,16 +142,24 @@ function resetTurns(character) {
     character.turns = 5;
 }
 
-function initializeFirstCharacter(list) {
-    var character = list.head.element.name;
-
-    return character;
+function changeCharacter() {
+    console.log(characterCount);
+    if (characterCount < 2)
+        characterCount++;
+    else
+        characterCount = 0;
+    return;
 }
 
 //create event handler to move the banana along with a highlight square
-function movePlayer(currentCharacter, key, linked) {
+function movePlayer(key, charactersArray) {
 
+    let currentCharacter = scene.getObjectByName(charactersArray[characterCount].name);
     var cat = scene.getObjectByName("cat");
+
+    //LinkedList Implementation
+    //while (current != null) { //while the list is not null (no chars left) --- can edit this to continue
+    //var currentCharacter = charactersArray[characterCount];
 
     //create vector to hold object's location
     var positionVector = new THREE.Vector3();
@@ -130,14 +206,19 @@ function movePlayer(currentCharacter, key, linked) {
 
         --currentCharacterObj.turns;
 
+        //console.log(player);
+        //console.log(player.turns);
+        //console.log(player);
+
     } //end while(player turns > 0)
+
+    if (characterCount < 2)
+        characterCount++;
+    else
+        characterCount = 0;
+
     if (down)
         return;
-
-    if (linked.next === null) //continue after exhausting the list; need to check if all members or all enemies are defeated
-        return;
-    else
-        currentCharacter = linked.next; //currentCharacter is referring to the name
 }
 
 //Reference: https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
@@ -148,10 +229,54 @@ function keyLifted() {
     return down;
 }
 
-export { //createModel1, createModel2, createModel3, 
+function enemiesTurn(enemiesArray, enemyCount) {
+    let currentEnemy = scene.getObjectByName(enemiesArray[enemyCount].name);
+    console.log(currentEnemy);
+
+    //create vector to hold object's location
+    var positionVector = new THREE.Vector3();
+    var currentEnemyObj = scene.getObjectByName(currentEnemy.name);
+
+
+    while (currentEnemyObj.turns > 0) {
+
+        console.log("turn");
+        positionVector = currentEnemyObj.position;
+        //limit movement if out of bounds
+        if (!(positionVector.z >= mapTopZ)) {
+            currentEnemyObj.position.z -= 1;
+            console.log(positionVector);
+        }
+        --currentEnemyObj.turns;
+        currentEnemyObj.updateMatrix();
+        sleep(2000);
+
+    }
+
+    // if (enemyCount < 2)
+    //     enemyCount++;
+    // else
+    //     enemyCount = 0;
+
+}
+
+//Reference: https://stackoverflow.com/questions/16873323/javascript-sleep-wait-before-continuing/16873849
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds) {
+            break;
+        }
+    }
+}
+
+export {
     keyLifted,
     movePlayer,
     createModels,
     loadCat,
-    initializeFirstCharacter
+    changeCharacter,
+    enemiesTurn,
+    characterCount,
+    enemyCount
 };
