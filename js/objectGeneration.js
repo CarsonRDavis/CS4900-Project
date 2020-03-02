@@ -26,7 +26,7 @@ function createModels(charactersArray, enemiesArray, manager, managerEnemies) {
     const enemies = {
         meleeEnemy: { url: './models/Goblin_Male_Red.glb', name: 'meleeEnemy', pos: 0.5 },
         rangedEnemy: { url: './models/Cowgirl.glb', name: 'rangedEnemy', pos: 1.5 },
-        defenderEnemy: { url: './models/BlueSoldier_Female.glb', name: 'defenderEnemy', pos: -0.5 },
+        defenderEnemy: { url: './models/Viking.glb', name: 'defenderEnemy', pos: -0.5 },
     };
 
     //count number of characters on the level
