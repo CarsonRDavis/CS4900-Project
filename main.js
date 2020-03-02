@@ -1,13 +1,8 @@
 import { worldCreation, highlightGeneration } from './js/worldGeneration.js';
 import { createCamera, addCameraControls } from './js/camera.js';
-import { //createModel1, createModel2, createModel3, 
-    keyLifted, movePlayer, 
-    createModels, 
-    loadCat, 
-    changeCharacter, 
-    initializeFirstCharacter
-} from './js/objectGeneration.js';
+import { keyLifted, movePlayer, createModels, loadCat, changeCharacter, } from './js/objectGeneration.js';
 import { Node, LinkedList } from './js/LinkedList.js';
+import { addButton, onEndTurnClick } from './js/HUD.js';
 
 //set window size
 var height = window.innerHeight;
@@ -16,6 +11,7 @@ var width = window.innerWidth;
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(width, height);
 document.body.append(renderer.domElement);
+
 //create scene
 var scene = new THREE.Scene();
 scene.background = new THREE.Color("#C0C0C0");
@@ -28,19 +24,8 @@ worldCreation(scene);
 var highlights = [];
 highlights = highlightGeneration(scene);
 
-// var charactersArray = [];
-
-// createModel1(charactersArray);
-// createModel2(charactersArray, scene);
-// createModel3(charactersArray, scene);
-
-
-
-// console.log(linkedlist.isEmpty());
-// console.log(linkedlist.printList());
-// console.log(linkedlist.head.next);
-// console.log(linkedlist.indexOf(1));
 loadCat();
+addButton();
 
 const mapTopZ = 4.5;
 const mapRightX = -4.5;
@@ -57,14 +42,23 @@ function animate() {     //returns void
 var manager = new THREE.LoadingManager();
 var charactersArray = [];
 var characterCount = 0;
+
+var managerEnemies = new THREE.LoadingManager();
 var enemiesArray = [];
+var enemyCount = 0;
+
 //let linked = new LinkedList();
 //createModels(linked, manager);
-createModels(charactersArray, enemiesArray, manager);
+createModels(charactersArray, enemiesArray, manager, managerEnemies);
+
+managerEnemies.onLoad = function() {
+    console.log("enemies loaded");
+}
+
+//add end turn button
 
 manager.onLoad = function(){
-    //var character = linked.head.element;
-    //var character = charactersArray[characterCount];
+
     console.log(characterCount);
 
     //Reference: https://stackoverflow.com/questions/8941183/pass-multiple-arguments-along-with-an-event-object-to-an-event-handler
@@ -84,9 +78,4 @@ manager.onLoad = function(){
     animate();
 }
 
-export {
-    scene,charactersArray,
-    mapTopZ, mapRightX, mapBottomZ, mapLeftX,
-    highlights
-};
-	//player };
+export { scene, charactersArray, enemiesArray, mapTopZ, mapRightX, mapBottomZ, mapLeftX, highlights };

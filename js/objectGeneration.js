@@ -1,35 +1,43 @@
-import {
-    scene, charactersArray,
-    mapTopZ, mapRightX, mapBottomZ, mapLeftX, highlights
-} from '/main.js';
-//player 
+import { scene, mapTopZ, mapRightX, mapBottomZ, mapLeftX, highlights } from '/main.js';
 import { createHighlight } from './worldGeneration.js';
 import { LinkedList } from './LinkedList.js';
 //import { Node, LinkedList } from './LinkedList.js';
+import { Actor, Defender, Melee, Ranged } from './actors.js';
 
 var down = false;
-var characterCount = 0;
+var characterCount = 1;
+var enemyCount = 0;
 
 //var current = list.head;
 //implementing Mat's function that loads the models
 
 //function createModels(linkedList, manager) {
-function createModels(charactersArray, enemiesArray, manager) {
+function createModels(charactersArray, enemiesArray, manager, managerEnemies) {
 
     const gltfLoader = new THREE.GLTFLoader(manager);
+    const gltfLoaderEnemies = new THREE.GLTFLoader(managerEnemies);
 
-    //var linkedList = new LinkedList();
-
-    // var redMat = new THREE.MeshLambertMaterial({color:0xF7573E});
-    // var blueMat = new THREE.MeshLambertMaterial({color:0x2194ce});
-    // var greenMat = new THREE.MeshLambertMaterial({color:0x11E020});
-
-    const models = {
-        melee: { url: './models/Pirate_Male.glb', name: 'melee', pos: 0.5 },
+    const characters = {
+        melee: { url: './models/PirateTest.glb', name: 'melee', pos: 0.5 },
         ranged: { url: './models/Ninja_Male.glb', name: 'ranged', pos: 1.5 },
-        defender: { url: './models/BlueSoldier_Female.glb', name: 'defender', pos: -0.5 },
+        defender: { url: './models/BlueSoldier_Female.glb', name: 'defender', pos: -0.5 }
     };
-    for (const model of Object.values(models)) {
+
+    const enemies = {
+        meleeEnemy: { url: './models/Goblin_Male_Red.glb', name: 'meleeEnemy', pos: 0.5 },
+        rangedEnemy: { url: './models/Cowgirl.glb', name: 'rangedEnemy', pos: 1.5 },
+        defenderEnemy: { url: './models/BlueSoldier_Female.glb', name: 'defenderEnemy', pos: -0.5 },
+    };
+
+    //count number of characters on the level
+    // var numCharacters = 0;
+    // for (const model of Object.values(characters)) {
+    //     numCharacters++;
+    // }
+
+
+    //load characters and populate characters array
+    for (const model of Object.values(characters)) {
         gltfLoader.load(model.url, (gltf) => {
             const root = gltf.scene;
             root.name = model.name;
@@ -38,19 +46,44 @@ function createModels(charactersArray, enemiesArray, manager) {
             root.scale.set(.34, .34, .34);
             //root.visible = false;
             ///////////linkedList.add(root); //add the models to the LinkedList
+            if (root.name === "melee") {
+                console.log("melee");
+                let mike = new Melee("Mike");
+                root.actor = mike;
+            } else if (root.name === "ranged") {
+                console.log("ranged");
+                let rachel = new Ranged("Rachel");
+                root.actor = rachel;
+            } else if (root.name === "defender") {
+                console.log("defender");
+                let donovan = new Defender("Donovan");
+                root.actor = donovan;
+            }            
             charactersArray.push(root);
             scene.add(root);
         });
-    }
+    }//end for
 
-    //return linkedList;
-    //console.log(linked);
+    //load enemies and populate enemies array
+    for (const model of Object.values(enemies)) {
+        gltfLoaderEnemies.load(model.url, (gltf) => {
+            const root = gltf.scene;
+            root.name = model.name;
+            root.turns = 5; //determines the number of moves; will need to relocate
+            root.position.set(model.pos, 0.01, 3.5);
+            root.rotation.y += Math.PI;
+            root.scale.set(.34, .34, .34);
+            //root.visible = false;
+            ///////////linkedList.add(root); //add the models to the LinkedList
+            enemiesArray.push(root);
+            scene.add(root);
+        });
+    }//end for
 }
 
 function loadCat() {     //cat doesn't get added to the LinkedList
     const gltfLoader = new THREE.GLTFLoader();
     gltfLoader.load('./models/Felixx.glb', function (gltf) {
-
         const root = gltf.scene;
         root.name = "cat";
         root.visible = false;
@@ -60,12 +93,6 @@ function loadCat() {     //cat doesn't get added to the LinkedList
         root.scale.set(10, 10, 10);
         scene.add(root);
     });
-}
-
-function initializeFirstCharacter(list) {
-    var character = list.head.element.name;
-
-    return character;
 }
 
 function changeCharacter() {
@@ -102,7 +129,7 @@ function movePlayer(key, charactersArray) {
             console.log(positionVector);
             if (!(positionVector.z >= mapTopZ)) {
                 currentCharacterObj.position.z += 1;
-                //change location of highlight squares
+                console.log(currentCharacterObj.actor);                //change location of highlight squares
                 highlights.forEach(function (highlight) {
                     highlight.position.z += 1;
                 });
@@ -173,7 +200,7 @@ function movePlayer(key, charactersArray) {
         characterCount = 0;
 
     resetHighlights(currentCharacter.name);
-    
+
     if (down)
         return;
 }
@@ -210,6 +237,47 @@ function resetHighlights(playerName) {
         highlights[1].position.set(-1.5, 0.02, -3.5);
         highlights[2].position.set(-0.5, 0.02, -4.5);
         highlights[3].position.set(0.5, 0.02, -3.5);
+    }
+}
+
+function enemiesTurn(enemiesArray, enemyCount) {
+    let currentEnemy = scene.getObjectByName(enemiesArray[enemyCount].name);
+    console.log(currentEnemy);
+
+    //create vector to hold object's location
+    var positionVector = new THREE.Vector3();
+    var currentEnemyObj = scene.getObjectByName(currentEnemy.name);
+
+
+    while (currentEnemyObj.turns > 0) {
+
+        console.log("turn");
+        positionVector = currentEnemyObj.position;
+        //limit movement if out of bounds
+        if (!(positionVector.z >= mapTopZ)) {
+            currentEnemyObj.position.z -= 1;
+            console.log(positionVector);
+        }
+        --currentEnemyObj.turns;
+        currentEnemyObj.updateMatrix();
+        sleep(2000);
+
+    }
+
+    // if (enemyCount < 2)
+    //     enemyCount++;
+    // else
+    //     enemyCount = 0;
+
+}
+
+//Reference: https://stackoverflow.com/questions/16873323/javascript-sleep-wait-before-continuing/16873849
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds) {
+            break;
+        }
     }
 }
 
@@ -255,9 +323,4 @@ function createCubes() {
     return temp;
 }
 
-export { //createModel1, createModel2, createModel3, 
-    keyLifted, movePlayer, createModels,
-    loadCat,
-    changeCharacter,
-    initializeFirstCharacter
-};
+export { keyLifted, movePlayer, createModels, loadCat, changeCharacter, enemiesTurn, characterCount, enemyCount };
