@@ -9,17 +9,18 @@ class Actor{   //Base character object
         this.movement = 5;      //How far a unit can move in one turn
         this.range = 1;         //How far the unit can reach
 
+
         this.resist = null;     //Resistances, weakness and attack type are declared 
         this.weakness = null;   //-->as null here for the following basic functions 
         this.attType = null;    //-->that all ACTOR subclasses will have 
         this.model = null;      //String that holds the model's name
     }
 
-    //Function for changing the the position of an actor
-    move(x, y){ 
-        this.xPos = x;
-        this.yPos = y;
-    }
+    // //Function for changing the the position of an actor
+    // move(x, y){ 
+    //     this.xPos = x;
+    //     this.yPos = y;
+    // }
 
     //Function for damaging another actor. For now, it simply checks weakness and resistance before dealing damage
     attack(actor){
@@ -47,7 +48,7 @@ class Actor{   //Base character object
 
     //Check to see if an actor is in attack range
     inRange(actor){
-        var xDiff = this.getDiff(this.xPos, actor.xPos);
+        var xDiff = this.getDiff(this.xPos, actor.xPos); ///////////////// change this functionality to use vector?
         var yDiff = this.getDiff(this.yPos, actor.yPos);
 
         if(xDiff + yDiff > this.range)

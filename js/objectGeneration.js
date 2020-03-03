@@ -8,6 +8,8 @@ var down = false;
 var characterCount = 1;
 var enemyCount = 0;
 
+var positionVector = new THREE.Vector3();
+
 //var current = list.head;
 //implementing Mat's function that loads the models
 
@@ -48,7 +50,7 @@ function createModels(charactersArray, enemiesArray, manager, managerEnemies) {
             ///////////linkedList.add(root); //add the models to the LinkedList
             if (root.name === "melee") {
                 console.log("melee");
-                let mike = new Melee("Mike");
+                let mike = new Melee("Mike");///////////////////////use obj location for actor; stay away from duplicate info
                 root.actor = mike;
             } else if (root.name === "ranged") {
                 console.log("ranged");
@@ -56,9 +58,9 @@ function createModels(charactersArray, enemiesArray, manager, managerEnemies) {
                 root.actor = rachel;
             } else if (root.name === "defender") {
                 console.log("defender");
-                let donovan = new Defender("Donovan");
-                root.actor = donovan;
-            }            
+                let joe = new Defender("Joe");
+                root.actor = joe;
+            }
             charactersArray.push(root);
             scene.add(root);
         });
@@ -75,6 +77,19 @@ function createModels(charactersArray, enemiesArray, manager, managerEnemies) {
             root.scale.set(.34, .34, .34);
             //root.visible = false;
             ///////////linkedList.add(root); //add the models to the LinkedList
+            if (root.name === "meleeEnemy") {
+                console.log("meleeEnemy");
+                let makayla = new Melee("Makayla");
+                root.actor = makayla;
+            } else if (root.name === "rangedEnemy") {
+                console.log("rangedEnemy");
+                let lkay = new Ranged("LKay");
+                root.actor = lkay;
+            } else if (root.name === "defenderEnemy") {
+                console.log("defenderEnemy");
+                let denise = new Defender("Denise");
+                root.actor = denise;
+            }
             enemiesArray.push(root);
             scene.add(root);
         });
@@ -115,7 +130,7 @@ function movePlayer(key, charactersArray) {
     //var currentCharacter = charactersArray[characterCount];
 
     //create vector to hold object's location
-    var positionVector = new THREE.Vector3();
+    //var positionVector = new THREE.Vector3();
     var currentCharacterObj = scene.getObjectByName(currentCharacter.name);
 
     while (currentCharacterObj.turns > 0) {
@@ -124,7 +139,9 @@ function movePlayer(key, charactersArray) {
         down = true;
 
         if (event.key === 'w') { //w is pressed
-            positionVector = currentCharacterObj.position;
+            positionVector = currentCharacterObj.position;  //////pass into actor method for movement fuck carson
+
+
             //limit movement if out of bounds
             console.log(positionVector);
             if (!(positionVector.z >= mapTopZ)) {
@@ -161,7 +178,6 @@ function movePlayer(key, charactersArray) {
                     highlight.position.x += -1;
                 });
             }
-            //The following can be used to manually swap characters, skipping moves
         } else if (event.key == 'c') {//cat easter egg
             //loadCat();
             cat.visible = true;
@@ -270,6 +286,8 @@ function enemiesTurn(enemiesArray, enemyCount) {
     //     enemyCount = 0;
 
 }
+
+
 
 //Reference: https://stackoverflow.com/questions/16873323/javascript-sleep-wait-before-continuing/16873849
 function sleep(milliseconds) {

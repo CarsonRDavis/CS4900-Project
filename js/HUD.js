@@ -1,18 +1,33 @@
-import { scene, enemiesArray } from "../main.js";
-import { enemiesTurn, enemyCount } from "./objectGeneration.js";
+import { scene, enemiesArray, charactersArray } from "../main.js";
+import { enemiesTurn, enemyCount, characterCount } from "./objectGeneration.js";
+import { Actor, Melee, Defender, Ranged } from "./actors.js";
 
 //this file contains HUD elements
-function addButton(){
-    var button = document.getElementById("endTurn");
-    button.addEventListener("click", onEndTurnClick, false);
-    //button.addEventListener("onmouseup", )
-    
-    //scene.add(button);
+function addButtons(charactersArray){
+    var endTurnBtn = document.getElementById("endTurn");
+    endTurnBtn.addEventListener("click", onEndTurnClick, false);
+
+    var attackBtn = document.getElementById("attack");
+    var onAttackClick = function(charactersArray, characterCount, enemiesArray, enemyCount){    ///need position?
+        return function(event){
+            console.log("button clicked");
+
+            let currentCharacter = scene.getObjectByName(charactersArray[characterCount].name);
+            let actor = currentCharacter.actor;
+
+            let enemy = scene.getObjectByName(enemiesArray[enemyCount].name);
+            let enemyActor = enemy.actor;
+
+            actor.attack(enemyActor);   ////need to edit the method to use obj vector position
+        }
+    }
+    attackBtn.addEventListener("click", onAttackClick(charactersArray, characterCount, enemiesArray, enemyCount), false);
 }
 
 function onEndTurnClick(event){
     console.log("button clicked");
-    enemiesTurn(enemiesArray, enemyCount);
+    enemiesTurn(enemiesArray, enemyCount);  //will need to add more parameters 
+                                            //once enemy attacking is implemented
 }
 
-export { addButton, onEndTurnClick }
+export { addButtons, onEndTurnClick }

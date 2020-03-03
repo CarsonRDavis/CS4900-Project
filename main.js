@@ -2,7 +2,7 @@ import { worldCreation, highlightGeneration } from './js/worldGeneration.js';
 import { createCamera, addCameraControls } from './js/camera.js';
 import { keyLifted, movePlayer, createModels, loadCat, changeCharacter, } from './js/objectGeneration.js';
 import { Node, LinkedList } from './js/LinkedList.js';
-import { addButton, onEndTurnClick } from './js/HUD.js';
+import { addButtons, onEndTurnClick } from './js/HUD.js';
 
 //set window size
 var height = window.innerHeight;
@@ -25,7 +25,6 @@ var highlights = [];
 highlights = highlightGeneration(scene);
 
 loadCat();
-addButton();
 
 const mapTopZ = 4.5;
 const mapRightX = -4.5;
@@ -60,6 +59,9 @@ managerEnemies.onLoad = function() {
 manager.onLoad = function(){
 
     console.log(characterCount);
+
+    addButtons(charactersArray);
+
 
     //Reference: https://stackoverflow.com/questions/8941183/pass-multiple-arguments-along-with-an-event-object-to-an-event-handler
     //var handler = function (character, linked) {
