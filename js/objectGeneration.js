@@ -111,7 +111,7 @@ function loadCat() {     //cat doesn't get added to the LinkedList
 }
 
 function changeCharacter() {
-    console.log(characterCount);
+    //console.log(characterCount);
     if (characterCount < 2)
         characterCount++;
     else
@@ -215,7 +215,7 @@ function movePlayer(key, charactersArray) {
     else
         characterCount = 0;
 
-    resetHighlights(currentCharacter.name);
+    //////////resetHighlights(currentCharacter.name);
 
     if (down)
         return;

@@ -62,10 +62,9 @@ manager.onLoad = function(){
 
     addButtons(charactersArray);
 
-
     //Reference: https://stackoverflow.com/questions/8941183/pass-multiple-arguments-along-with-an-event-object-to-an-event-handler
     //var handler = function (character, linked) {
-    var handler = function (charactersArray) {
+    let handler = function (charactersArray) {
         return function (event) {
             if (event.key === 'w' || event.key === 'a' || event.key === 's' || event.key === 'd' || event.key === 'c')
                 movePlayer(event.key, charactersArray);
