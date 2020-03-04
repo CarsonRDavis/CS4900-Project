@@ -4,11 +4,11 @@ import { Actor, Melee, Defender, Ranged } from "./actors.js";
 
 //this file contains HUD elements
 function addButtons(charactersArray){
-    var endTurnBtn = document.getElementById("endTurn");
+    let endTurnBtn = document.getElementById("endTurn");
     endTurnBtn.addEventListener("click", onEndTurnClick, false);
 
-    var attackBtn = document.getElementById("attack");
-    var onAttackClick = function(charactersArray, characterCount, enemiesArray, enemyCount){    ///need position?
+    let attackBtn = document.getElementById("attack");
+    let onAttackClick = function(charactersArray, characterCount, enemiesArray, enemyCount){    ///need position?
         return function(event){
             console.log("button clicked");
 

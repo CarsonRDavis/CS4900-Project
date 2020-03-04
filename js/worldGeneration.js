@@ -1,7 +1,7 @@
 function worldCreation (scene) {    //returns void
         //add lighting
-        var light = new THREE.AmbientLight( 0xffffff, 2.5 );
-        light.position.set(0, 5, 0);
+        var light = new THREE.AmbientLight( 0xffffff, 2 );
+        light.position.set(5, 5, 5);
         //add map texture
         var loader = new THREE.TextureLoader();
         var grassTexture = loader.load( './textures/grass2.jpg', function ( grassTexture ) {
