@@ -1,5 +1,6 @@
-import { scene, mapTopZ, mapRightX, mapBottomZ, mapLeftX, highlights } from '/main.js';
-import { createHighlight } from './worldGeneration.js';
+import { scene, mapTopZ, mapRightX, mapBottomZ, mapLeftX, //highlights 
+        } from '/main.js';
+import { createHighlight, characterRadius } from './worldGeneration.js';
 import { LinkedList } from './LinkedList.js';
 //import { Node, LinkedList } from './LinkedList.js';
 import { Actor, Defender, Melee, Ranged } from './actors.js';
@@ -139,17 +140,16 @@ function movePlayer(key, charactersArray) {
         down = true;
 
         if (event.key === 'w') { //w is pressed
-            positionVector = currentCharacterObj.position;  //////pass into actor method for movement fuck carson
-
-
+            positionVector = currentCharacterObj.position;  //////pass into actor method for movement
             //limit movement if out of bounds
             console.log(positionVector);
             if (!(positionVector.z >= mapTopZ)) {
                 currentCharacterObj.position.z += 1;
-                console.log(currentCharacterObj.actor);                //change location of highlight squares
-                highlights.forEach(function (highlight) {
-                    highlight.position.z += 1;
-                });
+                console.log(currentCharacterObj.actor); //change location of highlight squares
+                characterRadius(scene, currentCharacterObj.position.x, currentCharacterObj.position.z, 5);
+                // highlights.forEach(function (highlight) {
+                //     highlight.position.z += 1;
+                // });
             }
         } else if (event.key === 'a') { //a is pressed
             positionVector = currentCharacterObj.position;
@@ -184,23 +184,23 @@ function movePlayer(key, charactersArray) {
             return;
         }
 
-        //set highlight visibility
-        if (currentCharacterObj.position.z === (mapTopZ)) {
-            highlights[0].visible = false;
-        } else
-            highlights[0].visible = true;
-        if (currentCharacterObj.position.x === (mapLeftX)) {
-            highlights[3].visible = false;
-        } else
-            highlights[3].visible = true;
-        if (currentCharacterObj.position.z === (mapBottomZ)) {
-            highlights[2].visible = false;
-        } else
-            highlights[2].visible = true;
-        if (currentCharacterObj.position.x === (mapRightX)) {
-            highlights[1].visible = false;
-        } else
-            highlights[1].visible = true;
+        // //set highlight visibility
+        // if (currentCharacterObj.position.z === (mapTopZ)) {
+        //     highlights[0].visible = false;
+        // } else
+        //     highlights[0].visible = true;
+        // if (currentCharacterObj.position.x === (mapLeftX)) {
+        //     highlights[3].visible = false;
+        // } else
+        //     highlights[3].visible = true;
+        // if (currentCharacterObj.position.z === (mapBottomZ)) {
+        //     highlights[2].visible = false;
+        // } else
+        //     highlights[2].visible = true;
+        // if (currentCharacterObj.position.x === (mapRightX)) {
+        //     highlights[1].visible = false;
+        // } else
+        //     highlights[1].visible = true;
 
         --currentCharacterObj.turns;
 

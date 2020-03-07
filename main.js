@@ -1,4 +1,6 @@
-import { worldCreation, highlightGeneration } from './js/worldGeneration.js';
+import { worldCreation, 
+    //highlightGeneration, 
+    fillBoard } from './js/worldGeneration.js';
 import { createCamera, addCameraControls } from './js/camera.js';
 import { keyLifted, movePlayer, createModels, loadCat, changeCharacter, } from './js/objectGeneration.js';
 import { Node, LinkedList } from './js/LinkedList.js';
@@ -21,8 +23,10 @@ scene.add(camera);
 addCameraControls(camera, renderer);
 
 worldCreation(scene);
-var highlights = [];
-highlights = highlightGeneration(scene);
+fillBoard(scene);
+
+// var highlights = [];
+// highlights = highlightGeneration(scene);
 
 loadCat();
 
@@ -79,4 +83,5 @@ manager.onLoad = function(){
     animate();
 }
 
-export { scene, charactersArray, enemiesArray, mapTopZ, mapRightX, mapBottomZ, mapLeftX, highlights };
+export { scene, charactersArray, enemiesArray, mapTopZ, mapRightX, mapBottomZ, mapLeftX, //highlights
+ };
