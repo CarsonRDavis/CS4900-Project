@@ -1,8 +1,9 @@
 function worldCreation(scene) { //returns void
-    //add lighting
+    // Creates lighting
     var light = new THREE.AmbientLight(0xffffff, 2.5);
     light.position.set(0, 5, 0);
-    //add map texture
+
+    // Loads a texture and maps it
     var loader = new THREE.TextureLoader();
     var grassTexture = loader.load('./textures/grass2.jpg', function (grassTexture) {
         grassTexture.wrapS = grassTexture.wrapT = THREE.RepeatWrapping;
@@ -11,19 +12,22 @@ function worldCreation(scene) { //returns void
     });
     var material = new THREE.MeshBasicMaterial();
     material.map = grassTexture;
-    //add floor
+
+    // Creates a floor, will be replaced by diamond square algorithm
     var floorMesh = new THREE.Mesh(new THREE.PlaneGeometry(17, 17, 17, 17), material);
     floorMesh.rotation.x -= Math.PI / 2;
-    //add grid
+
+    // Adds a grib over the floorMesh, but will be removed
     var gridHelper = new THREE.GridHelper(17, 17, 0x111111, 0x111111);
     gridHelper.position.set(0, 0.2, 0);
 
-    //add elements
+    // Adds elements to the scene
     scene.add(light);
     scene.add(floorMesh);
     scene.add(gridHelper);
 }
 
+// Function to create highlights
 function createHighlight() { //returns highlight mesh
     //adding plane geometry to act as highlighted coordinates
     var highlightPlane = new THREE.PlaneGeometry(.9, .9);
@@ -106,6 +110,8 @@ function fillBoard(scene) {
 
 }
 
+// Creates a skybox around the board
+// The current skybox is temporary
 function generateSkybox(scene) {
     var materialArray = [];
     var texture_ft = new THREE.TextureLoader().load('../textures/front.png');

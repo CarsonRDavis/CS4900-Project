@@ -1,3 +1,6 @@
+// Initial implementation of linked list
+// Has been scraped and are using an array
+
 var location;
 
 //Reference: https://www.geeksforgeeks.org/implementation-linkedlist-javascript/
@@ -143,4 +146,7 @@ class LinkedList {
 
 }
 
-export { Node, LinkedList };
+export {
+    Node,
+    LinkedList
+};

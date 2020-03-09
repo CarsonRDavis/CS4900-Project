@@ -1,4 +1,6 @@
 //This file creates the camera for the scene
+
+// Creates the actual camera and returns it
 function createCamera(width, height, renderer, scene) {
     //create camera
     var camera = new THREE.PerspectiveCamera(90, width / height, 0.1, 10000);
@@ -11,6 +13,7 @@ function createCamera(width, height, renderer, scene) {
     return camera;
 }
 
+// Creates the OrbitControls and sets the parameters for it
 function addCameraControls(camera, renderer) {
     // Creates an OrbitControls object to be able to rotate the camera around an object
     var controls = new THREE.OrbitControls(camera, renderer.domElement);

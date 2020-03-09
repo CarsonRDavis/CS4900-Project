@@ -20,18 +20,23 @@ import {
     Ranged
 } from './actors.js';
 
+// Creates variables for if a key is pressed,
+// Currently selected character for both
+// player and enemies
 var down = false;
 var characterCount = 1;
 var enemyCount = 0;
 
 //implementing Mat's function that loads the models
 
+// GLTF Model loader for all models in our game
 //function createModels(linkedList, manager) {
 function createModels(charactersArray, enemiesArray, manager, managerEnemies) {
 
     const gltfLoader = new THREE.GLTFLoader(manager);
     const gltfLoaderEnemies = new THREE.GLTFLoader(managerEnemies);
 
+    // Player character models
     const characters = {
         melee: {
             url: './models/PirateTest.glb',
@@ -50,6 +55,7 @@ function createModels(charactersArray, enemiesArray, manager, managerEnemies) {
         }
     };
 
+    // Enemy Player Models
     const enemies = {
         meleeEnemy: {
             url: './models/Goblin_Male_Red.glb',
@@ -120,6 +126,7 @@ function createModels(charactersArray, enemiesArray, manager, managerEnemies) {
     } //end for
 }
 
+// Loads cat for easter egg
 function loadCat() { //cat doesn't get added to the LinkedList
     const gltfLoader = new THREE.GLTFLoader();
     gltfLoader.load('./models/Felixx.glb', function (gltf) {
@@ -134,14 +141,7 @@ function loadCat() { //cat doesn't get added to the LinkedList
     });
 }
 
-function decrementTurns(character) {
-    character.turns -= 1;
-}
-
-function resetTurns(character) {
-    character.turns = 5;
-}
-
+// Changes the seleceted character for player
 function changeCharacter() {
     console.log(characterCount);
     if (characterCount < 2)
@@ -229,6 +229,7 @@ function keyLifted() {
     return down;
 }
 
+// Temporary function for moving enemies
 function enemiesTurn(enemiesArray, enemyCount) {
     let currentEnemy = scene.getObjectByName(enemiesArray[enemyCount].name);
     console.log(currentEnemy);
@@ -261,6 +262,7 @@ function enemiesTurn(enemiesArray, enemyCount) {
 }
 
 //Reference: https://stackoverflow.com/questions/16873323/javascript-sleep-wait-before-continuing/16873849
+// Delays movements by a set amount of time
 function sleep(milliseconds) {
     var start = new Date().getTime();
     for (var i = 0; i < 1e7; i++) {
