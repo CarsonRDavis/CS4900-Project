@@ -1,9 +1,9 @@
 
-function createModels(manager, scene, arr){
-    // Creates and loads banana object with texture
-    var redMat = new THREE.MeshLambertMaterial({color:0xF7573E});
-    var blueMat = new THREE.MeshLambertMaterial({color:0x2194ce});
-    var greenMat = new THREE.MeshLambertMaterial({color:0x11E020});
+function createModels(manager, scene, camera){
+    var down = new THREE.Vector3(0,-1,0);
+    var caster = new THREE.Raycaster(new THREE.Vector3(0,0,0), down);
+    caster.far = .25;
+    var floorMesh = scene.getObjectByName(floorMesh);
     var mixer;
     //load the obj
     const models = {
@@ -18,17 +18,31 @@ function createModels(manager, scene, arr){
         root.name = model.name;
         
 
-        mixer = new THREE.AnimationMixer(root);
-        root.mixer = mixer;
-        let animations = gltf.animations;
-        //var clip = THREE.AnimationClip.findByName( root.animations, 'Idle' );
-        var action = mixer.clipAction( animations[0] );
-        action.play();
+        // mixer = new THREE.AnimationMixer(root);
+        // root.mixer = mixer;
+        // let animations = gltf.animations;
+        // //var clip = THREE.AnimationClip.findByName( root.animations, 'Idle' );
+        // var action = mixer.clipAction( animations[0] );
+        // action.play();
 
 
-        root.position.set(model.pos, 1.5, -3.75);             
+        root.position.set(model.pos, 0.01, -3.75);             
         root.rotation.y += Math.PI;
         root.scale.set(.34,.34,.34)
+
+        caster.set(root.position, down);
+        let intersects = caster.intersectObjects(scene.children);
+        
+        while(intersects.length < 1){
+          
+          caster.set(root.position, down);
+          root.position.y += .05;
+          intersects = caster.intersectObjects(scene.children);
+          //console.log(root.postion);
+        }
+
+        root.position.y += .95;
+
         //root.visible = false;
         scene.add(root);
         

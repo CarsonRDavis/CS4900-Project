@@ -1,7 +1,7 @@
 import { boardGen } from './gameBoard.js';
 import {createCamera, addCameraControls} from'./camera.js';
 import {createModels } from './modelMaker.js';
-import {HeightMap} from './heightMap.js';
+import {HeightMap, VanillaRandomHeightMap} from './heightMap.js';
 var height = window.innerHeight;
 var width = window.innerWidth;
 //create renderer
@@ -14,7 +14,7 @@ var scene = new THREE.Scene;
 scene.background = new THREE.Color("#C0C0C0");
 
 //Generate height map
-var heightMap = new HeightMap(4,3,5,1,-1).map;
+var heightMap = new VanillaRandomHeightMap(4).map;
 
 //call method from worldGeneration.js
 boardGen(scene, heightMap);
@@ -25,7 +25,7 @@ var controls = addCameraControls(camera, renderer);
 
 const manager = new THREE.LoadingManager();
 manager.onLoad = init;
-createModels(manager,scene, heightMap);
+createModels(manager,scene, camera);
 
 function init(){
     var def = new Defender('Dan');
