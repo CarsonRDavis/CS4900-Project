@@ -12,11 +12,11 @@ function worldCreation (scene) {    //returns void
         var material = new THREE.MeshBasicMaterial();
         material.map = grassTexture;
         //add floor
-        var floorMesh = new THREE.Mesh(new THREE.PlaneGeometry(10, 10, 10, 10), material);
+        var floorMesh = new THREE.Mesh(new THREE.PlaneGeometry(17, 17, 17, 17), material);
         floorMesh.rotation.x -= Math.PI / 2;
         //add grid
-        var gridHelper = new THREE.GridHelper(10, 10, 0x111111, 0x111111);
-        gridHelper.position.set(0, 0.01, 0);
+        var gridHelper = new THREE.GridHelper(17, 17, 0x111111, 0x111111);
+        gridHelper.position.set(0, 0.2, 0);
               
         //add elements
         scene.add(light);
@@ -61,7 +61,6 @@ function characterRadius(scene, x, y, radius) {
     // sets its visibility to true
     var temp = "highlight - " + x + " - " + y;
     var highlight = scene.getObjectByName(temp);
-    console.log(highlight); ///////////////////////this is undefined as of 3 / 6 / 20
     if (highlight == undefined) {
         return;
     }
@@ -82,6 +81,7 @@ function clearRadius(scene, x, y, radius) {
     clearRadius(scene, x, y - 1, radius - 1);
 
     var temp = "highlight - " + x + " - " + y;
+    console.log(temp);
     var highlight = scene.getObjectByName(temp);
     if (highlight == undefined) {
         return;
@@ -98,6 +98,7 @@ function fillBoard(scene) {
             var temp = createHighlight();
             temp.position.set(i, 0.2, j);
             temp.name = "highlight - " + i + " - " + j;
+            console.log(temp.name);
             temp.visible = false;
             scene.add(temp);
         }
@@ -135,6 +136,25 @@ function fillBoard(scene) {
 //     return highlights;
 // }
 
+//attempting to create the title screen
+// function makeTitle(){
+//     var loader = new THREE.FontLoader();
+
+//     loader.load("./Recreativos_Regular.json", function ( font ) {
+    
+//         var geometry = new THREE.TextGeometry( 'Hello three.js!', {
+//             font: font,
+//             size: 80,
+//             height: 5,
+//         } );
+//         let titleMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000, specular: 0xffffff });
+//         var titleMesh = new THREE.Mesh(geometry, titleMaterial);
+//         scene.add(titleMesh);
+//     } );
+// }
+
 export { worldCreation, //highlightGeneration, 
         createHighlight, 
-        characterRadius, fillBoard, clearRadius };
+        characterRadius, fillBoard, clearRadius, 
+        //makeTitle 
+    };

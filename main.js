@@ -1,6 +1,8 @@
 import { worldCreation, 
     //highlightGeneration, 
-    fillBoard } from './js/worldGeneration.js';
+    fillBoard, 
+    //makeTitle 
+} from './js/worldGeneration.js';
 import { createCamera, addCameraControls } from './js/camera.js';
 import { keyLifted, movePlayer, createModels, loadCat, changeCharacter, } from './js/objectGeneration.js';
 import { Node, LinkedList } from './js/LinkedList.js';
@@ -29,6 +31,8 @@ fillBoard(scene);
 // highlights = highlightGeneration(scene);
 
 loadCat();
+
+//makeTitle();
 
 const mapTopZ = 4.5;
 const mapRightX = -4.5;

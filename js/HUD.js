@@ -19,6 +19,9 @@ function addButtons(charactersArray){
             let enemyActor = enemy.actor;
 
             actor.attack(enemyActor);   ////need to edit the method to use obj vector position
+            console.log(actor.hitPoints);
+            console.log(enemyActor.hitPoints);
+
         }
     }
     attackBtn.addEventListener("click", onAttackClick(charactersArray, characterCount, enemiesArray, enemyCount), false);

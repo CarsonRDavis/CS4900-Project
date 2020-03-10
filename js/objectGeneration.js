@@ -1,20 +1,15 @@
 import { scene, mapTopZ, mapRightX, mapBottomZ, mapLeftX, //highlights 
         } from '/main.js';
-import { createHighlight, characterRadius } from './worldGeneration.js';
-import { LinkedList } from './LinkedList.js';
-//import { Node, LinkedList } from './LinkedList.js';
+import { characterRadius, clearRadius } from './worldGeneration.js';
 import { Actor, Defender, Melee, Ranged } from './actors.js';
 
 var down = false;
 var characterCount = 1;
 var enemyCount = 0;
 
-var positionVector = new THREE.Vector3();
-
 //var current = list.head;
 //implementing Mat's function that loads the models
 
-//function createModels(linkedList, manager) {
 function createModels(charactersArray, enemiesArray, manager, managerEnemies) {
 
     const gltfLoader = new THREE.GLTFLoader(manager);
@@ -32,13 +27,6 @@ function createModels(charactersArray, enemiesArray, manager, managerEnemies) {
         defenderEnemy: { url: './models/Viking.glb', name: 'defenderEnemy', pos: -0.5 },
     };
 
-    //count number of characters on the level
-    // var numCharacters = 0;
-    // for (const model of Object.values(characters)) {
-    //     numCharacters++;
-    // }
-
-
     //load characters and populate characters array
     for (const model of Object.values(characters)) {
         gltfLoader.load(model.url, (gltf) => {
@@ -48,7 +36,6 @@ function createModels(charactersArray, enemiesArray, manager, managerEnemies) {
             root.position.set(model.pos, 0.01, -3.5);
             root.scale.set(.34, .34, .34);
             //root.visible = false;
-            ///////////linkedList.add(root); //add the models to the LinkedList
             if (root.name === "melee") {
                 console.log("melee");
                 let mike = new Melee("Mike");///////////////////////use obj location for actor; stay away from duplicate info
@@ -77,7 +64,6 @@ function createModels(charactersArray, enemiesArray, manager, managerEnemies) {
             root.rotation.y += Math.PI;
             root.scale.set(.34, .34, .34);
             //root.visible = false;
-            ///////////linkedList.add(root); //add the models to the LinkedList
             if (root.name === "meleeEnemy") {
                 console.log("meleeEnemy");
                 let makayla = new Melee("Makayla");
@@ -97,7 +83,7 @@ function createModels(charactersArray, enemiesArray, manager, managerEnemies) {
     }//end for
 }
 
-function loadCat() {     //cat doesn't get added to the LinkedList
+function loadCat() {  
     const gltfLoader = new THREE.GLTFLoader();
     gltfLoader.load('./models/Felixx.glb', function (gltf) {
         const root = gltf.scene;
@@ -111,6 +97,7 @@ function loadCat() {     //cat doesn't get added to the LinkedList
     });
 }
 
+// Changes the seleceted character for player
 function changeCharacter() {
     //console.log(characterCount);
     if (characterCount < 2)
@@ -126,12 +113,8 @@ function movePlayer(key, charactersArray) {
     let currentCharacter = scene.getObjectByName(charactersArray[characterCount].name);
     var cat = scene.getObjectByName("cat");
 
-    //LinkedList Implementation
-    //while (current != null) { //while the list is not null (no chars left) --- can edit this to continue
-    //var currentCharacter = charactersArray[characterCount];
-
     //create vector to hold object's location
-    //var positionVector = new THREE.Vector3();
+    var positionVector = new THREE.Vector3();
     var currentCharacterObj = scene.getObjectByName(currentCharacter.name);
 
     while (currentCharacterObj.turns > 0) {
@@ -144,65 +127,43 @@ function movePlayer(key, charactersArray) {
             //limit movement if out of bounds
             console.log(positionVector);
             if (!(positionVector.z >= mapTopZ)) {
+                console.log(currentCharacterObj.actor);
+                clearRadius(scene, currentCharacterObj.position.x, currentCharacterObj.position.z, currentCharacterObj.turns);
                 currentCharacterObj.position.z += 1;
-                console.log(currentCharacterObj.actor); //change location of highlight squares
-                characterRadius(scene, currentCharacterObj.position.x, currentCharacterObj.position.z, 5);
-                // highlights.forEach(function (highlight) {
-                //     highlight.position.z += 1;
-                // });
             }
         } else if (event.key === 'a') { //a is pressed
             positionVector = currentCharacterObj.position;
             console.log(positionVector);
             if (!(positionVector.x >= mapLeftX)) {
+                clearRadius(scene, currentCharacterObj.position.x, currentCharacterObj.position.z, currentCharacterObj.turns);
                 currentCharacterObj.position.x += 1;
-                highlights.forEach(function (highlight) {
-                    highlight.position.x += 1;
-                });
             }
         } else if (event.key === 's') { //s is pressed
             positionVector = currentCharacterObj.position;
             console.log(positionVector);
             if (!(positionVector.z <= mapBottomZ)) {
-                currentCharacterObj.position.z += -1;
-                highlights.forEach(function (highlight) {
-                    highlight.position.z += -1;
-                });
+                clearRadius(scene, currentCharacterObj.position.x, currentCharacterObj.position.z, currentCharacterObj.turns);
+                currentCharacterObj.position.z += -1;                // highlights.forEach(function (highlight) {
+                //     highlight.position.z += -1;
+                // });
             }
         } else if (event.key === 'd') { //d is pressed
             positionVector = currentCharacterObj.position;
             console.log(positionVector);
             if (!(positionVector.x <= mapRightX)) {
-                currentCharacterObj.position.x += -1;
-                highlights.forEach(function (highlight) {
-                    highlight.position.x += -1;
-                });
+                clearRadius(scene, currentCharacterObj.position.x, currentCharacterObj.position.z, currentCharacterObj.turns);
+                currentCharacterObj.position.x += -1;                // highlights.forEach(function (highlight) {
+                //     highlight.position.x += -1;
+                // });
             }
-        } else if (event.key == 'c') {//cat easter egg
-            //loadCat();
-            cat.visible = true;
-            return;
-        }
-
-        // //set highlight visibility
-        // if (currentCharacterObj.position.z === (mapTopZ)) {
-        //     highlights[0].visible = false;
-        // } else
-        //     highlights[0].visible = true;
-        // if (currentCharacterObj.position.x === (mapLeftX)) {
-        //     highlights[3].visible = false;
-        // } else
-        //     highlights[3].visible = true;
-        // if (currentCharacterObj.position.z === (mapBottomZ)) {
-        //     highlights[2].visible = false;
-        // } else
-        //     highlights[2].visible = true;
-        // if (currentCharacterObj.position.x === (mapRightX)) {
-        //     highlights[1].visible = false;
-        // } else
-        //     highlights[1].visible = true;
+        } //else if (event.key == 'c') {//cat easter egg    //need to move this to avoid losing turns
+        //     //loadCat();
+        //     cat.visible = true;
+        //     return;
+        // }
 
         --currentCharacterObj.turns;
+        characterRadius(scene, currentCharacterObj.position.x, currentCharacterObj.position.z, currentCharacterObj.turns);
 
         //console.log(player);
         //console.log(player.turns);
@@ -226,34 +187,6 @@ function keyLifted() {
     down = false;
 
     return down;
-}
-
-function resetHighlights(playerName) {
-    if (playerName === "melee") {
-        for (var i = 0; i < 4; i++) {
-            highlights[i].visible = true;
-        }
-        highlights[0].position.set(1.5, 0.02, -2.5);
-        highlights[1].position.set(0.5, 0.02, -3.5);
-        highlights[2].position.set(1.5, 0.02, -4.5);
-        highlights[3].position.set(2.5, 0.02, -3.5);
-    } else if (playerName === "ranged") {
-        for (var i = 0; i < 4; i++) {
-            highlights[i].visible = true;
-        }
-        highlights[0].position.set(-0.5, 0.02, -2.5);
-        highlights[1].position.set(-1.5, 0.02, -3.5);
-        highlights[2].position.set(-0.5, 0.02, -4.5);
-        highlights[3].position.set(0.5, 0.02, -3.5);
-    } else if (playerName === "defender") {
-        for (var i = 0; i < 4; i++) {
-            highlights[i].visible = true;
-        }
-        highlights[0].position.set(-0.5, 0.02, -2.5);
-        highlights[1].position.set(-1.5, 0.02, -3.5);
-        highlights[2].position.set(-0.5, 0.02, -4.5);
-        highlights[3].position.set(0.5, 0.02, -3.5);
-    }
 }
 
 function enemiesTurn(enemiesArray, enemyCount) {
