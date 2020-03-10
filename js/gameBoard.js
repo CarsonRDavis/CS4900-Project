@@ -1,5 +1,6 @@
 //This file creates the layout of the scene
 function boardGen(scene, heightMap) {
+    let mapVerts = heightMap.length;
     //add lighting
     var light = new THREE.AmbientLight( 0x404040, 15.0 );
     light.position.set(1, 1, 1);
@@ -15,7 +16,6 @@ function boardGen(scene, heightMap) {
     material.map = grassTexture;
 
     //setup the geometry for the map
-    var mapVerts = heightMap.length;
     var floorGeom = new THREE.PlaneBufferGeometry(mapVerts, mapVerts, mapVerts-1, mapVerts-1);
     var floorMesh = new THREE.Mesh(floorGeom,material);
     floorMesh.rotation.x -= Math.PI / 2;
@@ -44,18 +44,23 @@ function boardGen(scene, heightMap) {
     
     floorMesh.name = floorMesh;
     
+    //add natural terrain objects to the map
     layer1();
     //add elements
     scene.add(light, floorMesh, line);
 
+    //add natural terrain objects to the map
     function layer1(){
         //var obstacles = [...Array(mapVerts-1)].map((_, i) => [...Array(mapVerts-1)].map((_, i) => 0));
         var terObjs = [];
+        
         let numObjs = Math.floor(((mapVerts-1)*(mapVerts-1))*.2);
         let manager = new THREE.LoadingManager();
         let down = new THREE.Vector3(0,-1,0);
         let caster = new THREE.Raycaster(new THREE.Vector3(0,0,0), down);
-        let x = 0;
+        caster.far = 0.05;
+        let unit = mapVerts/(mapVerts - 1);
+        let x = unit/2;
         console.log(numObjs);
 
         const models = {
@@ -72,8 +77,8 @@ function boardGen(scene, heightMap) {
             gltfLoader.load(model.url, (gltf) => {
               const root = gltf.scene;
               
-              root.position.set(-5.5 + x, 0.01, .5);     
-              x += 2;        
+              root.position.set(-5*unit + x, 0.01, unit/2);     
+              x += 2*unit;        
               root.rotation.y += Math.PI;
               root.scale.set(.75,.75,.75)
       
@@ -86,8 +91,7 @@ function boardGen(scene, heightMap) {
                 intersects = caster.intersectObjects(scene.children);
               }
               root.position.y += .95;
-              scene.add(root);
-              
+              scene.add(root);              
             });
         }    
     }    
