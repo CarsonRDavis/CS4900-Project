@@ -1,5 +1,5 @@
 
-function createModels(manager, scene, camera){
+function createModels(manager, scene){
     var down = new THREE.Vector3(0,-1,0);
     var caster = new THREE.Raycaster(new THREE.Vector3(0,0,0), down);
     caster.far = .25;
@@ -34,16 +34,11 @@ function createModels(manager, scene, camera){
         let intersects = caster.intersectObjects(scene.children);
         
         while(intersects.length < 1){
-          
           caster.set(root.position, down);
           root.position.y += .05;
           intersects = caster.intersectObjects(scene.children);
-          //console.log(root.postion);
         }
-
         root.position.y += .95;
-
-        //root.visible = false;
         scene.add(root);
         
       });

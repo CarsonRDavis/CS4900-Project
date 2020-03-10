@@ -1,0 +1,237 @@
+{
+    "asset": {
+        "generator": "FBX2glTF v0.9.7",
+        "version": "2.0"
+    },
+    "scene": 0,
+    "buffers": [
+        {
+            "byteLength": 84708,
+            "uri": "buffer.bin"
+        }
+    ],
+    "bufferViews": [
+        {
+            "buffer": 0,
+            "byteLength": 336,
+            "byteOffset": 0,
+            "target": 34963
+        },
+        {
+            "buffer": 0,
+            "byteLength": 1296,
+            "byteOffset": 336,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteLength": 1296,
+            "byteOffset": 1632,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteLength": 9060,
+            "byteOffset": 2928,
+            "target": 34963
+        },
+        {
+            "buffer": 0,
+            "byteLength": 36360,
+            "byteOffset": 11988,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteLength": 36360,
+            "byteOffset": 48348,
+            "target": 34962
+        }
+    ],
+    "scenes": [
+        {
+            "name": "Root Scene",
+            "nodes": [
+                0
+            ]
+        }
+    ],
+    "accessors": [
+        {
+            "componentType": 5123,
+            "type": "SCALAR",
+            "count": 168,
+            "bufferView": 0,
+            "byteOffset": 0
+        },
+        {
+            "componentType": 5126,
+            "type": "VEC3",
+            "count": 108,
+            "bufferView": 1,
+            "byteOffset": 0,
+            "min": [
+                -0.00260783615522087,
+                -0.00196995912119746,
+                -7.84633011789992e-05
+            ],
+            "max": [
+                0.00153657689224929,
+                0.00234326021745801,
+                0.0247207283973694
+            ]
+        },
+        {
+            "componentType": 5126,
+            "type": "VEC3",
+            "count": 108,
+            "bufferView": 2,
+            "byteOffset": 0
+        },
+        {
+            "componentType": 5123,
+            "type": "SCALAR",
+            "count": 4530,
+            "bufferView": 3,
+            "byteOffset": 0
+        },
+        {
+            "componentType": 5126,
+            "type": "VEC3",
+            "count": 3030,
+            "bufferView": 4,
+            "byteOffset": 0,
+            "min": [
+                -0.00687053566798568,
+                -0.00636102491989732,
+                0.0109827732667327
+            ],
+            "max": [
+                0.00785591080784798,
+                0.00705342506989837,
+                0.0268703009933233
+            ]
+        },
+        {
+            "componentType": 5126,
+            "type": "VEC3",
+            "count": 3030,
+            "bufferView": 5,
+            "byteOffset": 0
+        }
+    ],
+    "samplers": [
+        {}
+    ],
+    "materials": [
+        {
+            "name": "Wood",
+            "alphaMode": "OPAQUE",
+            "extras": {
+                "fromFBX": {
+                    "shadingModel": "Phong",
+                    "isTruePBR": false
+                }
+            },
+            "pbrMetallicRoughness": {
+                "baseColorFactor": [
+                    0.122340939939022,
+                    0.0562880821526051,
+                    0.0476089976727962,
+                    1.0
+                ],
+                "metallicFactor": 0.400000005960464,
+                "roughnessFactor": 0.415087103843689
+            }
+        },
+        {
+            "name": "Green",
+            "alphaMode": "OPAQUE",
+            "extras": {
+                "fromFBX": {
+                    "shadingModel": "Phong",
+                    "isTruePBR": false
+                }
+            },
+            "pbrMetallicRoughness": {
+                "baseColorFactor": [
+                    0.069953553378582,
+                    0.12185650318861,
+                    0.0478881113231182,
+                    1.0
+                ],
+                "metallicFactor": 0.400000005960464,
+                "roughnessFactor": 0.415087103843689
+            }
+        }
+    ],
+    "meshes": [
+        {
+            "name": "PineTree_5",
+            "primitives": [
+                {
+                    "material": 0,
+                    "mode": 4,
+                    "attributes": {
+                        "NORMAL": 2,
+                        "POSITION": 1
+                    },
+                    "indices": 0
+                },
+                {
+                    "material": 1,
+                    "mode": 4,
+                    "attributes": {
+                        "NORMAL": 5,
+                        "POSITION": 4
+                    },
+                    "indices": 3
+                }
+            ]
+        }
+    ],
+    "nodes": [
+        {
+            "name": "RootNode",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "children": [
+                1
+            ]
+        },
+        {
+            "name": "PineTree_5",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                -0.707106828689575,
+                0.0,
+                0.0,
+                0.707106709480286
+            ],
+            "scale": [
+                100.0,
+                100.0,
+                100.0
+            ],
+            "mesh": 0
+        }
+    ]
+}

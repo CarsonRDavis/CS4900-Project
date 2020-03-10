@@ -43,9 +43,55 @@ function boardGen(scene, heightMap) {
     line.rotation.x -= Math.PI / 2;
     
     floorMesh.name = floorMesh;
-  
+    
+    layer1();
     //add elements
     scene.add(light, floorMesh, line);
-} 
+
+    function layer1(){
+        //var obstacles = [...Array(mapVerts-1)].map((_, i) => [...Array(mapVerts-1)].map((_, i) => 0));
+        var terObjs = [];
+        let numObjs = Math.floor(((mapVerts-1)*(mapVerts-1))*.2);
+        let manager = new THREE.LoadingManager();
+        let down = new THREE.Vector3(0,-1,0);
+        let caster = new THREE.Raycaster(new THREE.Vector3(0,0,0), down);
+        let x = 0;
+        console.log(numObjs);
+
+        const models = {
+            bush:    { url: './models/Bush_2/Bush_2.gltf'},
+            berryBush:   { url: './models/BushBerries_1/BushBerries_1.gltf'},
+            commonTree: { url: './models/CommonTree_2/CommonTree_2.gltf'},
+            commonTree2: { url: './models/CommonTree_3/CommonTree_3.gltf'},
+            pineTree: { url: './models/PineTree_5/PineTree_5.gltf'},
+            rock:    { url: './models/Rock_1/Rock_1.gltf'},
+            rock2:    { url: './models/Rock_2/Rock_2.gltf'},
+          };
+          const gltfLoader = new THREE.GLTFLoader(manager);
+          for (const model of Object.values(models)){
+            gltfLoader.load(model.url, (gltf) => {
+              const root = gltf.scene;
+              
+              root.position.set(-5.5 + x, 0.01, .5);     
+              x += 2;        
+              root.rotation.y += Math.PI;
+              root.scale.set(.75,.75,.75)
+      
+              caster.set(root.position, down);
+              let intersects = caster.intersectObjects(scene.children);
+              
+              while(intersects.length < 1){
+                caster.set(root.position, down);
+                root.position.y += .05;
+                intersects = caster.intersectObjects(scene.children);
+              }
+              root.position.y += .95;
+              scene.add(root);
+              
+            });
+        }    
+    }    
+}
 
 export{boardGen};
+

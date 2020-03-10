@@ -25,7 +25,7 @@ var controls = addCameraControls(camera, renderer);
 
 const manager = new THREE.LoadingManager();
 manager.onLoad = init;
-createModels(manager,scene, camera);
+createModels(manager,scene);
 
 function init(){
     var def = new Defender('Dan');

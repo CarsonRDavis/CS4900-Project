@@ -1,0 +1,237 @@
+{
+    "asset": {
+        "generator": "FBX2glTF v0.9.7",
+        "version": "2.0"
+    },
+    "scene": 0,
+    "buffers": [
+        {
+            "byteLength": 48140,
+            "uri": "buffer.bin"
+        }
+    ],
+    "bufferViews": [
+        {
+            "buffer": 0,
+            "byteLength": 2178,
+            "byteOffset": 0,
+            "target": 34963
+        },
+        {
+            "buffer": 0,
+            "byteLength": 8724,
+            "byteOffset": 2180,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteLength": 8724,
+            "byteOffset": 10904,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteLength": 3168,
+            "byteOffset": 19628,
+            "target": 34963
+        },
+        {
+            "buffer": 0,
+            "byteLength": 12672,
+            "byteOffset": 22796,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteLength": 12672,
+            "byteOffset": 35468,
+            "target": 34962
+        }
+    ],
+    "scenes": [
+        {
+            "name": "Root Scene",
+            "nodes": [
+                0
+            ]
+        }
+    ],
+    "accessors": [
+        {
+            "componentType": 5123,
+            "type": "SCALAR",
+            "count": 1089,
+            "bufferView": 0,
+            "byteOffset": 0
+        },
+        {
+            "componentType": 5126,
+            "type": "VEC3",
+            "count": 727,
+            "bufferView": 1,
+            "byteOffset": 0,
+            "min": [
+                -0.0065064262598753,
+                -0.00861081760376692,
+                -0.000321245664963499
+            ],
+            "max": [
+                0.00668951636180282,
+                0.00856557581573725,
+                0.0121414214372635
+            ]
+        },
+        {
+            "componentType": 5126,
+            "type": "VEC3",
+            "count": 727,
+            "bufferView": 2,
+            "byteOffset": 0
+        },
+        {
+            "componentType": 5123,
+            "type": "SCALAR",
+            "count": 1584,
+            "bufferView": 3,
+            "byteOffset": 0
+        },
+        {
+            "componentType": 5126,
+            "type": "VEC3",
+            "count": 1056,
+            "bufferView": 4,
+            "byteOffset": 0,
+            "min": [
+                -0.00723433354869485,
+                -0.00850201398134232,
+                0.0018620794871822
+            ],
+            "max": [
+                0.00615765247493982,
+                0.00857806485146284,
+                0.0124387191608548
+            ]
+        },
+        {
+            "componentType": 5126,
+            "type": "VEC3",
+            "count": 1056,
+            "bufferView": 5,
+            "byteOffset": 0
+        }
+    ],
+    "samplers": [
+        {}
+    ],
+    "materials": [
+        {
+            "name": "Green",
+            "alphaMode": "OPAQUE",
+            "extras": {
+                "fromFBX": {
+                    "shadingModel": "Phong",
+                    "isTruePBR": false
+                }
+            },
+            "pbrMetallicRoughness": {
+                "baseColorFactor": [
+                    0.069953553378582,
+                    0.12185650318861,
+                    0.0478881113231182,
+                    1.0
+                ],
+                "metallicFactor": 0.400000005960464,
+                "roughnessFactor": 0.415087103843689
+            }
+        },
+        {
+            "name": "Berry",
+            "alphaMode": "OPAQUE",
+            "extras": {
+                "fromFBX": {
+                    "shadingModel": "Phong",
+                    "isTruePBR": false
+                }
+            },
+            "pbrMetallicRoughness": {
+                "baseColorFactor": [
+                    0.373758852481842,
+                    0.0216256286948919,
+                    0.0305705163627863,
+                    1.0
+                ],
+                "metallicFactor": 0.400000005960464,
+                "roughnessFactor": 0.415087103843689
+            }
+        }
+    ],
+    "meshes": [
+        {
+            "name": "BushBerries_1",
+            "primitives": [
+                {
+                    "material": 0,
+                    "mode": 4,
+                    "attributes": {
+                        "NORMAL": 2,
+                        "POSITION": 1
+                    },
+                    "indices": 0
+                },
+                {
+                    "material": 1,
+                    "mode": 4,
+                    "attributes": {
+                        "NORMAL": 5,
+                        "POSITION": 4
+                    },
+                    "indices": 3
+                }
+            ]
+        }
+    ],
+    "nodes": [
+        {
+            "name": "RootNode",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "children": [
+                1
+            ]
+        },
+        {
+            "name": "BushBerries_1",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                -0.707106828689575,
+                0.0,
+                0.0,
+                0.707106709480286
+            ],
+            "scale": [
+                100.0,
+                100.0,
+                100.0
+            ],
+            "mesh": 0
+        }
+    ]
+}
