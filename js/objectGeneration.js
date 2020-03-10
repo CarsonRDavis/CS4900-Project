@@ -175,26 +175,27 @@ function movePlayer(key, charactersArray) {
             //limit movement if out of bounds
             if (!(positionVector.z >= mapTopZ)) {
                 clearRadius(scene, currentCharacterObj.position.x, currentCharacterObj.position.z, currentCharacterObj.turns);
-                decrementTurns(currentCharacterObj);
                 currentCharacterObj.position.z += 1;
-                characterRadius(scene, currentCharacterObj.position.x, currentCharacterObj.position.z, currentCharacterObj.turns);
             }
         } else if (event.key === 'a') { //a is pressed
             positionVector = currentCharacterObj.position;
             console.log(positionVector);
             if (!(positionVector.x >= mapLeftX)) {
+                clearRadius(scene, currentCharacterObj.position.x, currentCharacterObj.position.z, currentCharacterObj.turns);
                 currentCharacterObj.position.x += 1;
             }
         } else if (event.key === 's') { //s is pressed
             positionVector = currentCharacterObj.position;
             console.log(positionVector);
             if (!(positionVector.z <= mapBottomZ)) {
+                clearRadius(scene, currentCharacterObj.position.x, currentCharacterObj.position.z, currentCharacterObj.turns);
                 currentCharacterObj.position.z += -1;
             }
         } else if (event.key === 'd') { //d is pressed
             positionVector = currentCharacterObj.position;
             console.log(positionVector);
             if (!(positionVector.x <= mapRightX)) {
+                clearRadius(scene, currentCharacterObj.position.x, currentCharacterObj.position.z, currentCharacterObj.turns);
                 currentCharacterObj.position.x += -1;
             }
             //The following can be used to manually swap characters, skipping moves
@@ -205,6 +206,7 @@ function movePlayer(key, charactersArray) {
         }
 
         --currentCharacterObj.turns;
+        characterRadius(scene, currentCharacterObj.position.x, currentCharacterObj.position.z, currentCharacterObj.turns);
 
         //console.log(player);
         //console.log(player.turns);

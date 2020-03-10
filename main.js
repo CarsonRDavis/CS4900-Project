@@ -88,9 +88,6 @@ managerEnemies.onLoad = function () {
 // Adds character movement 
 //add end turn button
 manager.onLoad = function () {
-
-    characterRadius(scene, character.position.x, character.position.z, character.turns);
-
     // Handles which method to call depending on which key is pressed
     //Reference: https://stackoverflow.com/questions/8941183/pass-multiple-arguments-along-with-an-event-object-to-an-event-handler
     //var handler = function (character, linked) {

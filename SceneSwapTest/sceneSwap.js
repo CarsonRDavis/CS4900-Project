@@ -19,8 +19,12 @@ function onLoad() {
             break;
     }
 
+    var direction = new THREE.Vector3();
+
     var camera = new THREE.PerspectiveCamera(90, width / height, 0.1, 10000);
     scene.add(camera);
+    camera.position.set(-43, 0, -5);
+    camera.lookAt(-43, 0, 0);
 
     renderer.render(scene, camera);
 }
