@@ -1,3 +1,4 @@
+
 class Actor{   //Base character object
     constructor(name){
         this.name = name;
@@ -23,27 +24,35 @@ class Actor{   //Base character object
     // }
 
     //Function for damaging another actor. For now, it simply checks weakness and resistance before dealing damage
-    attack(actor){
+    attack(actor, array){
         var attMod = 1;                                       //attack modifier
         
-        if(!this.inRange(actor))
-            return;
+        // if(!this.inRange(actor)) //in progress
+        //     return;
 
         if(this.attType != null && actor.weakness != null){   
-            for(var i = 0; i < this.attType.length; i++){     
+            for(let i = 0; i < this.attType.length; i++){     
                 if(actor.weakness.includes(this.attType[i])){ //if the arg actor's weakness includes the type, attack mod is doubled
-                    attMod *=2;                     
+                    attMod *=2;
                 }
             }
         }
         if(actor.resist != null){
-            for(var i = 0; i < this.attType.length; i++){     //second verse, same as the first (but for resistance)
+            for(let i = 0; i < this.attType.length; i++){     //second verse, same as the first (but for resistance)
                 if(actor.resist.includes(this.attType[i])){   //if the arg actor is resitant, attack mod is halved
                     attMod /= 2;
-                }    
+                }
             }
         }
-        actor.hitPts -= this.attPow * attMod;                  //reduce the arg actor's HP 
+        if(!(actor.hitPts - (this.attPow * attMod) <= 0)){
+            actor.hitPts -= this.attPow * attMod;                  //reduce the arg actor's HP 
+        }else{
+            //they ded
+            actor.hitPts = 0;
+            console.log(array);                 //meleeEnemy, etc. :(
+            console.log(actor);
+            console.log(array.indexOf(actor));      //array has meleeEnemy which has actor property; how to find index
+        }
     }
 
     //Check to see if an actor is in attack range

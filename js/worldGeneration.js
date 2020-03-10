@@ -81,7 +81,7 @@ function clearRadius(scene, x, y, radius) {
     clearRadius(scene, x, y - 1, radius - 1);
 
     var temp = "highlight - " + x + " - " + y;
-    console.log(temp);
+    //console.log(temp);
     var highlight = scene.getObjectByName(temp);
     if (highlight == undefined) {
         return;
@@ -98,7 +98,7 @@ function fillBoard(scene) {
             var temp = createHighlight();
             temp.position.set(i, 0.2, j);
             temp.name = "highlight - " + i + " - " + j;
-            console.log(temp.name);
+            //console.log(temp.name);
             temp.visible = false;
             scene.add(temp);
         }

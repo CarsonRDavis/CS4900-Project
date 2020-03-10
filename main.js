@@ -68,7 +68,7 @@ manager.onLoad = function(){
 
     console.log(characterCount);
 
-    addButtons(charactersArray);
+    addButtons(charactersArray, enemiesArray);
 
     //Reference: https://stackoverflow.com/questions/8941183/pass-multiple-arguments-along-with-an-event-object-to-an-event-handler
     //var handler = function (character, linked) {
