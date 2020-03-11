@@ -51,6 +51,12 @@ class Actor{   //Base character object
             actor.hitPts = 0;
             console.log(array);                 //meleeEnemy, etc. :(
             console.log(actor);
+            for(let i = 0; i < array.length; i++){
+                if(array[i].actor.name == actor.name)
+                    console.log("lit");
+                    
+            }
+            console.log(array[0].actor.name);
             console.log(array.indexOf(actor));      //array has meleeEnemy which has actor property; how to find index
         }
     }
