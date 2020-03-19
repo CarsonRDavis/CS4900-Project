@@ -53,6 +53,8 @@ function boardGen(scene, heightMap, obstacles) {
   function layer1(obstacles){
     //Declare varibles for object generation 
     var terObjs = [];
+    var quads = [0,0,0,0];
+    let mostPopulated = 3;
     let numObjs = Math.floor(((mapVerts-1)*(mapVerts-1))*.15);
     let manager = new THREE.LoadingManager();
     let down = new THREE.Vector3(0,-1,0);
@@ -82,6 +84,12 @@ function boardGen(scene, heightMap, obstacles) {
         let y = getRandomInt(mid);
         let quad = getRandomInt(4);
 
+        //Check that the next model will not go to a quad that is too crowded
+        while(quad == mostPopulated){
+          quad = getRandomInt(4);
+          console.log('Quad change')
+        }
+
         //Place the model in a random location based on the random quad variable and mark its location on the obstacles array
         if(quad == 0){
           //For each quadrant, call isOccupied to ensure that each piece goes to an empty spot
@@ -101,6 +109,7 @@ function boardGen(scene, heightMap, obstacles) {
           }  
           root.position.set((unit/2) + x*unit, 0.01, -(unit/2) - y*unit);
           obstacles[mid+y][mid-x-1] = 1;
+
         }
         else if(quad ==2){
           while(isOccupied(obstacles,mid+y,mid+x)){
@@ -121,6 +130,14 @@ function boardGen(scene, heightMap, obstacles) {
           obstacles[mid-y-1][mid+x] = 1;
         }
         
+        quads[quad]+=1;
+
+        if(quads[mostPopulated] < quads[quad]){
+          mostPopulated = quad;
+        }  
+        console.log('Highest Populated: ', mostPopulated, ' with ', quads[mostPopulated], ' models.');
+        console.log(quads.toString())
+        console.log('Quad ', quad)
         //Give the model a random rotation
         let rotate = getRandomInt(3);
         if(rotate == 0){
