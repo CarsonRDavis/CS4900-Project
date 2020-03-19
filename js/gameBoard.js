@@ -84,24 +84,45 @@ function boardGen(scene, heightMap, obstacles) {
 
         //Place the model in a random location based on the random quad variable and mark its location on the obstacles array
         if(quad == 0){
+          //For each quadrant, call isOccupied to ensure that each piece goes to an empty spot
+          while(isOccupied(obstacles,mid-y-1,mid-x-1)){
+            x = getRandomInt(mid);
+            y = getRandomInt(mid);
+            console.log('Coord Change');
+          }
           root.position.set((unit/2) + x*unit, 0.01, (unit/2) + y*unit);
           obstacles[mid-y-1][mid-x-1] = 1;
         }
         else if(quad == 1){
+          while(isOccupied(obstacles,mid+y,mid-x-1)){
+            x = getRandomInt(mid);
+            y = getRandomInt(mid);
+            console.log('Coord Change');
+          }  
           root.position.set((unit/2) + x*unit, 0.01, -(unit/2) - y*unit);
           obstacles[mid+y][mid-x-1] = 1;
         }
         else if(quad ==2){
+          while(isOccupied(obstacles,mid+y,mid+x)){
+            x = getRandomInt(mid);
+            y = getRandomInt(mid);
+            console.log('Coord Change');
+          }  
           root.position.set(-(unit/2) - x*unit, 0.01, -(unit/2) - y*unit);
           obstacles[mid+y][mid+x] = 1;
         }
         else{
+          while(isOccupied(obstacles,mid-y-1,mid+x)){
+            x = getRandomInt(mid);
+            y = getRandomInt(mid);
+            console.log('Coord Change');
+          }  
           root.position.set(-(unit/2) - x*unit, 0.01, (unit/2) + y*unit);
           obstacles[mid-y-1][mid+x] = 1;
         }
         
         //Give the model a random rotation
-        let rotate = getRandomInt();
+        let rotate = getRandomInt(3);
         if(rotate == 0){
         root.rotation.y += Math.PI;
         }
@@ -129,7 +150,14 @@ function boardGen(scene, heightMap, obstacles) {
         scene.add(root);              
       });
     }    
-  }    
+  }  
+  //Helper that returns true if the specified location is occupied
+  function isOccupied(obstacles,y,x){
+    if(obstacles[y][x] == 1){
+      return true;
+    }
+    return false;
+  }
 }
 
 export{boardGen};
