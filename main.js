@@ -81,6 +81,16 @@ manager.onLoad = function(){
         };
     };
 
+    let raycaster = new THREE.Raycaster();
+    let mouse = new THREE.Vector2();
+
+    //event handler when clicking an enemy to attack (or possibly a teammate to heal?)
+    document.addEventListener('mousedown', onMouseDown, false);
+    function onMouseDown(event){
+        let intersects = raycaster.intersectObjects(scene.children, true);
+console.log(intersects[0]);
+    }
+
     window.addEventListener('keydown', handler(charactersArray), false);
     window.addEventListener('keyup', keyLifted, false);
     console.log(characterCount);
