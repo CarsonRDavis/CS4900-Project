@@ -84,11 +84,16 @@ manager.onLoad = function(){
     let raycaster = new THREE.Raycaster();
     let mouse = new THREE.Vector2();
 
+    //Check this example for reference: https://threejs.org/examples/#webgl_interactive_lines
     //event handler when clicking an enemy to attack (or possibly a teammate to heal?)
     document.addEventListener('mousedown', onMouseDown, false);
     function onMouseDown(event){
+        raycaster.setFromCamera(mouse, camera);     //place within render/animate function???
+
         let intersects = raycaster.intersectObjects(scene.children, true);
-console.log(intersects[0]);
+        console.log(intersects[0]);
+        console.log(intersects[0].object);
+        // console.log(intersects[0].object.name);
     }
 
     window.addEventListener('keydown', handler(charactersArray), false);

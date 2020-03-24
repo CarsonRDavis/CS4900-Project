@@ -232,46 +232,4 @@ function sleep(milliseconds) {
     }
 }
 
-//add test cubes and set their obj names
-function addCubes() {
-    var cube = createCubes();
-    cube.name = "cube";
-    var cube1 = createCubes();
-    cube1.name = "cube1";
-    var cube2 = createCubes();
-    cube2.name = "cube2";
-    var cube3 = createCubes();
-    cube3.name = "cube3";
-    var cube4 = createCubes();
-    cube4.name = "cube4";
-    //initialize starting cube
-    var selectedCube = cube;
-    //set positions
-    cube.position.set(0, 0.25, 0);
-    cube1.position.set(5, 0.25, 5);
-    cube2.position.set(5, 0.25, -5);
-    cube3.position.set(-5, 0.25, 5);
-    cube4.position.set(-5, 0.25, -5);
-    //add cubes to scene
-    scene.add(cube);
-    scene.add(cube1);
-    scene.add(cube2);
-    scene.add(cube3);
-    scene.add(cube4);
-    //return for use in main.js
-    return cube;
-}
-
-//method to create the cubes and returns to addCubes()
-function createCubes() {
-    var cubeGeometry = new THREE.CubeGeometry(1, 1, 1);
-    var cubeMaterial = new THREE.MeshBasicMaterial({
-        color: 0xff0000
-    });
-
-    var temp = new THREE.Mesh(cubeGeometry, cubeMaterial);
-
-    return temp;
-}
-
 export { keyLifted, movePlayer, createModels, loadCat, changeCharacter, enemiesTurn, characterCount, enemyCount };
